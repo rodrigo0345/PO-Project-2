@@ -1,6 +1,6 @@
 package Backend.Users;
 
-public class User {
+public abstract class User implements Comparable<User> {
     private String name;
     private String email;
     private String username;
@@ -48,5 +48,10 @@ public class User {
     @Override
     public String toString() {
         return "name=" + name + ", email=" + email + ", username=" + username;
+    }
+
+    @Override
+    public int compareTo(User o) {
+        return this.getUsername().compareTo(o.getUsername());
     }
 }
