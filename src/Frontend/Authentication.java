@@ -11,7 +11,6 @@ public class Authentication {
         String username = sc.nextLine();
         System.out.println("Password: ");
         String password = sc.nextLine();
-        sc.close();
         User user = Backend.UserRepo.UserRepo.login(username, password);
         return user;
     }

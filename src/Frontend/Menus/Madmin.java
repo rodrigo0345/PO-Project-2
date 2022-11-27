@@ -1,10 +1,24 @@
 package Frontend.Menus;
 
+import java.util.Scanner;
+
+import Backend.Users.Admin;
+
 public class Madmin implements Menu {
     private int option;
+    private Admin user;
+
+    public Madmin(Admin user) {
+        this.user = user;
+    }
+
+    public Admin getUser() {
+        return user;
+    }
 
     @Override
     public void mostrarMenu() {
+        Scanner sc = new Scanner(System.in);
         System.out.println("1. Add a new producer");
         System.out.println("2. Add a new musician");
         System.out.println("3. Remove user");
@@ -13,6 +27,12 @@ public class Madmin implements Menu {
         System.out.println("6. Show all recording sessions");
         System.out.println("7. Show all albums being edited");
         System.out.println("8. Stats");
+
+        try {
+            option = sc.nextInt();
+        } catch (Exception e) {
+            System.out.println("Invalid option");
+        }
     }
 
     @Override
@@ -44,6 +64,7 @@ public class Madmin implements Menu {
                 // showStats();
                 break;
             default:
+                System.out.println("Invalid option");
                 break;
         }
 

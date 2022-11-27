@@ -1,11 +1,32 @@
 package Frontend.Menus;
 
+import java.util.Scanner;
+
+import Backend.Users.Produtor;
+
 public class Mprodutor implements Menu {
     private int option;
+    private Produtor user;
+
+    public Mprodutor(Produtor user) {
+        this.user = user;
+    }
 
     @Override
     public void mostrarMenu() {
+        Scanner sc = new Scanner(System.in);
 
+        // escrever aqui os menus
+
+        try {
+            option = sc.nextInt();
+        } catch (Exception e) {
+            System.out.println("Invalid option");
+        }
+    }
+
+    public Produtor getUser() {
+        return user;
     }
 
     @Override
