@@ -27,4 +27,8 @@ public class Repos {
     public static void removeUser(String username) {
         users.remove(username);
     }
+
+    public static void devUsers() {
+        addUser(new Admin("Admin", "admin", "admin", "admin"));
+    }
 }

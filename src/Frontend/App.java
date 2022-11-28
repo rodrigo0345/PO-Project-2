@@ -1,6 +1,5 @@
 package Frontend;
 
-import Backend.UserRepo.UserRepo;
 import Backend.Users.Admin;
 import Backend.Users.Musician;
 import Backend.Users.Produtor;
@@ -11,7 +10,7 @@ import Frontend.Menus.Mprodutor;
 
 public class App {
     public static void main(String[] args) throws Exception {
-        UserRepo.devUsers();
+        Backend.Users.Repos.devUsers();
         User auth = Authentication.loginPrompt();
         if (auth != null) {
             if (auth instanceof Musician) {
