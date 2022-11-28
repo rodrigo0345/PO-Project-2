@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import Backend.Instruments.*;
 
-public class Admin extends User implements Serializable {
+public class Admin extends User {
 
     public Admin(String name, String email, String username, String password) {
         super(name, email, username, password);

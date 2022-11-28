@@ -1,8 +1,9 @@
 package Backend.Instruments;
 
+import java.io.Serializable;
 import java.util.UUID;
 
-public class Instrument {
+public class Instrument implements Serializable {
     private String name;
     private UUID id;
 

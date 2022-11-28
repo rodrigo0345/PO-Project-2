@@ -1,9 +1,10 @@
 package Backend.Sessions;
 
+import java.io.Serializable;
 import java.sql.Date;
 import java.util.UUID;
 
-public class Session {
+public class Session implements Serializable {
     private Date date;
     private UUID id = UUID.randomUUID();
     private boolean completed = false;

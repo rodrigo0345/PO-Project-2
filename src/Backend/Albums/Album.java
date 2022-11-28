@@ -1,12 +1,13 @@
 package Backend.Albums;
 
+import java.io.Serializable;
 import java.sql.Date;
 import java.util.Set;
 import java.util.TreeSet;
 
 import Backend.Users.Musician;
 
-public class Album {
+public class Album implements Serializable {
     private Set<Musician> artists = new TreeSet<>();
     private String titulo;
     private String genero;

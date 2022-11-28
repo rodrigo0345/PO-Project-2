@@ -1,9 +1,10 @@
 package Backend.Instruments;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Repos {
+public class Repos implements Serializable {
     private static Map<String, Instrument> instruments = new HashMap<>();
 
     public static void addInstrument(Instrument instrument) {

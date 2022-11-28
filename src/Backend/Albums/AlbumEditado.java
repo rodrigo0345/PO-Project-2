@@ -1,5 +1,6 @@
 package Backend.Albums;
 
+import java.io.Serializable;
 import java.sql.Date;
 import java.util.Set;
 import java.util.TreeSet;

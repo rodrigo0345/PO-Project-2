@@ -26,7 +26,7 @@ public class Mmusico implements Menu {
         System.out.println("5. See the state of all recording sessions");
 
         try {
-            option = sc.nextInt();
+            this.option = sc.nextInt();
         } catch (Exception e) {
             System.out.println("Invalid option");
         }
