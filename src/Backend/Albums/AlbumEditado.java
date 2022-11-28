@@ -29,6 +29,10 @@ public class AlbumEditado extends Album {
         this.setDate(new Date(System.currentTimeMillis()));
     }
 
+    public boolean isEdited() {
+        return isEdited;
+    }
+
     public void addSession(Date date) {
         if (this.isEdited) {
             return;

@@ -62,4 +62,11 @@ public class Session {
         this.id = id2;
     }
 
+    public Object getAccepted() {
+        return null;
+    }
+
+    public void setAccepted(boolean b) {
+    }
+
 }

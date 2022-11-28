@@ -37,31 +37,91 @@ public class Madmin implements Menu {
 
     @Override
     public void executeOption() {
-
+        Scanner sc = new Scanner(System.in);
         switch (option) {
             case 1:
-                // addProducer();
+                System.out.println("Name: ");
+                String name = sc.nextLine();
+                System.out.println("Username: ");
+                String username = sc.nextLine();
+                System.out.println("Password: ");
+                String password = sc.nextLine();
+                System.out.println("Email: ");
+                String email = sc.nextLine();
+
+                try{
+                    user.addProdutor(name, email, username, password);
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                }
                 break;
             case 2:
-                // addMusician();
+                System.out.println("Name: ");
+                name = sc.nextLine();
+                System.out.println("Username: ");
+                username = sc.nextLine();
+                System.out.println("Password: ");
+                password = sc.nextLine();
+                System.out.println("Email: ");
+                email = sc.nextLine();
+
+                try{
+                    user.addMusician(name, username, password, email);
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                }
                 break;
             case 3:
-                // removeUser();
+                System.out.println("Username: ");
+                username = sc.nextLine();
+                try{
+                    user.removeUser(username);
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                }
                 break;
             case 4:
-                // addMusicInstrument();
+                System.out.println("Name of the instrument: ");
+                name = sc.nextLine();
+                try{
+                    user.addInstrument(name);
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                }
                 break;
             case 5:
-                // showAllSessionRequests();
+                if (this.user.showAllSessionRequests() == -1) {
+                    System.out.println("No session requests");
+                    return;
+                };
+                System.out.print("Select a session request: ");
+                int id = sc.nextInt();
+                System.out.println("Accept or reject? (y/n)");
+                String answer = sc.nextLine();
+                if (answer.equals("y")) {
+                    try{
+                        this.user.acceptSessionRequest(id);
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
+                } else if (answer.equals("n")) {
+                    try{
+                        this.user.acceptSessionRequest(id);
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
+                } else {
+                    System.out.println("Invalid option");
+                }
                 break;
             case 6:
-                // showAllRecordingSessions();
+                this.user.showAllRecordingSessions();
                 break;
             case 7:
-                // showAllAlbumsBeingEdited();
+                this.user.showAllAlbumsBeingEdited();
                 break;
             case 8:
-                // showStats();
+                this.user.showStats();
                 break;
             default:
                 System.out.println("Invalid option");
