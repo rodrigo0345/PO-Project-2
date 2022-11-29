@@ -22,9 +22,9 @@ public class Save extends Thread {
             oos.close();
             return true;
         } catch (IOException e) {
-            System.out.println("Save - Error saving all information");
+            System.out.println("Save - Error saving all information " + e.getMessage());
         } catch (NullPointerException e) {
-            System.out.println("Save - The provided path is not valid");
+            System.out.println("Save - The provided path is not valid " + e.getMessage());
         }
         return false;
     }

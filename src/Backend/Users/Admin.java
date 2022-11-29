@@ -5,39 +5,49 @@ import java.io.Serializable;
 import Backend.Instruments.*;
 
 public class Admin extends User {
+    Backend.Instruments.Repos instruments;
+    Backend.Albums.Repos albums;
+    Backend.Users.Repos users;
+    Backend.Sessions.Repos sessions;
 
-    public Admin(String name, String email, String username, String password) {
+    public Admin(String name, String email, String username, String password, 
+                    Backend.Instruments.Repos instruments, Backend.Albums.Repos albums, 
+                        Backend.Users.Repos users, Backend.Sessions.Repos sessions) {
         super(name, email, username, password);
+        this.instruments = instruments;
+        this.albums = albums;
+        this.users = users;
+        this.sessions = sessions;
     }
 
     public void addInstrument(String name) {
         Instrument instrument = new Instrument(name);
-        Backend.Instruments.Repos.addInstrument(instrument);
+        instruments.addInstrument(instrument);
     }
 
     public void removeInstrument(String name) {
-        Backend.Instruments.Repos.removeInstrument(name);
+        instruments.removeInstrument(name);
     }
 
     public void addMusician(String name, String email, String username, String password) {
         Musician musician = new Musician(name, email, username, password);
-        Backend.Users.Repos.addUser(musician);
+        users.addUser(musician);
     }
 
     public void addProdutor(String name, String email, String username, String password) {
         Produtor produtor = new Produtor(name, email, username, password);
-        Backend.Users.Repos.addUser(produtor);
+        users.addUser(produtor);
     }
 
     public void removeUser(String username) {
-        Backend.Users.Repos.removeUser(username);
+        users.removeUser(username);
     }
 
     public int showAllSessionRequests() {
-        if (Backend.Sessions.Repos.getSessions() == null) {
+        if (sessions.getSessions() == null) {
             return -1;
         } else {
-            for (Backend.Sessions.Session session : Backend.Sessions.Repos.getSessions()) {
+            for (Backend.Sessions.Session session : sessions.getSessions()) {
                 if (session.getAccepted() == null) {
                     System.out.println(session);
                 }
@@ -47,7 +57,7 @@ public class Admin extends User {
     }
 
     public void showAllRecordingSessions() {
-        for (Backend.Sessions.Session session : Backend.Sessions.Repos.getSessions()) {
+        for (Backend.Sessions.Session session : sessions.getSessions()) {
             if (((Boolean)session.getAccepted()).equals(true)) {
                 System.out.println(session);
             }
@@ -56,7 +66,7 @@ public class Admin extends User {
     }
 
     public void showAllAlbumsBeingEdited() {
-        for (Backend.Albums.Album album : Backend.Albums.Repos.getAlbums()) {
+        for (Backend.Albums.Album album : albums.getAlbums()) {
             if (album instanceof Backend.Albums.AlbumEditado && !((Backend.Albums.AlbumEditado)album).isEdited()) {
                 System.out.println(album);
             }
@@ -64,7 +74,7 @@ public class Admin extends User {
     }
 
     public void showAllAlbumsEdited() {
-        for (Backend.Albums.Album album : Backend.Albums.Repos.getAlbums()) {
+        for (Backend.Albums.Album album : albums.getAlbums()) {
             if (album instanceof Backend.Albums.AlbumEditado && ((Backend.Albums.AlbumEditado)album).isEdited()) {
                 System.out.println(album);
             }
@@ -75,10 +85,10 @@ public class Admin extends User {
     }
 
     public void acceptSessionRequest(int id) {
-        (Backend.Sessions.Repos.getSession(id)).setAccepted(true);
+        (sessions.getSession(id)).setAccepted(true);
     }
 
     public void rejectSessionRequest(int id) {
-        (Backend.Sessions.Repos.getSession(id)).setAccepted(false);
+        (sessions.getSession(id)).setAccepted(false);
     }
 }

@@ -33,7 +33,7 @@ public class Mmusico implements Menu {
         }
     }
 
-    public void executeOption() {
+    public void executeOption(Backend.Instruments.Repos instruments, Backend.Albums.Repos albums, Backend.Users.Repos users) {
         Scanner sc = new Scanner(System.in);
         
         switch (option) {
@@ -81,9 +81,9 @@ public class Mmusico implements Menu {
                 }
                 break;
             case 2:
-                Set<Backend.Albums.Album> albums = this.user.getAlbums();
+                Set<Backend.Albums.Album> aux = this.user.getAlbums();
 
-                for (Backend.Albums.Album album : albums) {
+                for (Backend.Albums.Album album : aux) {
                     if (album instanceof Backend.Albums.Album) {
                         System.out.println(album.getTitulo());
                     }

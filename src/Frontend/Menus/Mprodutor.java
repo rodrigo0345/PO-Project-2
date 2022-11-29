@@ -30,7 +30,7 @@ public class Mprodutor implements Menu {
     }
 
     @Override
-    public void executeOption() {
+    public void executeOption(Backend.Instruments.Repos instruments, Backend.Albums.Repos albums, Backend.Users.Repos users) {
         switch (option) {
             case 1:
                 System.out.println("Cadastrar produtor");

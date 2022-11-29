@@ -1,9 +1,10 @@
 package Backend.Users;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Repos {
+public class Repos implements Serializable {
     private Map<String, User> users = new HashMap<String, User>();
 
     private boolean checkUser(String username, String password) {
@@ -28,8 +29,9 @@ public class Repos {
         users.remove(username);
     }
 
-    public void devUsers() {
-        addUser(new Admin("Admin", "admin", "admin", "admin"));
+    public void devUsers(Backend.Instruments.Repos instruments, Backend.Albums.Repos albums, 
+    Backend.Users.Repos users, Backend.Sessions.Repos sessions) {
+        addUser(new Admin("Admin", "admin", "admin", "admin", instruments, albums, users, sessions));
     }
 
     // only used to load the data from the files
