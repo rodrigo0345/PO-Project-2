@@ -36,7 +36,7 @@ public class Madmin implements Menu {
     }
 
     @Override
-    public void executeOption() {
+    public void executeOption(Backend.Instruments.Repos instruments, Backend.Albums.Repos albums, Backend.Users.Repos users) {
         Scanner sc = new Scanner(System.in);
         switch (option) {
             case 1:

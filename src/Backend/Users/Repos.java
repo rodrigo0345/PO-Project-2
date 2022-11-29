@@ -4,9 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Repos {
-    private static Map<String, User> users = new HashMap<String, User>();
+    private Map<String, User> users = new HashMap<String, User>();
 
-    private static boolean checkUser(String username, String password) {
+    private boolean checkUser(String username, String password) {
         User user = users.get(username);
         if (user != null) {
             return user.getPassword().equals(password);
@@ -14,26 +14,26 @@ public class Repos {
         return false;
     }
 
-    public static void addUser(User user) {
+    public void addUser(User user) {
         users.put(user.getUsername(), user);
     }
 
-    public static User getUser(String username, String password) {
+    public User getUser(String username, String password) {
         if (checkUser(username, password))
             return users.get(username);
         return null;
     }
 
-    public static void removeUser(String username) {
+    public void removeUser(String username) {
         users.remove(username);
     }
 
-    public static void devUsers() {
+    public void devUsers() {
         addUser(new Admin("Admin", "admin", "admin", "admin"));
     }
 
     // only used to load the data from the files
-    public static Map<String, User> getUsers() {
+    public Map<String, User> getUsers() {
         return users;
     }
 }

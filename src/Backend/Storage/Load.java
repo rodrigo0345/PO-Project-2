@@ -1,43 +1,26 @@
 package Backend.Storage;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.util.Map;
 
-public class Load extends Thread {
+public class Load {
     
-    private static Object loadInto = null;
-    private static String pathToLoad = null;
+    private Object loadInto = null;
+    private String pathToLoad = null;
     
     public Load(Object loadIntoArg, String path) {
-        pathToLoad = path;
-        loadInto = loadIntoArg;
+        this.pathToLoad = path;
+        this.loadInto = loadIntoArg;
     }
     
-    public synchronized static boolean load() {
-        ObjectInputStream ois = null;
-
-        try {
-            FileInputStream fis = new FileInputStream(pathToLoad);
-            ois = new ObjectInputStream(fis);
-            loadInto=ois.readObject();
-            return true;
-        } catch (ClassNotFoundException | IOException e) {
-            e.printStackTrace();
-        }
-        finally {
-            try {
-                ois.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return false;
-    }
-    
-    public void run() {
-        if (!load()) {
-            System.out.println("Error loading all information");
-        }
+    public void load() throws IOException, ClassNotFoundException{
+        BufferedInputStream fis = new BufferedInputStream(new FileInputStream(pathToLoad));
+        ObjectInputStream ois = new ObjectInputStream(fis);
+        this.loadInto=ois.readObject();
+        ois.close();
     }
 }

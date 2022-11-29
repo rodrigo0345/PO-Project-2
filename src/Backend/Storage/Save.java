@@ -6,15 +6,15 @@ import java.io.ObjectOutputStream;
 
 public class Save extends Thread {
     
-    private static Object itemToStore = null;
-    private static String pathToStore = null;
+    private Object itemToStore = null;
+    private String pathToStore = null;
     
     public Save(Object item, String path) {
-        itemToStore = item;
-        pathToStore = path;
+        this.itemToStore = item;
+        this.pathToStore = path;
     }
     
-    public synchronized static boolean save() {
+    public synchronized boolean save() {
         try {
             FileOutputStream fos = new FileOutputStream(pathToStore);
             ObjectOutputStream oos = new ObjectOutputStream(fos);
@@ -31,7 +31,7 @@ public class Save extends Thread {
     
     public void run() {
         if (!save()) {
-            System.out.println("Error saving");
+            System.out.println("Error saving...");
         }
     }
 }
