@@ -8,11 +8,12 @@ public class Repos implements Serializable {
     private static Set<Session> sessions = new TreeSet<>();
 
     public static Set<Session> getSessions() {
-        return null;
+        return sessions;
     }
 
     public static Session getSession(int id) {
         return null;
     }
+
 
 }

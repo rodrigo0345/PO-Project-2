@@ -18,4 +18,8 @@ public class Repos implements Serializable {
     public static void removeInstrument(String name) {
         instruments.remove(name);
     }
+
+    public static Map<String, Instrument> getInstruments() {
+        return instruments;
+    }
 }

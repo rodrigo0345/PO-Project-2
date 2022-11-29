@@ -31,4 +31,9 @@ public class Repos {
     public static void devUsers() {
         addUser(new Admin("Admin", "admin", "admin", "admin"));
     }
+
+    // only used to load the data from the files
+    public static Map<String, User> getUsers() {
+        return users;
+    }
 }
