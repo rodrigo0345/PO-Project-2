@@ -5,6 +5,8 @@ import java.sql.Date;
 import java.util.UUID;
 
 public class Session implements Serializable {
+    private static long serialVersionUID = 4L;
+
     private Date date;
     private UUID id = UUID.randomUUID();
     private boolean completed = false;

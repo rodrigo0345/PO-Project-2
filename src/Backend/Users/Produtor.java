@@ -6,8 +6,9 @@ import java.util.TreeSet;
 public class Produtor extends User {
     private Set<Backend.Albums.AlbumEditado> projetos = new TreeSet<>();
 
-    public Produtor(String name, String email, String username, String password) {
-        super(name, email, username, password);
+    public Produtor(String name, String email, String username, String password, Backend.Users.Repos users,
+            Backend.Instruments.Repos instruments, Backend.Albums.Repos albums, Backend.Sessions.Repos sessions) {
+        super(name, email, username, password, users, instruments, albums, sessions);
     }
 
     public void addProjeto(Backend.Albums.AlbumEditado projeto) {

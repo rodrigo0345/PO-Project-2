@@ -8,6 +8,7 @@ import java.util.TreeSet;
 import Backend.Users.Musician;
 
 public class Album implements Serializable {
+    private static long serialVersionUID = 8L;
     private Set<Musician> artists = new TreeSet<>();
     private String titulo;
     private String genero;

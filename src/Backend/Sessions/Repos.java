@@ -6,6 +6,7 @@ import java.util.TreeSet;
 
 public class Repos implements Serializable {
     private Set<Session> sessions = new TreeSet<>();
+    private static long serialVersionUID = 3L;
 
     public Set<Session> getSessions() {
         return sessions;

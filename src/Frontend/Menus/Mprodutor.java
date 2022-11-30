@@ -17,6 +17,7 @@ public class Mprodutor implements Menu {
         Scanner sc = new Scanner(System.in);
 
         // escrever aqui os menus
+        System.out.println("Menu de Produtor - Logged as " + user.getUsername());
 
         try {
             option = sc.nextInt();
@@ -30,7 +31,8 @@ public class Mprodutor implements Menu {
     }
 
     @Override
-    public void executeOption(Backend.Instruments.Repos instruments, Backend.Albums.Repos albums, Backend.Users.Repos users) {
+    public void executeOption(Backend.Instruments.Repos instruments, Backend.Albums.Repos albums,
+            Backend.Users.Repos users) {
         switch (option) {
             case 1:
                 System.out.println("Cadastrar produtor");
