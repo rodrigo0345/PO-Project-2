@@ -36,13 +36,6 @@ public class App {
             e.printStackTrace();
             return;
         }
-        
-
-        // prepare threads to save data
-        Backend.Storage.Save saveUsers = new Backend.Storage.Save(users, "users.txt");
-        Backend.Storage.Save saveAlbums = new Backend.Storage.Save(albums, "albums.txt");
-        Backend.Storage.Save saveInstruments = new Backend.Storage.Save(instruments, "instruments.txt");
-        Backend.Storage.Save saveSessions = new Backend.Storage.Save(sessions, "sessions.txt");
 
         // test
         users.getUsers();
@@ -50,11 +43,14 @@ public class App {
         users.devUsers(instruments, albums, users, sessions);
 
         User auth = null;
-        try{
-            auth = Authentication.loginPrompt(users);
-        }   
-        catch(Exception e){
-            System.out.println("Failed to login: " + e.getMessage());
+
+        while(auth==null) {
+            try{
+                auth = Authentication.loginPrompt(users);
+            }   
+            catch(Exception e){
+                System.out.println("Failed to login: " + e.getMessage());
+            }
         }
         
 
@@ -65,7 +61,7 @@ public class App {
                 while (menu.getUser() != null) {
                     menu.mostrarMenu();
                     menu.executeOption(instruments, albums, users);
-                    save(saveUsers, saveAlbums, saveInstruments, saveSessions);
+                    save( albums, instruments, users, sessions);
                 }
             } else if (auth instanceof Admin) {
                 Admin user = (Admin) auth;
@@ -73,7 +69,7 @@ public class App {
                 while (menu.getUser() != null) {
                     menu.mostrarMenu();
                     menu.executeOption(instruments, albums, users);
-                    save(saveUsers, saveAlbums, saveInstruments, saveSessions);
+                    save( albums, instruments, users, sessions);
                 }
             } else if (auth instanceof Produtor) {
                 Produtor user = (Produtor) auth;
@@ -81,15 +77,18 @@ public class App {
                 while (menu.getUser() != null) {
                     menu.mostrarMenu();
                     menu.executeOption(instruments, albums, users);
-                    save(saveUsers, saveAlbums, saveInstruments, saveSessions);
+                    save( albums, instruments, users, sessions);
                 }
             }
         }
     }
 
-    public static void save(Backend.Storage.Save saveUsers, 
-                                Backend.Storage.Save saveAlbums, Backend.Storage.Save saveInstruments, 
-                                    Save saveSessions) {
+    public static void save(Backend.Albums.Repos albums, Backend.Instruments.Repos instruments, Backend.Users.Repos users, Backend.Sessions.Repos sessions) {
+        // não é a maneira mais eficiente de fazer isso, mas não é possivel iniciar a mesma thread duas vezes
+        Backend.Storage.Save saveUsers = new Backend.Storage.Save(users, "users.txt");
+        Backend.Storage.Save saveAlbums = new Backend.Storage.Save(albums, "albums.txt");
+        Backend.Storage.Save saveInstruments = new Backend.Storage.Save(instruments, "instruments.txt");
+        Backend.Storage.Save saveSessions = new Backend.Storage.Save(sessions, "sessions.txt");
         saveUsers.start();
         saveAlbums.start();
         saveInstruments.start();
