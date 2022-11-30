@@ -2,9 +2,6 @@ package Frontend;
 
 import java.io.IOException;
 
-import Backend.Sessions.Repos;
-import Backend.Storage.Load;
-import Backend.Storage.Save;
 import Backend.Users.Admin;
 import Backend.Users.Musician;
 import Backend.Users.Produtor;
@@ -29,12 +26,15 @@ public class App {
             albums = load.loadAlbums();
             users = load.loadUsers();
             sessions = load.loadSessions();
-        } catch (IOException e) {
-            e.printStackTrace();
-            return;
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
             return;
+        } catch (IOException e) {
+            e.printStackTrace();
+            instruments = new Backend.Instruments.Repos();
+            albums = new Backend.Albums.Repos();
+            users = new Backend.Users.Repos();
+            sessions = new Backend.Sessions.Repos();
         }
 
         // test

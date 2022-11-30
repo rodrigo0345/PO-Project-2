@@ -29,14 +29,22 @@ public class Admin extends User {
         instruments.removeInstrument(name);
     }
 
-    public void addMusician(String name, String email, String username, String password) {
+    public void addMusician(String name, String email, String username, String password)
+        throws IllegalArgumentException {
         Musician musician = new Musician(name, email, username, password);
-        users.addUser(musician);
+        if (users.isUserValid(musician)) {
+            users.addUser(musician);
+        }
+        else { throw new IllegalArgumentException("Username already exists"); }
     }
 
-    public void addProdutor(String name, String email, String username, String password) {
+    public void addProdutor(String name, String email, String username, String password) 
+        throws IllegalArgumentException {
         Produtor produtor = new Produtor(name, email, username, password);
-        users.addUser(produtor);
+        if (users.isUserValid(produtor)) {
+            users.addUser(produtor);
+        }
+        else { throw new IllegalArgumentException("Username already exists"); }
     }
 
     public void removeUser(String username) {

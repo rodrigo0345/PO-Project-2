@@ -38,4 +38,8 @@ public class Repos implements Serializable {
     public Map<String, User> getUsers() {
         return users;
     }
+
+    public boolean isUserValid(User u) {
+        return !users.containsKey(u.getUsername());
+    }
 }
