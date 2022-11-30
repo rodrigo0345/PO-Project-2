@@ -44,7 +44,6 @@ public class Mmusico implements Menu {
                 System.out.println("[2] - Edit username");
                 System.out.println("[3] - Edit email");
                 System.out.println("[4] - Edit password");
-                System.out.println("[5] - Edit email");
 
                 try {
                     int option = sc.nextInt();
@@ -68,11 +67,6 @@ public class Mmusico implements Menu {
                             System.out.println("New password: ");
                             String password = sc.next();
                             user.setPassword(password);
-                            break;
-                        case 5:
-                            System.out.println("New email: ");
-                            String email2 = sc.next();
-                            user.setEmail(email2);
                             break;
                         default:
                             System.out.println("Invalid option");

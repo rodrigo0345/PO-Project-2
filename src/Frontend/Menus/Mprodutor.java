@@ -17,7 +17,13 @@ public class Mprodutor implements Menu {
         Scanner sc = new Scanner(System.in);
 
         // escrever aqui os menus
-        System.out.println("Menu de Produtor - Logged as " + user.getUsername());
+        System.out.println("Producer Menu - Logged as " + user.getUsername());
+        System.out.println("1. Edit profile");
+        System.out.println("2. Start/Edit the editing of an album");
+        System.out.println("3. End recording session");
+        System.out.println("4. See the state of an album");
+        System.out.println("5. Your Albums");
+        System.out.println("6. Recording Sessions of a day");
 
         try {
             option = sc.nextInt();
@@ -33,24 +39,59 @@ public class Mprodutor implements Menu {
     @Override
     public void executeOption(Backend.Instruments.Repos instruments, Backend.Albums.Repos albums,
             Backend.Users.Repos users) {
+        Scanner sc = new Scanner(System.in);
         switch (option) {
             case 1:
-                System.out.println("Cadastrar produtor");
+                System.out.println("[1] - Edit name");
+                System.out.println("[2] - Edit username");
+                System.out.println("[3] - Edit email");
+                System.out.println("[4] - Edit password");
+
+                int option = sc.nextInt();
+                try {
+                    switch (option) {
+                        case 1:
+                            System.out.println("New name: ");
+                            String name = sc.next();
+                            user.setName(name);
+                            break;
+                        case 2:
+                            System.out.println("New username: ");
+                            String surname = sc.next();
+                            user.setUsername(surname);
+                            break;
+                        case 3:
+                            System.out.println("New email: ");
+                            String email = sc.next();
+                            user.setEmail(email);
+                            break;
+                        case 4:
+                            System.out.println("New password: ");
+                            String password = sc.next();
+                            user.setPassword(password);
+                            break;
+                        default:
+                            System.out.println("Invalid option");
+                            break;
+                    }
+                } catch (Exception e) {
+                    System.out.println("Invalid option");
+                }
                 break;
             case 2:
-                System.out.println("Listar produtores");
+
                 break;
             case 3:
-                System.out.println("Editar produtor");
+
                 break;
             case 4:
-                System.out.println("Excluir produtor");
+
                 break;
             case 5:
-                System.out.println("Voltar");
+
                 break;
             default:
-                System.out.println("Opção inválida");
+
                 break;
         }
 
