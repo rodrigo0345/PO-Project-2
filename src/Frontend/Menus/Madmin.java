@@ -150,7 +150,9 @@ public class Madmin implements Menu {
                 }
                 sc.nextLine();
                 break;
-            case 11:
+            case 11: // honestamente isto está super confuso
+
+                // creating an album
                 System.out.println("Name of the album: ");
                 String titleOfTheAlbum = sc.nextLine();
                 System.out.println("Producer: ");
@@ -184,50 +186,11 @@ public class Madmin implements Menu {
                     sc.nextLine();
                     return;
                 }
-                int option2 = 0;
-                while (option2 != -1) {
+                String answer2 = new String("y");
+                while (answer2.equals("y")) {
                     System.out.println("Add a song to the album? (y/n)");
-                    String answer2 = sc.nextLine();
-                    if (answer2.equals("y")) {
-                        System.out.println("Title of the song: ");
-                        String titleOfTheSong = sc.nextLine();
-                        System.out.println("Duration: ");
-                        int duration = sc.nextInt();
-                        System.out.println("Genre: ");
-                        genre = sc.nextLine();
-                        System.out.println("Musician: ");
-                        String musician = sc.nextLine();
-                        try {
-                            Backend.Tracks.Track t = new Backend.Tracks.Track(titleOfTheSong,
-                                    genre, duration);
-                            t.addArtist((Backend.Users.Musician) users.getUser(musician));
-                            user.addTrackToAlbum(titleOfTheAlbum, t);
-
-                            // add musicians to the track
-                            int option3 = 0;
-                            while (option3 != -1) {
-                                System.out.println("Add a new musician to the track? (y/n)");
-                                String answer3 = sc.nextLine();
-                                if (answer3.equals("y")) {
-                                    System.out.println("Musician: ");
-                                    String musician2 = sc.nextLine();
-                                    t.addArtist((Backend.Users.Musician) users.getUser(musician2));
-                                } else if (answer3.equals("n")) {
-                                    option = -1;
-                                } else {
-                                    System.out.println("Invalid option");
-                                }
-                            }
-
-                            user.addTrackToAlbum(titleOfTheAlbum, t);
-                        } catch (Exception e) {
-                            System.out.println(e.getMessage());
-                        }
-                    } else if (answer2.equals("n")) {
-                        option = -1;
-                    } else {
-                        System.out.println("Invalid option");
-                    }
+                    answer2 = sc.nextLine();
+                    this.addTrackToAlbum(answer2, user, users, titleOfTheAlbum);
                 }
                 break;
             default:
@@ -235,6 +198,58 @@ public class Madmin implements Menu {
                 break;
         }
 
+    }
+
+    private void addTrackToAlbum(String ans, Backend.Users.Admin user, Backend.Users.Repos users,
+            String titleOfTheAlbum) {
+        Scanner sc = new Scanner(System.in);
+        if (ans.equals("y")) {
+            System.out.println("Title of the song: ");
+            String titleOfTheSong = sc.nextLine();
+            System.out.println("Duration: ");
+            int duration = sc.nextInt();
+            System.out.println("Genre: ");
+            sc.nextLine(); // flush
+            String genre = sc.nextLine();
+            System.out.println("Musician: ");
+            String musician = sc.nextLine();
+            try {
+                Backend.Tracks.Track t = new Backend.Tracks.Track(titleOfTheSong,
+                        genre, duration);
+                t.addArtist((Backend.Users.Musician) users.getUser(musician));
+                user.addTrackToAlbum(titleOfTheAlbum, t);
+
+                // add musicians to the track
+                String answer3 = new String("y");
+                while (answer3.equals("y")) {
+                    System.out.println("Add a new musician to the track? (y/n)");
+                    answer3 = sc.nextLine();
+                    this.addArtistToTrack(answer3, user, users, t);
+                }
+
+                user.addTrackToAlbum(titleOfTheAlbum, t);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        } else if (ans.equals("n")) {
+            option = -1;
+        } else {
+            System.out.println("Invalid option");
+        }
+    }
+
+    private void addArtistToTrack(String ans, Backend.Users.Admin user, Backend.Users.Repos users,
+            Backend.Tracks.Track t) {
+        Scanner sc = new Scanner(System.in);
+        if (ans.equals("y")) {
+            System.out.println("Musician: ");
+            String musician2 = sc.nextLine();
+            t.addArtist((Backend.Users.Musician) users.getUser(musician2));
+        } else if (ans.equals("n")) {
+            option = -1;
+        } else {
+            System.out.println("Invalid option");
+        }
     }
 
 }

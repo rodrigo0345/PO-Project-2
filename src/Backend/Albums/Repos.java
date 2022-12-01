@@ -9,6 +9,11 @@ public class Repos implements Serializable {
     private Set<Album> albums = new TreeSet<>();
 
     public Album getAlbum(String name) {
+        for (Album album : albums) {
+            if (album.getTitulo().equals(name)) {
+                return album;
+            }
+        }
         return null;
     }
 
