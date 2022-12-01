@@ -1,6 +1,8 @@
 package Backend.Users;
 
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.util.Date;
 
 import Backend.Instruments.*;
 
@@ -95,4 +97,36 @@ public class Admin extends User {
     public void rejectSessionRequest(int id) {
         (getSessionsRepo().getSession(id)).setAccepted(false);
     }
+
+    public void addAlbum(String name, String genre, LocalDate date, Backend.Users.Produtor produtor) {
+        Backend.Albums.Album album = new Backend.Albums.Album(name, genre, date, produtor, instrumentsRepo, albumsRepo,
+                usersRepo,
+                sessionsRepo);
+        getAlbumsRepo().addAlbum(album);
+    }
+
+    public void addMusicianToAlbum(String username, String titleOfTheAlbum) {
+        Backend.Albums.Album album = getAlbumsRepo().getAlbum(titleOfTheAlbum);
+        Backend.Users.Musician musician = (Backend.Users.Musician) getUsersRepo().getUser(username);
+        album.addArtist(musician);
+        musician.addAlbum(album);
+    }
+
+    // aqui tratamos de adicionar albums que não foram editados na editora
+    public void setProdutorToAlbum(String username, String titleOfTheAlbum) {
+        Backend.Albums.Album album = getAlbumsRepo().getAlbum(titleOfTheAlbum);
+        Backend.Users.Produtor produtor = (Backend.Users.Produtor) getUsersRepo().getUser(username);
+        album.setProdutor(produtor);
+        produtor.addOldAlbum(album);
+    }
+
+    // automaticamente associamos o album aos artistas que participaram na track
+    public void addTrackToAlbum(String titleOfTheAlbum, Backend.Tracks.Track track) {
+        Backend.Albums.Album album = getAlbumsRepo().getAlbum(titleOfTheAlbum);
+        album.addTrack(track);
+        for (Backend.Users.Musician musician : track.getArtists()) {
+            musician.addAlbum(album);
+        }
+    }
+
 }

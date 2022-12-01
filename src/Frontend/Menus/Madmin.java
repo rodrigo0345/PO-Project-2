@@ -1,5 +1,11 @@
 package Frontend.Menus;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -31,6 +37,7 @@ public class Madmin implements Menu {
         System.out.println("8. Stats");
         System.out.println("9. Show all users");
         System.out.println("10. Show all instruments");
+        System.out.println("11. Add a new album");
 
         try {
             option = sc.nextInt();
@@ -142,6 +149,86 @@ public class Madmin implements Menu {
                     System.out.println(entry.getValue().toString());
                 }
                 sc.nextLine();
+                break;
+            case 11:
+                System.out.println("Name of the album: ");
+                String titleOfTheAlbum = sc.nextLine();
+                System.out.println("Producer: ");
+                String producer = sc.nextLine();
+                System.out.println("Genre: ");
+                String genre = sc.nextLine();
+                System.out.println("Date of release (dd MM yyyy): ");
+                String d = sc.nextLine();
+                LocalDate date = null;
+                try {
+                    DateTimeFormatter df = DateTimeFormatter.ofPattern("dd MM yyyy", Locale.FRANCE);
+                    date = LocalDate.parse(d, df);
+                } catch (Exception e) {
+                    System.out.println("Invalid date");
+                    sc.nextLine();
+                    return;
+                }
+
+                try {
+                    Backend.Users.User aux = users.getUser(producer);
+                    if (aux instanceof Backend.Users.Produtor) {
+                        Backend.Users.Produtor prod = (Backend.Users.Produtor) aux;
+                        user.addAlbum(titleOfTheAlbum, genre, date, prod);
+                    } else {
+                        System.out.println("Invalid producer");
+                        sc.nextLine();
+                        return;
+                    }
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                    sc.nextLine();
+                    return;
+                }
+                int option2 = 0;
+                while (option2 != -1) {
+                    System.out.println("Add a song to the album? (y/n)");
+                    String answer2 = sc.nextLine();
+                    if (answer2.equals("y")) {
+                        System.out.println("Title of the song: ");
+                        String titleOfTheSong = sc.nextLine();
+                        System.out.println("Duration: ");
+                        int duration = sc.nextInt();
+                        System.out.println("Genre: ");
+                        genre = sc.nextLine();
+                        System.out.println("Musician: ");
+                        String musician = sc.nextLine();
+                        try {
+                            Backend.Tracks.Track t = new Backend.Tracks.Track(titleOfTheSong,
+                                    genre, duration);
+                            t.addArtist((Backend.Users.Musician) users.getUser(musician));
+                            user.addTrackToAlbum(titleOfTheAlbum, t);
+
+                            // add musicians to the track
+                            int option3 = 0;
+                            while (option3 != -1) {
+                                System.out.println("Add a new musician to the track? (y/n)");
+                                String answer3 = sc.nextLine();
+                                if (answer3.equals("y")) {
+                                    System.out.println("Musician: ");
+                                    String musician2 = sc.nextLine();
+                                    t.addArtist((Backend.Users.Musician) users.getUser(musician2));
+                                } else if (answer3.equals("n")) {
+                                    option = -1;
+                                } else {
+                                    System.out.println("Invalid option");
+                                }
+                            }
+
+                            user.addTrackToAlbum(titleOfTheAlbum, t);
+                        } catch (Exception e) {
+                            System.out.println(e.getMessage());
+                        }
+                    } else if (answer2.equals("n")) {
+                        option = -1;
+                    } else {
+                        System.out.println("Invalid option");
+                    }
+                }
                 break;
             default:
                 System.out.println("Invalid option");

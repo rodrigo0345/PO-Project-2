@@ -26,6 +26,10 @@ public class Repos implements Serializable {
         return null;
     }
 
+    public User getUser(String username) {
+        return users.get(username);
+    }
+
     public void removeUser(String username) {
         users.remove(username);
     }

@@ -100,13 +100,13 @@ public class Mprodutor implements Menu {
 
                 if (option2 == 1) {
                     System.out.println("Original Album's name: ");
-                    String albumName = sc.nextLine();
+                    // String albumName = sc.nextLine();
                     System.out.println("New Album's name: ");
-                    String albumName = sc.nextLine();
+                    // String albumName = sc.nextLine();
                     System.out.println("New Album genre: ");
                     String albumGenre = sc.nextLine();
 
-                    user.createProject();
+                    // user.createProject();
                 } else if (option2 == 2) {
 
                 } else {

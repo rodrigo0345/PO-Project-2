@@ -16,6 +16,10 @@ public class Repos implements Serializable {
         return albums;
     }
 
+    public void addAlbum(Album album) {
+        albums.add(album);
+    }
+
     public boolean isTituloValid(String titulo) {
         for (Album album : albums) {
             if (album.getTitulo().equals(titulo)) {
