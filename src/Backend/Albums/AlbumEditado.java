@@ -11,8 +11,10 @@ public class AlbumEditado extends Album {
     private Set<Backend.Sessions.Session> sessions = new TreeSet<>();
     private Backend.Users.Produtor producer;
 
-    public AlbumEditado(String titulo, String genero, Backend.Users.Produtor producer) {
-        super(titulo, genero, null);
+    public AlbumEditado(String titulo, String genero, Date date, Backend.Instruments.Repos instruments,
+            Backend.Albums.Repos albums,
+            Backend.Users.Repos users, Backend.Sessions.Repos sessions, Backend.Users.Produtor producer) {
+        super(titulo, genero, null, instruments, albums, users, sessions);
         this.isEdited = false;
         this.producer = producer;
     }

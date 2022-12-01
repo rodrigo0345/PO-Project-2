@@ -47,7 +47,14 @@ public class Mprodutor implements Menu {
                 System.out.println("[3] - Edit email");
                 System.out.println("[4] - Edit password");
 
-                int option = sc.nextInt();
+                try {
+                    int option = sc.nextInt();
+                } catch (Exception e) {
+                    System.out.println("Invalid option");
+                    sc.nextLine();
+                    return;
+                }
+
                 try {
                     switch (option) {
                         case 1:
@@ -58,7 +65,7 @@ public class Mprodutor implements Menu {
                         case 2:
                             System.out.println("New username: ");
                             String surname = sc.next();
-                            user.setUsername(surname);
+                            user.setUsername(surname); // throws exception
                             break;
                         case 3:
                             System.out.println("New email: ");
@@ -79,6 +86,32 @@ public class Mprodutor implements Menu {
                 }
                 break;
             case 2:
+                System.out.println("1. Start a new edit of an album");
+                System.out.println("2. Edit an existing edit of an album");
+
+                int option2;
+                try {
+                    option2 = sc.nextInt();
+                } catch (Exception e) {
+                    System.out.println("Invalid option");
+                    sc.nextLine();
+                    return;
+                }
+
+                if (option2 == 1) {
+                    System.out.println("Original Album's name: ");
+                    String albumName = sc.nextLine();
+                    System.out.println("New Album's name: ");
+                    String albumName = sc.nextLine();
+                    System.out.println("New Album genre: ");
+                    String albumGenre = sc.nextLine();
+
+                    user.createProject();
+                } else if (option2 == 2) {
+
+                } else {
+                    System.out.println("Invalid option");
+                }
 
                 break;
             case 3:

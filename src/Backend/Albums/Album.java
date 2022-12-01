@@ -14,10 +14,21 @@ public class Album implements Serializable {
     private String genero;
     private Date date;
 
-    public Album(String titulo, String genero, Date date) {
+    Backend.Instruments.Repos instrumentsRepo;
+    Backend.Albums.Repos albumsRepo;
+    Backend.Users.Repos usersRepo;
+    Backend.Sessions.Repos sessionsRepo;
+
+    public Album(String titulo, String genero, Date date, Backend.Instruments.Repos instruments,
+            Backend.Albums.Repos albums,
+            Backend.Users.Repos users, Backend.Sessions.Repos sessions) {
         this.titulo = titulo;
         this.genero = genero;
         this.date = date;
+        this.instrumentsRepo = instruments;
+        this.albumsRepo = albums;
+        this.usersRepo = users;
+        this.sessionsRepo = sessions;
     }
 
     // automatically adds the album to the musician's list of albums
@@ -40,6 +51,13 @@ public class Album implements Serializable {
 
     public String getTitulo() {
         return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        if (albumsRepo.isTituloValid(titulo)) {
+            this.titulo = titulo;
+        }
+        this.titulo = titulo;
     }
 
     public String getGenero() {
