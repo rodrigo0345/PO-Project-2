@@ -29,8 +29,8 @@ public class Repos implements Serializable {
         users.remove(username);
     }
 
-    public void devUsers(Backend.Instruments.Repos instruments, Backend.Albums.Repos albums, 
-    Backend.Users.Repos users, Backend.Sessions.Repos sessions) {
+    public void devUsers(Backend.Instruments.Repos instruments, Backend.Albums.Repos albums,
+            Backend.Users.Repos users, Backend.Sessions.Repos sessions) {
         addUser(new Admin("Admin", "admin", "admin", "admin", instruments, albums, users, sessions));
     }
 
