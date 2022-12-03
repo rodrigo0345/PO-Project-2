@@ -9,8 +9,9 @@ public class Musician extends User {
     private Set<Backend.Albums.Album> albums = new TreeSet<>();
     private Set<Instrument> instruments = new TreeSet<>();
 
-    public Musician(String name, String email, String username, String password) {
-        super(name, email, username, password);
+    public Musician(String name, String email, String username, String password, Backend.Users.Repos users,
+            Backend.Instruments.Repos instruments, Backend.Albums.Repos albums, Backend.Sessions.Repos sessions) {
+        super(name, email, username, password, users, instruments, albums, sessions);
     }
 
     public void addAlbum(Backend.Albums.Album album) {
@@ -36,5 +37,5 @@ public class Musician extends User {
     public Set<Instrument> getInstruments() {
         return instruments;
     }
-    
+
 }

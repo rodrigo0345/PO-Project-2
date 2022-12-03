@@ -20,6 +20,7 @@ public class Mmusico implements Menu {
     @Override
     public void mostrarMenu() {
         Scanner sc = new Scanner(System.in);
+        System.out.println("Menu de Musico - Logged as " + user.getUsername());
         System.out.println("1. Edit profile");
         System.out.println("2. Associated albums");
         System.out.println("3. Future recording sessions");
@@ -33,16 +34,16 @@ public class Mmusico implements Menu {
         }
     }
 
-    public void executeOption(Backend.Instruments.Repos instruments, Backend.Albums.Repos albums, Backend.Users.Repos users) {
+    public void executeOption(Backend.Instruments.Repos instruments, Backend.Albums.Repos albums,
+            Backend.Users.Repos users) {
         Scanner sc = new Scanner(System.in);
-        
+
         switch (option) {
             case 1:
                 System.out.println("[1] - Edit name");
                 System.out.println("[2] - Edit username");
                 System.out.println("[3] - Edit email");
                 System.out.println("[4] - Edit password");
-                System.out.println("[5] - Edit email");
 
                 try {
                     int option = sc.nextInt();
@@ -67,11 +68,6 @@ public class Mmusico implements Menu {
                             String password = sc.next();
                             user.setPassword(password);
                             break;
-                        case 5:
-                            System.out.println("New email: ");
-                            String email2 = sc.next();
-                            user.setEmail(email2);
-                            break;
                         default:
                             System.out.println("Invalid option");
                             break;
@@ -88,19 +84,21 @@ public class Mmusico implements Menu {
                         System.out.println(album.getTitulo());
                     }
                 }
+                sc.nextLine();
                 break;
             case 3:
                 Set<Backend.Albums.Album> albums2 = this.user.getAlbums();
 
                 for (Backend.Albums.Album album : albums2) {
-                    if (album instanceof Backend.Albums.Album && !((Backend.Albums.AlbumEditado)album).isEdited()) {
+                    if (album instanceof Backend.Albums.Album && !((Backend.Albums.AlbumEditado) album).isEdited()) {
                         System.out.println(album);
                     }
                 }
+                sc.nextLine();
                 break;
             case 4:
                 Set<Backend.Instruments.Instrument> availableInstruments = this.user.getInstruments();
-                
+
                 System.out.println("Instrument's name: ");
                 break;
             case 5:

@@ -2,6 +2,7 @@ package Backend.Albums;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.UUID;
@@ -11,8 +12,11 @@ public class AlbumEditado extends Album {
     private Set<Backend.Sessions.Session> sessions = new TreeSet<>();
     private Backend.Users.Produtor producer;
 
-    public AlbumEditado(String titulo, String genero, Backend.Users.Produtor producer) {
-        super(titulo, genero, null);
+    public AlbumEditado(String titulo, String genero, Date date, Backend.Users.Produtor produtor,
+            Backend.Instruments.Repos instruments,
+            Backend.Albums.Repos albums,
+            Backend.Users.Repos users, Backend.Sessions.Repos sessions, Backend.Users.Produtor producer) {
+        super(titulo, genero, null, producer, instruments, albums, users, sessions);
         this.isEdited = false;
         this.producer = producer;
     }
@@ -27,7 +31,7 @@ public class AlbumEditado extends Album {
 
     private void setEdited() {
         this.isEdited = true;
-        this.setDate(new Date(System.currentTimeMillis()));
+        this.setDate(LocalDate.now());
     }
 
     public boolean isEdited() {
