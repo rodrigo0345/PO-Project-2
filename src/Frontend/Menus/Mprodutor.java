@@ -24,6 +24,7 @@ public class Mprodutor implements Menu {
         System.out.println("4. See the state of an album");
         System.out.println("5. Your Albums");
         System.out.println("6. Recording Sessions of a day");
+        System.out.println("7. Log out");
 
         try {
             option = sc.nextInt();
@@ -122,6 +123,13 @@ public class Mprodutor implements Menu {
                 break;
             case 5:
 
+                break;
+
+            case 6:
+                
+                break;
+            case 7:
+                this.user = null;
                 break;
             default:
 

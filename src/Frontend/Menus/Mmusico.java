@@ -26,6 +26,7 @@ public class Mmusico implements Menu {
         System.out.println("3. Future recording sessions");
         System.out.println("4. Request an instrument for a specific recording session");
         System.out.println("5. See the state of all recording sessions");
+        System.out.println("6. - Log out");
 
         try {
             this.option = sc.nextInt();
@@ -44,6 +45,7 @@ public class Mmusico implements Menu {
                 System.out.println("[2] - Edit username");
                 System.out.println("[3] - Edit email");
                 System.out.println("[4] - Edit password");
+                System.out.println("[5] - See the state of all recording sessions");
 
                 try {
                     int option = sc.nextInt();
@@ -81,7 +83,7 @@ public class Mmusico implements Menu {
 
                 for (Backend.Albums.Album album : aux) {
                     if (album instanceof Backend.Albums.Album) {
-                        System.out.println(album.getTitulo());
+                        System.out.println(album.toString());
                     }
                 }
                 sc.nextLine();
@@ -103,6 +105,9 @@ public class Mmusico implements Menu {
                 break;
             case 5:
                 System.out.println("See the state of all recording sessions");
+                break;
+            case 6:
+                this.user = null;
                 break;
             default:
                 System.out.println("Invalid option");

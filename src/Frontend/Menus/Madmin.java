@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.Set;
 
 import Backend.Users.Admin;
 
@@ -38,6 +39,8 @@ public class Madmin implements Menu {
         System.out.println("9. Show all users");
         System.out.println("10. Show all instruments");
         System.out.println("11. Add a new album");
+        System.out.println("12. Show all albums");
+        System.out.println("13. Log out");
 
         try {
             option = sc.nextInt();
@@ -192,6 +195,16 @@ public class Madmin implements Menu {
                     answer2 = sc.nextLine();
                     this.addTrackToAlbum(answer2, user, users, titleOfTheAlbum);
                 }
+                break;
+            case 12:
+                Set<Backend.Albums.Album> list3 = albums.getAlbums();
+                for (Backend.Albums.Album album : list3) {
+                    System.out.println(album.toString());
+                }
+                sc.nextLine();
+                break;
+            case 13:
+                this.user = null;
                 break;
             default:
                 System.out.println("Invalid option");

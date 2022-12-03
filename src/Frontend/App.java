@@ -32,7 +32,7 @@ public class App {
             e.printStackTrace();
             return;
         } catch (IOException e) {
-            e.printStackTrace();
+            // omit error message because this is triggered the first time the program is run
             instruments = new Backend.Instruments.Repos();
             albums = new Backend.Albums.Repos();
             users = new Backend.Users.Repos();
@@ -42,10 +42,20 @@ public class App {
         // test
         users.getUsers();
 
+        // create test users
         users.devUsers(instruments, albums, users, sessions);
 
         User auth = null;
+        while(true) {
+            program(auth, instruments, albums, users, sessions);
+        }
+    }
+
+    private static void program(User auth, Backend.Instruments.Repos instruments, Backend.Albums.Repos albums,
+            Backend.Users.Repos users, Backend.Sessions.Repos sessions) {
+        
         Scanner sc = new Scanner(System.in);
+        // login system
         while (auth == null) {
             try {
                 auth = Authentication.loginPrompt(users);
@@ -54,8 +64,9 @@ public class App {
                 System.out.println("Failed to login: " + e.getMessage());
                 sc.nextLine();
             }
-        }
+        }   
 
+        // access user's functionalities
         if (auth != null) {
             if (auth instanceof Musician) {
                 Musician user = (Musician) auth;
@@ -87,11 +98,14 @@ public class App {
                     cleanPrompt();
                     save(albums, instruments, users, sessions);
                 }
+            } else {
+                System.out.println("User type not recognized");
+                sc.nextLine();
             }
         }
     }
 
-    public static void save(Backend.Albums.Repos albums, Backend.Instruments.Repos instruments,
+    private static void save(Backend.Albums.Repos albums, Backend.Instruments.Repos instruments,
             Backend.Users.Repos users, Backend.Sessions.Repos sessions) {
         // não é a maneira mais eficiente de fazer isso, mas não é possivel iniciar a
         // mesma thread duas vezes
@@ -105,7 +119,7 @@ public class App {
         saveSessions.start();
     }
 
-    public static void cleanPrompt() {
+    private static void cleanPrompt() {
         System.out.print("\033[H\033[2J");
         System.out.flush();
     }
