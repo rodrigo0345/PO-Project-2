@@ -37,23 +37,24 @@ public class AlbumEditado extends Album {
         return isEdited;
     }
 
-    public void addSession(Date date) {
+    public Backend.Sessions.Session addSession(LocalDate date) throws IllegalArgumentException {
         if (this.isEdited) {
-            return;
+            throw new IllegalArgumentException("The given album is already finished");
         }
-        if (date.before(new Date(System.currentTimeMillis()))) {
-            return;
+        if (date.isBefore(LocalDate.now())) {
+            throw new IllegalArgumentException("The given date is a past date");
         }
         Backend.Sessions.Session session = new Backend.Sessions.Session(date);
         sessions.add(session);
+        return session;
     }
 
-    public void removeSession(Date date) {
+    public void removeSession(LocalDate date) throws IllegalArgumentException {
         if (this.isEdited) {
-            return;
+            throw new IllegalArgumentException("The album you are trying to edit is already finished.");
         }
-        if (date.before(new Date(System.currentTimeMillis()))) {
-            return;
+        if (date.isBefore(LocalDate.now())) {
+            throw new IllegalArgumentException("You cannot delete a session that has already finished.");
         }
         Backend.Sessions.Session session = new Backend.Sessions.Session(date);
         sessions.remove(session);

@@ -2,24 +2,25 @@ package Backend.Sessions;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.UUID;
 
 public class Session implements Serializable {
     private static long serialVersionUID = 4L;
 
-    private Date date;
+    private LocalDate date;
     private UUID id = UUID.randomUUID();
     private boolean completed = false;
 
-    public Session(Date date) {
+    public Session(LocalDate date) {
         this.date = date;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 

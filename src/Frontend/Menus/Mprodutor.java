@@ -1,7 +1,12 @@
 package Frontend.Menus;
 
+import java.text.DateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 import java.util.Scanner;
 
+import Backend.Users.Musician;
 import Backend.Users.Produtor;
 
 public class Mprodutor implements Menu {
@@ -39,7 +44,7 @@ public class Mprodutor implements Menu {
 
     @Override
     public void executeOption(Backend.Instruments.Repos instruments, Backend.Albums.Repos albums,
-            Backend.Users.Repos users) throws ClassNotFoundException {
+            Backend.Users.Repos users) {
         Scanner sc = new Scanner(System.in);
         switch (option) {
             case 1:
@@ -105,14 +110,63 @@ public class Mprodutor implements Menu {
                     System.out.println("New Album's name: ");
                     String newAlbumName = sc.nextLine();
 
-                    Backend.Albums.AlbumEditado ref;
+                    Backend.Albums.AlbumEditado album;
                     try {
-                        ref = user.createAlbumEdit(albumName, newAlbumName);
+                        album = user.createAlbumEdit(albumName, newAlbumName);
                     } catch( ClassNotFoundException | IllegalArgumentException e) {
                         System.out.println(e.getMessage());
+                        return;
                     }
 
+                    System.out.println("Plan a new recording session? (y/n)");
+                    String choice = sc.nextLine();
+                    while(choice.equals("y")) {
+                        System.out.println("Date of the session (dd mm yyyy): ");
+                        String newDate = sc.nextLine();
+                        LocalDate newDateFormatted = null;
+                        Backend.Sessions.Session newSession = null;
 
+                        try {
+                            DateTimeFormatter df = DateTimeFormatter.ofPattern("dd MM yyyy", Locale.ITALY);
+                            newDateFormatted = LocalDate.parse(newDate, df);
+                            newSession = album.addSession(newDateFormatted);
+                        } catch (IllegalArgumentException e){
+                            System.out.println(e.getMessage());
+                        } catch (Exception e) {
+                            System.out.println("Invalid date");
+                            sc.nextLine();
+                            return;
+                        }
+
+                        System.out.println("Add new artist? (y/n)");
+                        String artist = sc.nextLine();
+                        while(artist.equals("y")) {
+                            System.out.println("Artist's username: ");
+                            artist = sc.nextLine();
+
+                            Backend.Users.User aux = users.getUser(artist);
+                            if (!(aux instanceof Backend.Users.Musician) || aux == null) {
+                                System.out.println("The given musician does not exist");
+                                return;
+                            }
+
+                            // add this session to the musician
+                            Backend.Users.Musician artistInstance = (Musician) aux;
+                            try {
+                                artistInstance.addSession(album, newSession);
+                            } catch (Exception e) {
+                                System.out.println(e.getMessage());
+                                sc.nextLine();
+                                // no need to return
+                            }
+
+                            System.out.println("Add new artist? (y/n)");
+                            artist = sc.nextLine();
+                        }
+
+                        System.out.println("Plan a new recording session (y/n)");
+                        choice = sc.nextLine();
+                    }
 
                 } else if (option2 == 2) {
 

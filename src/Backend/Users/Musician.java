@@ -3,11 +3,14 @@ package Backend.Users;
 import java.util.Set;
 import java.util.TreeSet;
 
+import Backend.Albums.AlbumEditado;
 import Backend.Instruments.Instrument;
+import Backend.Sessions.Session;
 
 public class Musician extends User {
     private Set<Backend.Albums.Album> albums = new TreeSet<>();
     private Set<Instrument> instruments = new TreeSet<>();
+    private Set<Backend.Sessions.Session> sessions = new TreeSet<>();
 
     public Musician(String name, String email, String username, String password, Backend.Users.Repos users,
             Backend.Instruments.Repos instruments, Backend.Albums.Repos albums, Backend.Sessions.Repos sessions) {
@@ -38,4 +41,12 @@ public class Musician extends User {
         return instruments;
     }
 
+    public void addSession(AlbumEditado album, Session newSession)
+        throws Exception{
+        this.addAlbum(album);
+        boolean add = this.sessions.add(newSession);
+        if (add == false){
+            throw new Exception("Musician was already in this session");
+        }
+    }
 }
