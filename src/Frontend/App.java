@@ -1,8 +1,5 @@
 package Frontend;
 
-import java.io.IOException;
-import java.util.Scanner;
-
 import Backend.Users.Admin;
 import Backend.Users.Musician;
 import Backend.Users.Produtor;
@@ -10,6 +7,9 @@ import Backend.Users.User;
 import Frontend.Menus.Madmin;
 import Frontend.Menus.Mmusico;
 import Frontend.Menus.Mprodutor;
+
+import java.io.IOException;
+import java.util.Scanner;
 
 public class App {
     public static void main(String[] args) {
@@ -38,9 +38,6 @@ public class App {
             users = new Backend.Users.Repos();
             sessions = new Backend.Sessions.Repos();
         }
-
-        // test
-        users.getUsers();
 
         // create test users
         users.devUsers(instruments, albums, users, sessions);

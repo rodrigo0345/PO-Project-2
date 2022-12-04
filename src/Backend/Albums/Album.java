@@ -1,22 +1,23 @@
 package Backend.Albums;
 
+import Backend.Users.Musician;
+import Backend.Users.Produtor;
+
+import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
-import Backend.Users.Musician;
-import Backend.Users.Produtor;
-
 public class Album implements Serializable, Comparable<Album> {
-    private static long serialVersionUID = 8L;
-    private Map<String, Backend.Tracks.Track> tracks = new HashMap<>();
-    private Set<Musician> artists = new TreeSet<>();
+    @Serial
+    private static final long serialVersionUID = 8L;
+    private final Map<String, Backend.Tracks.Track> tracks = new HashMap<>();
+    private final Set<Musician> artists = new TreeSet<>();
     private String titulo;
-    private String genero;
+    private final String genero;
     private LocalDate date;
     private Produtor produtor;
 
