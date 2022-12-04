@@ -39,7 +39,7 @@ public class Mprodutor implements Menu {
 
     @Override
     public void executeOption(Backend.Instruments.Repos instruments, Backend.Albums.Repos albums,
-            Backend.Users.Repos users) {
+            Backend.Users.Repos users) throws ClassNotFoundException {
         Scanner sc = new Scanner(System.in);
         switch (option) {
             case 1:
@@ -101,13 +101,19 @@ public class Mprodutor implements Menu {
 
                 if (option2 == 1) {
                     System.out.println("Original Album's name: ");
-                    // String albumName = sc.nextLine();
+                    String albumName = sc.nextLine();
                     System.out.println("New Album's name: ");
-                    // String albumName = sc.nextLine();
-                    System.out.println("New Album genre: ");
-                    String albumGenre = sc.nextLine();
+                    String newAlbumName = sc.nextLine();
 
-                    // user.createProject();
+                    Backend.Albums.AlbumEditado ref;
+                    try {
+                        ref = user.createAlbumEdit(albumName, newAlbumName);
+                    } catch( ClassNotFoundException | IllegalArgumentException e) {
+                        System.out.println(e.getMessage());
+                    }
+
+
+
                 } else if (option2 == 2) {
 
                 } else {

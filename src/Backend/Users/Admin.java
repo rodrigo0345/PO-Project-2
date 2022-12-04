@@ -46,11 +46,13 @@ public class Admin extends User {
     }
 
     public void removeUser(String username) {
+        // implement a way of removing all the associated albums and musics
         getUsersRepo().removeUser(username);
     }
 
+    // returns -1 if the Sessions repo is empty
     public int showAllSessionRequests() {
-        if (getSessionsRepo().getSessions() == null) {
+        if (getSessionsRepo().getSessions().size() == 0) {
             return -1;
         } else {
             for (Backend.Sessions.Session session : getSessionsRepo().getSessions()) {

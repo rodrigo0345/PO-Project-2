@@ -1,5 +1,6 @@
 package Backend.Users;
 
+import java.text.DateFormat;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -45,6 +46,23 @@ public class Produtor extends User {
             }
         }
         return null;
+    }
+
+    public Backend.Albums.AlbumEditado createAlbumEdit(String albumName, String newAlbumName)
+        throws ClassNotFoundException, IllegalArgumentException {
+        // checking for possible errors
+        Backend.Albums.Album original = getAlbumsRepo().getAlbum(albumName);
+        if (original == null) {
+            throw new ClassNotFoundException(albumName + " not found.");
+        } else if (getAlbumsRepo().isTituloValid(newAlbumName)) {
+            throw new IllegalArgumentException(newAlbumName + " already exists.");
+        }
+        // create the new album edit
+        Backend.Albums.AlbumEditado albumEdit = new Backend.Albums.AlbumEditado(
+            newAlbumName, original.getGenero(), getInstrumentsRepo(),
+            getAlbumsRepo(), getUsersRepo(), getSessionsRepo(), this);
+        this.addProjeto(albumEdit);
+        return albumEdit;
     }
 
 }

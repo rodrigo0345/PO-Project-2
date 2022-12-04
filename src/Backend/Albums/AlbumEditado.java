@@ -8,10 +8,10 @@ import java.util.UUID;
 
 public class AlbumEditado extends Album {
     private boolean isEdited;
-    private Set<Backend.Sessions.Session> sessions = new TreeSet<>();
+    private final Set<Backend.Sessions.Session> sessions = new TreeSet<>();
     private Backend.Users.Produtor producer;
 
-    public AlbumEditado(String titulo, String genero, Date date, Backend.Users.Produtor produtor,
+    public AlbumEditado(String titulo, String genero,
             Backend.Instruments.Repos instruments,
             Backend.Albums.Repos albums,
             Backend.Users.Repos users, Backend.Sessions.Repos sessions, Backend.Users.Produtor producer) {

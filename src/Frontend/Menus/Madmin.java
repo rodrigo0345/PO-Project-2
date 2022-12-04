@@ -12,6 +12,7 @@ import java.util.Set;
 
 import Backend.Users.Admin;
 
+// Menu of the administrators
 public class Madmin implements Menu {
     private int option;
     private Admin user;
@@ -69,6 +70,7 @@ public class Madmin implements Menu {
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
                 }
+                
                 break;
             case 2:
                 System.out.println("Name: ");
@@ -109,7 +111,6 @@ public class Madmin implements Menu {
                     System.out.println("No session requests");
                     return;
                 }
-                ;
                 System.out.print("Select a session request: ");
                 int id = sc.nextInt();
                 System.out.println("Accept or reject? (y/n)");
@@ -132,9 +133,11 @@ public class Madmin implements Menu {
                 break;
             case 6:
                 this.user.showAllRecordingSessions();
+                sc.nextLine();
                 break;
             case 7:
                 this.user.showAllAlbumsBeingEdited();
+                sc.nextLine();
                 break;
             case 8:
                 this.user.showStats();
@@ -153,8 +156,7 @@ public class Madmin implements Menu {
                 }
                 sc.nextLine();
                 break;
-            case 11: // honestamente isto está super confuso
-
+            case 11:
                 // creating an album
                 System.out.println("Name of the album: ");
                 String titleOfTheAlbum = sc.nextLine();
@@ -165,6 +167,8 @@ public class Madmin implements Menu {
                 System.out.println("Date of release (dd MM yyyy): ");
                 String d = sc.nextLine();
                 LocalDate date = null;
+
+                // verify that the inserted date is valid
                 try {
                     DateTimeFormatter df = DateTimeFormatter.ofPattern("dd MM yyyy", Locale.FRANCE);
                     date = LocalDate.parse(d, df);
@@ -174,6 +178,7 @@ public class Madmin implements Menu {
                     return;
                 }
 
+                // verify that the inserted producer is valid
                 try {
                     Backend.Users.User aux = users.getUser(producer);
                     if (aux instanceof Backend.Users.Produtor) {
@@ -189,6 +194,8 @@ public class Madmin implements Menu {
                     sc.nextLine();
                     return;
                 }
+
+                // adicionar musicas ao album
                 String answer2 = new String("y");
                 while (answer2.equals("y")) {
                     System.out.println("Add a song to the album? (y/n)");

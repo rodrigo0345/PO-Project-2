@@ -26,7 +26,7 @@ public class Mmusico implements Menu {
         System.out.println("3. Future recording sessions");
         System.out.println("4. Request an instrument for a specific recording session");
         System.out.println("5. See the state of all recording sessions");
-        System.out.println("6. - Log out");
+        System.out.println("6. Log out");
 
         try {
             this.option = sc.nextInt();
