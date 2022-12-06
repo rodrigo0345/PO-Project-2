@@ -169,6 +169,29 @@ public class Mprodutor implements Menu {
                     }
 
                 } else if (option2 == 2) {
+                    System.out.println("Name of the album: ");
+
+                    System.out.println("1. Add a new recording session");
+                    System.out.println("2. Delete a recording session");
+                    System.out.println("3. Add a new artist");
+                    System.out.println("4. Remove an artist");
+                    System.out.println("5. Add a new track");
+                    int choice = sc.nextInt();
+
+                    switch(choice) {
+                        case 1:
+                            break;
+                        case 2:
+                            break;
+                        case 3:
+                            break;
+                        case 4:
+                            break;
+                        case 5:
+                            break;
+                        default:
+                            System.out.println("Invalid selection");
+                    }
 
                 } else {
                     System.out.println("Invalid option");

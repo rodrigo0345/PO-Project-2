@@ -8,6 +8,9 @@ import java.util.Set;
 import java.util.TreeSet;
 
 public class Repos implements Serializable {
+
+    // for sessions waiting for the admin approval
+    private Set<Session> pendingSessions = new TreeSet<>();
     private Set<Session> sessions = new TreeSet<>();
     private static long serialVersionUID = 3L;
 
@@ -39,5 +42,30 @@ public class Repos implements Serializable {
             }
         }
         return aux;
+    }
+
+    public Set<Session> getPendingSessions(){
+        return this.pendingSessions;
+    }
+
+    public boolean addPendingSession(Session session){
+        return this.pendingSessions.add(session);
+    }
+
+    public Session getPendingSession(LocalDate date){
+        for(Session s: pendingSessions){
+            if(s.getDate().equals(date)){
+                return s;
+            }
+        }
+        return null;
+    }
+
+    public boolean approveSession(Session s){
+        return pendingSessions.remove(s) && sessions.add(s);
+    }
+
+    public boolean denySession(Session s){
+        return pendingSessions.remove(s);
     }
 }

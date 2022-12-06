@@ -100,7 +100,7 @@ public class Mmusico implements Menu {
                 }
                 sc.nextLine();
                 break;
-            case 4:
+            case 4:  // does not treat errors
                 System.out.println("Access option 3 to see all the available sessions");
                 System.out.println("Date of the session: ");
                 LocalDate date = Frontend.Utils.Generics.readDate();
@@ -119,6 +119,19 @@ public class Mmusico implements Menu {
                 break;
             case 5:
                 System.out.println("See the state of all recording sessions");
+                for(Session s: sessions.getPendingSessions()){
+                    System.out.println("Pending: " + s);
+                }
+
+                for(Session s: sessions.getSessions()){
+                    if (s.isCompleted() == false){
+                        System.out.println("Accepted: " + s);
+                    }
+                    else {
+                        System.out.println("Done: " + s);
+                    }
+                }
+                sc.nextLine();
                 break;
             case 6:
                 this.user = null;
