@@ -5,7 +5,9 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 import java.util.Scanner;
+import java.util.UUID;
 
+import Backend.Albums.AlbumEditado;
 import Backend.Users.Musician;
 import Backend.Users.Produtor;
 
@@ -170,6 +172,16 @@ public class Mprodutor implements Menu {
 
                 } else if (option2 == 2) {
                     System.out.println("Name of the album: ");
+                    String albumName = sc.nextLine();
+                    Backend.Albums.Album album = albums.getAlbum(albumName);
+
+                    if (!(album instanceof Backend.Albums.AlbumEditado)){
+                        System.out.println("The album you selected is not editable!");
+                        return;
+                    } else if (((Backend.Users.Produtor) user).equals(album.getProdutor())) {
+                        System.out.println("You cannot edit this album! Permission denied!");
+                        return;
+                    }
 
                     System.out.println("1. Add a new recording session");
                     System.out.println("2. Delete a recording session");
@@ -180,10 +192,20 @@ public class Mprodutor implements Menu {
 
                     switch(choice) {
                         case 1:
+                            System.out.println("Choose a date to the recording: ");
+                            LocalDate d = Frontend.Utils.Generics.readDate();
+                            ((AlbumEditado) album).addSession(d);
                             break;
                         case 2:
+                            System.out.println("ID of the recording session: ");
+                            String id = sc.nextLine();
+                            boolean success = sessions.deleteSession(UUID.fromString(id));
+                            if (!success) { System.out.println("The session you are trying to delete does not exist"); return;}
+                            System.out.println("Session deleted with success");
                             break;
                         case 3:
+                            System.out.println("Ending recording session....");
+
                             break;
                         case 4:
                             break;

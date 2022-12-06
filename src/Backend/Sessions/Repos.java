@@ -6,6 +6,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.UUID;
 
 public class Repos implements Serializable {
 
@@ -18,8 +19,17 @@ public class Repos implements Serializable {
         return sessions;
     }
 
-    public Session getSession(int id) {
+    public Session getSession(UUID id) {
+        for(Session s:sessions){
+            if(s.getId().equals(id)){
+                return s;
+            }
+        }
         return null;
+    }
+
+    public boolean deleteSession(UUID id){
+        return pendingSessions.remove(getSession(id)) || sessions.remove(getSession(id));
     }
 
     public Session getSession(LocalDate date){
@@ -67,5 +77,13 @@ public class Repos implements Serializable {
 
     public boolean denySession(Session s){
         return pendingSessions.remove(s);
+    }
+
+    public boolean endRecordingSessions() {
+        for (Session s:sessions) {
+            if(s.getDate().isBefore(LocalDate.now()) && s.isCompleted() == false){
+                s.setCompleted(true);
+            }
+        }
     }
 }
