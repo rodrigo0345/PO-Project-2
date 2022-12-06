@@ -70,7 +70,6 @@ public class Admin extends User {
                 System.out.println(session);
             }
         }
-
     }
 
     public void showAllAlbumsBeingEdited() {

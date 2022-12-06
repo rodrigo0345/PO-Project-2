@@ -49,4 +49,14 @@ public class Musician extends User {
             throw new Exception("Musician was already in this session");
         }
     }
+
+    @Override
+    public boolean equals(Object a) {
+        if (a instanceof Musician) {
+            if (this.getUsername() == ((Musician) a).getUsername()) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

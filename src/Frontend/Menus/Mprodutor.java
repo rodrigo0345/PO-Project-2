@@ -44,7 +44,7 @@ public class Mprodutor implements Menu {
 
     @Override
     public void executeOption(Backend.Instruments.Repos instruments, Backend.Albums.Repos albums,
-            Backend.Users.Repos users) {
+            Backend.Users.Repos users, Backend.Sessions.Repos sessions) {
         Scanner sc = new Scanner(System.in);
         switch (option) {
             case 1:
