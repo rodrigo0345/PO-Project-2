@@ -205,8 +205,8 @@ public class Madmin implements Menu {
                 }
                 break;
             case 12:
-                Set<Backend.Albums.Album> list3 = albums.getAlbums();
-                for (Backend.Albums.Album album : list3) {
+                Map<String, Backend.Albums.Album> list3 = albums.getAlbums();
+                for (Backend.Albums.Album album : list3.values()) {
                     System.out.println(album.toString());
                 }
                 sc.nextLine();
