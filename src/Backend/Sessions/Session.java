@@ -1,12 +1,19 @@
 package Backend.Sessions;
 
+import Backend.Instruments.Instrument;
+import Backend.Users.Musician;
+import com.sun.source.tree.Tree;
+
 import java.io.Serializable;
 import java.sql.Date;
 import java.time.LocalDate;
-import java.util.UUID;
+import java.util.*;
 
 public class Session implements Serializable {
     private static long serialVersionUID = 4L;
+    private Map<String, Musician> invitedArtists = new HashMap<>();
+    private Set<Instrument> pendentInstruments = new TreeSet<>();
+    private Set<Instrument> instruments = new TreeSet<>();
 
     private LocalDate date;
     private UUID id = UUID.randomUUID();
@@ -73,4 +80,40 @@ public class Session implements Serializable {
     public void setAccepted(boolean b) {
     }
 
+    public void addInvitedMusician(Backend.Users.Musician m){
+        this.invitedArtists.put(m.getUsername(), m);
+    }
+
+    public Backend.Users.Musician getInvitedMusician(Musician musician){
+        return this.invitedArtists.get(musician.getUsername());
+    }
+
+    public Backend.Users.Musician getInviteMusician(String username){
+        return this.invitedArtists.get(username);
+    }
+
+    public Map<String, Backend.Users.Musician> getInvitedMusicians(){
+        return this.invitedArtists;
+    }
+
+    // waits for the permission of the administrator
+    public void addPendendingInstrument(Instrument instrument) {
+        this.pendentInstruments.add(instrument);
+    }
+
+    public Set<Instrument> getPendentInstruments(){
+        return this.pendentInstruments;
+    }
+
+    public boolean approveInstrument(Instrument instrument){
+        return this.pendentInstruments.remove(instrument) && this.instruments.add(instrument);
+    }
+
+    public boolean denyInstrument(Instrument instrument){
+        return this.pendentInstruments.remove(instrument);
+    }
+
+    public Set<Instrument> getApprovedInstruments(){
+        return this.instruments;
+    }
 }

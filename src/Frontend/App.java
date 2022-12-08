@@ -71,7 +71,7 @@ public class App {
                 while (menu.getUser() != null) {
                     menu.mostrarMenu();
                     cleanPrompt();
-                    menu.executeOption(instruments, albums, users);
+                    menu.executeOption(instruments, albums, users, sessions);
                     cleanPrompt();
                     save(albums, instruments, users, sessions);
                 }
@@ -81,7 +81,7 @@ public class App {
                 while (menu.getUser() != null) {
                     menu.mostrarMenu();
                     cleanPrompt();
-                    menu.executeOption(instruments, albums, users);
+                    menu.executeOption(instruments, albums, users, sessions);
                     cleanPrompt();
                     save(albums, instruments, users, sessions);
                 }
@@ -91,7 +91,7 @@ public class App {
                 while (menu.getUser() != null) {
                     menu.mostrarMenu();
                     cleanPrompt();
-                    menu.executeOption(instruments, albums, users);
+                    menu.executeOption(instruments, albums, users, sessions);
                     cleanPrompt();
                     save(albums, instruments, users, sessions);
                 }

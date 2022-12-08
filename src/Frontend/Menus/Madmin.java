@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 
+import Backend.Instruments.Repos;
 import Backend.Users.Admin;
 
 // Menu of the administrators
@@ -52,7 +53,7 @@ public class Madmin implements Menu {
 
     @Override
     public void executeOption(Backend.Instruments.Repos instruments, Backend.Albums.Repos albums,
-            Backend.Users.Repos users) {
+            Backend.Users.Repos users, Backend.Sessions.Repos sessions) {
         Scanner sc = new Scanner(System.in);
         switch (option) {
             case 1:
@@ -204,8 +205,8 @@ public class Madmin implements Menu {
                 }
                 break;
             case 12:
-                Set<Backend.Albums.Album> list3 = albums.getAlbums();
-                for (Backend.Albums.Album album : list3) {
+                Map<String, Backend.Albums.Album> list3 = albums.getAlbums();
+                for (Backend.Albums.Album album : list3.values()) {
                     System.out.println(album.toString());
                 }
                 sc.nextLine();

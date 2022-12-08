@@ -1,9 +1,13 @@
 package Frontend.Menus;
 
+import java.time.LocalDate;
 import java.util.Scanner;
 import java.util.Set;
 
+import Backend.Instruments.Instrument;
+import Backend.Sessions.Session;
 import Backend.Users.Musician;
+import Frontend.Utils.Generics;
 
 public class Mmusico implements Menu {
     private int option;
@@ -36,7 +40,7 @@ public class Mmusico implements Menu {
     }
 
     public void executeOption(Backend.Instruments.Repos instruments, Backend.Albums.Repos albums,
-            Backend.Users.Repos users) {
+            Backend.Users.Repos users, Backend.Sessions.Repos sessions) {
         Scanner sc = new Scanner(System.in);
 
         switch (option) {
@@ -89,22 +93,45 @@ public class Mmusico implements Menu {
                 sc.nextLine();
                 break;
             case 3:
-                Set<Backend.Albums.Album> albums2 = this.user.getAlbums();
-
-                for (Backend.Albums.Album album : albums2) {
-                    if (album instanceof Backend.Albums.Album && !((Backend.Albums.AlbumEditado) album).isEdited()) {
-                        System.out.println(album);
-                    }
+                // get all the sessions with the musician in it
+                Set<Session> relatedSessions = sessions.getMusicianSessions(user);
+                for (Session s: relatedSessions){
+                    System.out.println(s);
                 }
                 sc.nextLine();
                 break;
-            case 4:
-                Set<Backend.Instruments.Instrument> availableInstruments = this.user.getInstruments();
+            case 4:  // does not treat errors
+                System.out.println("Access option 3 to see all the available sessions");
+                System.out.println("Date of the session: ");
+                LocalDate date = Frontend.Utils.Generics.readDate();
+                Session selectedSession = sessions.getSession(date);
 
+                Set<Backend.Instruments.Instrument> availableInstruments = this.user.getInstruments();
+                for(Backend.Instruments.Instrument i: availableInstruments){
+                    System.out.println(i);
+                }
                 System.out.println("Instrument's name: ");
+                String instrumentName = sc.nextLine();
+                Instrument instrument = instruments.getInstrument(instrumentName);
+
+                // the admin will then be able to accept or deny the request
+                selectedSession.addPendendingInstrument(instrument);
                 break;
             case 5:
                 System.out.println("See the state of all recording sessions");
+                for(Session s: sessions.getPendingSessions()){
+                    System.out.println("Pending: " + s);
+                }
+
+                for(Session s: sessions.getSessions()){
+                    if (s.isCompleted() == false){
+                        System.out.println("Accepted: " + s);
+                    }
+                    else {
+                        System.out.println("Done: " + s);
+                    }
+                }
+                sc.nextLine();
                 break;
             case 6:
                 this.user = null;

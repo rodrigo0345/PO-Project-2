@@ -70,11 +70,10 @@ public class Admin extends User {
                 System.out.println(session);
             }
         }
-
     }
 
     public void showAllAlbumsBeingEdited() {
-        for (Backend.Albums.Album album : getAlbumsRepo().getAlbums()) {
+        for (Backend.Albums.Album album : getAlbumsRepo().getAlbums().values()) {
             if (album instanceof Backend.Albums.AlbumEditado && !((Backend.Albums.AlbumEditado) album).isEdited()) {
                 System.out.println(album);
             }
@@ -82,7 +81,7 @@ public class Admin extends User {
     }
 
     public void showAllAlbumsEdited() {
-        for (Backend.Albums.Album album : getAlbumsRepo().getAlbums()) {
+        for (Backend.Albums.Album album : getAlbumsRepo().getAlbums().values()) {
             if (album instanceof Backend.Albums.AlbumEditado && ((Backend.Albums.AlbumEditado) album).isEdited()) {
                 System.out.println(album);
             }
