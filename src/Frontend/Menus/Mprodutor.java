@@ -182,7 +182,7 @@ public class Mprodutor implements Menu {
                     if (!(album instanceof Backend.Albums.AlbumEditado)){
                         System.out.println("The album you selected is not editable!");
                         return;
-                    } else if (((Backend.Users.Produtor) user).equals(album.getProdutor())) {
+                    } else if (user.equals(album.getProdutor())) {
                         System.out.println("You cannot edit this album! Permission denied!");
                         return;
                     }
@@ -226,7 +226,7 @@ public class Mprodutor implements Menu {
                         case 4:
                             System.out.println("Username of the artist: ");
                             String username2 = sc.nextLine();
-                            boolean success2 = album.deleteArtist(username2);
+                            boolean success2 = album.removeArtist(username2);
                             if (!success2) {
                                 System.out.println("The system was not able to delete the user you" +
                                         " provided!");

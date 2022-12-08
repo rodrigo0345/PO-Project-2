@@ -193,7 +193,7 @@ public class Madmin implements Menu {
                 }
 
                 // adicionar musicas ao album
-                String answer2 = new String("y");
+                String answer2 = "y";
                 while (answer2.equals("y")) {
                     System.out.println("Add a song to the album? (y/n)");
                     answer2 = sc.nextLine();
@@ -237,7 +237,7 @@ public class Madmin implements Menu {
                 user.addTrackToAlbum(titleOfTheAlbum, t);
 
                 // add musicians to the track
-                String answer3 = new String("y");
+                String answer3 = "y";
                 while (answer3.equals("y")) {
                     System.out.println("Add a new musician to the track? (y/n)");
                     answer3 = sc.nextLine();

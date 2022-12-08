@@ -20,6 +20,12 @@ public class AlbumEditado extends Album {
         this.producer = producer;
     }
 
+    public AlbumEditado(String titulo){
+        super(titulo);
+        this.isEdited = false;
+        this.producer = null;
+    }
+
     public void setProducer(Backend.Users.Produtor producer) {
         this.producer = producer;
     }

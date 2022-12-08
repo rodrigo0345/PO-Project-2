@@ -67,7 +67,7 @@ public class Admin extends User {
 
     public void showAllRecordingSessions() {
         for (Backend.Sessions.Session session : getSessionsRepo().getSessions()) {
-            if (((Boolean) session.getAccepted()).equals(true)) {
+            if (session.getAccepted().equals(true)) {
                 System.out.println(session);
             }
         }

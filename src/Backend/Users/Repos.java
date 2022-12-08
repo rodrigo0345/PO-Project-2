@@ -5,8 +5,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Repos implements Serializable {
-    private Map<String, User> users = new HashMap<String, User>();
-    private static long serialVersionUID = 2L;
+    private final Map<String, User> users = new HashMap<String, User>();
+    private static final long serialVersionUID = 2L;
 
     private boolean checkUser(String username, String password) {
         User user = users.get(username);

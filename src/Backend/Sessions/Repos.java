@@ -11,9 +11,9 @@ import java.util.UUID;
 public class Repos implements Serializable {
 
     // for sessions waiting for the admin approval
-    private Set<Session> pendingSessions = new TreeSet<>();
-    private Set<Session> sessions = new TreeSet<>();
-    private static long serialVersionUID = 3L;
+    private final Set<Session> pendingSessions = new TreeSet<>();
+    private final Set<Session> sessions = new TreeSet<>();
+    private static final long serialVersionUID = 3L;
 
     public Set<Session> getSessions() {
         return sessions;
@@ -89,6 +89,6 @@ public class Repos implements Serializable {
                 count++;
             }
         }
-        return (count == 0)? false: true;
+        return count != 0;
     }
 }

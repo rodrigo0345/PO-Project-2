@@ -3,7 +3,7 @@ package Backend.Users;
 import java.io.Serializable;
 
 public abstract class User implements Comparable<User>, Serializable {
-    private static long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
     private String name;
     private String email;
     private String username;

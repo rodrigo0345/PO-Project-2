@@ -9,8 +9,8 @@ import java.util.Set;
 import java.util.TreeSet;
 
 public class Produtor extends User {
-    private Set<Backend.Albums.AlbumEditado> projetos = new TreeSet<>();
-    private Set<Backend.Albums.Album> oldAlbums = new TreeSet<>();
+    private final Set<Backend.Albums.AlbumEditado> projetos = new TreeSet<>();
+    private final Set<Backend.Albums.Album> oldAlbums = new TreeSet<>();
 
     public Produtor(String name, String email, String username, String password, Backend.Users.Repos users,
             Backend.Instruments.Repos instruments, Backend.Albums.Repos albums, Backend.Sessions.Repos sessions) {

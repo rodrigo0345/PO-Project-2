@@ -17,19 +17,18 @@ public class Album implements Serializable, Comparable<Album> {
     private final Map<String, Backend.Tracks.Track> tracks = new HashMap<>();
     private final Set<Musician> artists = new TreeSet<>();
     private String titulo;
-    private final String genero;
+    private String genero;
     private LocalDate date;
     private Produtor produtor;
 
-    Backend.Instruments.Repos instrumentsRepo;
-    Backend.Albums.Repos albumsRepo;
-    Backend.Users.Repos usersRepo;
-    Backend.Sessions.Repos sessionsRepo;
+    private Backend.Instruments.Repos instrumentsRepo;
+    private Backend.Albums.Repos albumsRepo;
+    private Backend.Users.Repos usersRepo;
+    private Backend.Sessions.Repos sessionsRepo;
 
     public Album(String titulo, String genero, LocalDate date, Produtor produtor, Backend.Instruments.Repos instruments,
             Backend.Albums.Repos albums,
             Backend.Users.Repos users, Backend.Sessions.Repos sessions) {
-        this.titulo = titulo;
         this.genero = genero;
         this.date = date;
         this.produtor = produtor;
@@ -37,12 +36,25 @@ public class Album implements Serializable, Comparable<Album> {
         this.albumsRepo = albums;
         this.usersRepo = users;
         this.sessionsRepo = sessions;
+        this.setTitulo(titulo);
+        this.albumsRepo.addAlbum(this); // dependency
+    }
+
+    // only used for testing
+    public Album(String titulo){
+        this.instrumentsRepo = new Backend.Instruments.Repos();
+        this.albumsRepo = new Backend.Albums.Repos();
+        this.usersRepo = new Backend.Users.Repos();
+        this.sessionsRepo = new Backend.Sessions.Repos();
+        this.setTitulo(titulo);
+        this.albumsRepo.addAlbum(this); // dependency
     }
 
     // automatically adds the album to the musician's list of albums
-    public void addArtist(Musician artist) {
-        artists.add(artist);
-        artist.addAlbum(this);
+    public boolean addArtist(Musician artist) {
+        boolean a = artists.add(artist);
+        boolean b = artist.addAlbum(this);
+        return a && b;
     }
 
     public Musician getArtist(String username) {
@@ -52,7 +64,11 @@ public class Album implements Serializable, Comparable<Album> {
         return null;
     }
 
-    public boolean deleteArtist(String username) {
+    public Set<Musician> getArtists(){
+        return this.artists;
+    }
+
+    public boolean removeArtist(String username) {
         Musician aux = getArtist(username);
         if (aux == null) return false;
         return artists.remove(aux);
@@ -75,14 +91,13 @@ public class Album implements Serializable, Comparable<Album> {
     }
 
     public String getTitulo() {
-        return titulo;
+        return this.titulo;
     }
 
-    public void setTitulo(String titulo) {
-        if (albumsRepo.isTituloValid(titulo)) {
-            this.titulo = titulo;
-        }
+    public boolean setTitulo(String titulo) {
+        if (!this.albumsRepo.isTituloValid(titulo)) return false;
         this.titulo = titulo;
+        return true;
     }
 
     public String getGenero() {
@@ -97,10 +112,7 @@ public class Album implements Serializable, Comparable<Album> {
     }
 
     private boolean isTracknameValid(String trackname) {
-        if (tracks.containsKey(trackname)) {
-            return false;
-        }
-        return true;
+        return !tracks.containsKey(trackname);
     }
 
     public void removeTrack(Backend.Tracks.Track track) {
@@ -122,8 +134,23 @@ public class Album implements Serializable, Comparable<Album> {
 
     @Override
     public int compareTo(Album o) {
-        return this.titulo.compareTo(o.titulo);
+        return this.getTitulo().compareTo(o.getTitulo());
     }
 
 
+    public Backend.Instruments.Repos getInstrumentsRepo() {
+        return instrumentsRepo;
+    }
+
+    public Backend.Users.Repos getUsersRepo() {
+        return usersRepo;
+    }
+
+    public Backend.Sessions.Repos getSessionsRepo() {
+        return sessionsRepo;
+    }
+
+    public Backend.Albums.Repos getAlbumsRepo() {
+        return albumsRepo;
+    }
 }

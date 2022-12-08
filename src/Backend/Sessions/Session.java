@@ -10,10 +10,10 @@ import java.time.LocalDate;
 import java.util.*;
 
 public class Session implements Serializable {
-    private static long serialVersionUID = 4L;
-    private Map<String, Musician> invitedArtists = new HashMap<>();
-    private Set<Instrument> pendentInstruments = new TreeSet<>();
-    private Set<Instrument> instruments = new TreeSet<>();
+    private static final long serialVersionUID = 4L;
+    private final Map<String, Musician> invitedArtists = new HashMap<>();
+    private final Set<Instrument> pendentInstruments = new TreeSet<>();
+    private final Set<Instrument> instruments = new TreeSet<>();
 
     private LocalDate date;
     private UUID id = UUID.randomUUID();
@@ -61,11 +61,8 @@ public class Session implements Serializable {
             return false;
         Session other = (Session) obj;
         if (id == null) {
-            if (other.id != null)
-                return false;
-        } else if (!id.equals(other.id))
-            return false;
-        return true;
+            return other.id == null;
+        } else return id.equals(other.id);
     }
 
     // used for exceptions

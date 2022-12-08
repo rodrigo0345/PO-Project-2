@@ -10,7 +10,7 @@ import java.util.TreeSet;
 public class Repos implements Serializable {
     @Serial
     private static final long serialVersionUID = 10L;
-    private Map<String, Album> albums = new HashMap<>();
+    private final Map<String, Album> albums = new HashMap<>();
 
     public Album getAlbum(String name) {
         return albums.get(name);
@@ -21,14 +21,13 @@ public class Repos implements Serializable {
     }
 
     public boolean addAlbum(Album album) {
-        if (isTituloValid(album.getTitulo())) return false;
+        if (album.getTitulo() == null) return false;
+        if (!isTituloValid(album.getTitulo())) return false;
         albums.put(album.getTitulo(), album);
         return true;
     }
 
     public boolean isTituloValid(String titulo) {
-        if(albums.get(titulo) != null)
-            return true;
-        return false;
+        return albums.get(titulo) == null;
     }
 }
