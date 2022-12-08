@@ -1,6 +1,10 @@
 package Backend.Users;
 
+import Backend.Albums.AlbumEditado;
+import Backend.Sessions.Session;
+
 import java.text.DateFormat;
+import java.time.LocalDate;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -66,4 +70,13 @@ public class Produtor extends User {
         return albumEdit;
     }
 
+    public Session findSessionByDate(LocalDate d) {
+        for(AlbumEditado a: projetos) {
+            Set<Backend.Sessions.Session> associatedSessions = a.getAllSessions();
+            for (Backend.Sessions.Session s : associatedSessions) {
+                if (s.getDate().equals(d)) return s;
+            }
+        }
+        return null;
+    }
 }

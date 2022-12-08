@@ -70,4 +70,8 @@ public class AlbumEditado extends Album {
             session.setCompleted(true);
         }
     }
+
+    public Set<Backend.Sessions.Session> getAllSessions() {
+        return sessions;
+    }
 }

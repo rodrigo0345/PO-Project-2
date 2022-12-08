@@ -312,8 +312,11 @@ public class Mprodutor implements Menu {
                 }
                 sc.nextLine();
                 break;
-            case 6:
-                
+            case 6: // so encontra uma sessao por dia
+                System.out.println("Select a day: ");
+                LocalDate d = Frontend.Utils.Generics.readDate();
+                Backend.Sessions.Session session = user.findSessionByDate(d);
+                System.out.println(session);
                 break;
             case 7:
                 this.user = null;
