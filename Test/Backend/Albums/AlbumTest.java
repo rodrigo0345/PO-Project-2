@@ -66,12 +66,18 @@ public class AlbumTest {
     @Test
     public void setTitulo() {
         // cannot have albums with the same title
-        Album album1 = new Album("Teste", "Rock",
-                                   Frontend.Utils.Generics.stringToDate("11/12/2000"),null,
-                                    album.getInstrumentsRepo(), album.getAlbumsRepo(), album.getUsersRepo(),
-                                        album.getSessionsRepo());
-        boolean success = album.setTitulo("Teste");
-        assertFalse(success);
+        try{
+            Album album1 = new Album("Teste", "Rock",
+                    Frontend.Utils.Generics.stringToDate("11/12/2000"),null,
+                    album.getInstrumentsRepo(), album.getAlbumsRepo(), album.getUsersRepo(),
+                    album.getSessionsRepo());
+            boolean success = album.setTitulo("Teste");
+            assertFalse(success);
+        } catch (IllegalArgumentException e){
+            System.out.println(e.getMessage());
+        }
+
+        boolean success;
         success = album.setTitulo("Rodrigo");
         assertTrue(success);
     }
