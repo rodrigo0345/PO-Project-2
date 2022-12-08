@@ -45,6 +45,23 @@ public class Album implements Serializable, Comparable<Album> {
         artist.addAlbum(this);
     }
 
+    public Musician getArtist(String username) {
+        for(Musician m: artists){
+            if (m.getUsername().equals(username)) return m;
+        }
+        return null;
+    }
+
+    public boolean deleteArtist(String username) {
+        Musician aux = getArtist(username);
+        if (aux == null) return false;
+        return artists.remove(aux);
+    }
+
+    public boolean deleteArtist(Musician user){
+        return artists.remove(user);
+    }
+
     public void removeArtist(Musician artist) {
         artists.remove(artist);
     }
@@ -72,10 +89,11 @@ public class Album implements Serializable, Comparable<Album> {
         return genero;
     }
 
-    public void addTrack(Backend.Tracks.Track track) {
+    public boolean addTrack(Backend.Tracks.Track track) {
         if (!isTracknameValid(track.getTitulo()))
-            return;
+            return false;
         tracks.put(track.getTitulo(), track);
+        return true;
     }
 
     private boolean isTracknameValid(String trackname) {
@@ -106,4 +124,6 @@ public class Album implements Serializable, Comparable<Album> {
     public int compareTo(Album o) {
         return this.titulo.compareTo(o.titulo);
     }
+
+
 }

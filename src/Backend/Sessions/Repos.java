@@ -80,10 +80,15 @@ public class Repos implements Serializable {
     }
 
     public boolean endRecordingSessions() {
+        int count = 0;
+
+        // pending sessions do not count here
         for (Session s:sessions) {
             if(s.getDate().isBefore(LocalDate.now()) && s.isCompleted() == false){
                 s.setCompleted(true);
+                count++;
             }
         }
+        return (count == 0)? false: true;
     }
 }

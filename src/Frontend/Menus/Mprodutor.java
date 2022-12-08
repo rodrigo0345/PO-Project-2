@@ -1,13 +1,17 @@
 package Frontend.Menus;
 
+import java.awt.*;
 import java.text.DateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 import java.util.Scanner;
+import java.util.Set;
 import java.util.UUID;
 
+import Backend.Albums.Album;
 import Backend.Albums.AlbumEditado;
+import Backend.Tracks.Track;
 import Backend.Users.Musician;
 import Backend.Users.Produtor;
 
@@ -188,6 +192,7 @@ public class Mprodutor implements Menu {
                     System.out.println("3. Add a new artist");
                     System.out.println("4. Remove an artist");
                     System.out.println("5. Add a new track");
+                    System.out.println("6. End all past recording sessions");
                     int choice = sc.nextInt();
 
                     switch(choice) {
@@ -204,12 +209,52 @@ public class Mprodutor implements Menu {
                             System.out.println("Session deleted with success");
                             break;
                         case 3:
-                            System.out.println("Ending recording session....");
+                            System.out.println("Username of the artist: ");
+                            String username = sc.nextLine();
+                            Backend.Users.User artist = users.getUser(username);
+                            if (!(artist instanceof Musician) || artist == null) {
+                                System.out.println("Invalid username, the username you " +
+                                        "selected is either not an artist or does not exist!");
+                                return;
+                            }
 
+                            // always need to add the album to the
+                            // artist and then the artist to the album
+                            ((Musician) artist).addAlbum(album);
+                            album.addArtist((Musician) artist);
                             break;
                         case 4:
+                            System.out.println("Username of the artist: ");
+                            String username2 = sc.nextLine();
+                            boolean success2 = album.deleteArtist(username2);
+                            if (!success2) {
+                                System.out.println("The system was not able to delete the user you" +
+                                        " provided!");
+                                sc.nextLine();
+                            }
                             break;
                         case 5:
+                            System.out.println("Name of the track: ");
+                            String trackName = sc.nextLine();
+                            System.out.println("Genre of the track: ");
+                            String genre = sc.nextLine();
+                            System.out.println("Duration: ");
+                            int duration = sc.nextInt();
+
+                            Backend.Tracks.Track newTrack = new Track(trackName, genre ,duration);
+                            boolean success3 = album.addTrack(newTrack);
+                            if (!success3) {
+                                System.out.println("The name of the track needs to be unique inside the album!");
+                                sc.nextLine();
+                            }
+                            break;
+                        case 6:
+                            System.out.println("Ending recording sessions...");
+                            boolean res = sessions.endRecordingSessions();
+                            if (!res) {
+                                System.out.println("No recording session was ended!");
+                                sc.nextLine();
+                            }
                             break;
                         default:
                             System.out.println("Invalid selection");
@@ -221,15 +266,52 @@ public class Mprodutor implements Menu {
 
                 break;
             case 3:
-
+                System.out.println("Ending recording sessions...");
+                boolean res = sessions.endRecordingSessions();
+                if (!res) {
+                    System.out.println("No recording session was ended!");
+                    sc.nextLine();
+                }
                 break;
             case 4:
+                System.out.println("Select the album to examine: ");
+                String albumName = sc.nextLine();
+                Backend.Albums.Album album = albums.getAlbum(albumName);
 
+                if (!(album instanceof AlbumEditado)){
+                    System.out.println(albumName + " was never edited here!");
+                    return;
+                }
+                if (((Backend.Albums.AlbumEditado) album).isEdited()) {
+                    System.out.println(albumName + " this album is now complete! Date of conclusion: "
+                                        + album.getDate());
+                } else {
+                    System.out.println(albumName + " is still being edited!");
+                }
                 break;
             case 5:
+                Set<Album> oldProjects = user.getOldAlbums();
+                Set<AlbumEditado> myEditedProjects = user.getProjetos();
 
+
+                System.out.println("--- Old albums ---");
+                if (oldProjects.isEmpty()) { System.out.println("No albums...");}
+                else {
+                    for (Album album1: oldProjects){
+                        System.out.println(album1);
+                    }
+                }
+
+                System.out.println("--- New albums ---");
+                if(myEditedProjects.isEmpty()) {
+                    System.out.println("No albums...");
+                } else {
+                    for (AlbumEditado album1 : myEditedProjects) {
+                        System.out.println(album1);
+                    }
+                }
+                sc.nextLine();
                 break;
-
             case 6:
                 
                 break;

@@ -4,11 +4,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Scanner;
-import java.util.Set;
+import java.util.*;
 
 import Backend.Instruments.Repos;
 import Backend.Users.Admin;
@@ -113,7 +109,7 @@ public class Madmin implements Menu {
                     return;
                 }
                 System.out.print("Select a session request: ");
-                int id = sc.nextInt();
+                UUID id = UUID.fromString(sc.nextLine());
                 System.out.println("Accept or reject? (y/n)");
                 String answer = sc.nextLine();
                 if (answer.equals("y")) {

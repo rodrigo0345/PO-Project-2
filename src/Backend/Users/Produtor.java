@@ -27,6 +27,7 @@ public class Produtor extends User {
         return projetos;
     }
 
+    // when the album is added by the admin
     public void addOldAlbum(Backend.Albums.Album album) {
         oldAlbums.add(album);
     }

@@ -3,6 +3,7 @@ package Backend.Users;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.UUID;
 
 import Backend.Instruments.*;
 
@@ -91,11 +92,11 @@ public class Admin extends User {
     public void showStats() {
     }
 
-    public void acceptSessionRequest(int id) {
+    public void acceptSessionRequest(UUID id) {
         (getSessionsRepo().getSession(id)).setAccepted(true);
     }
 
-    public void rejectSessionRequest(int id) {
+    public void rejectSessionRequest(UUID id) {
         (getSessionsRepo().getSession(id)).setAccepted(false);
     }
 
@@ -104,6 +105,7 @@ public class Admin extends User {
                 usersRepo,
                 sessionsRepo);
         getAlbumsRepo().addAlbum(album);
+        produtor.addOldAlbum(album);
     }
 
     public void addMusicianToAlbum(String username, String titleOfTheAlbum) {
