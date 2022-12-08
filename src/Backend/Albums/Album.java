@@ -1,5 +1,6 @@
 package Backend.Albums;
 
+import Backend.Tracks.Track;
 import Backend.Users.Musician;
 import Backend.Users.Produtor;
 
@@ -28,7 +29,8 @@ public class Album implements Serializable, Comparable<Album> {
 
     public Album(String titulo, String genero, LocalDate date, Produtor produtor, Backend.Instruments.Repos instruments,
             Backend.Albums.Repos albums,
-            Backend.Users.Repos users, Backend.Sessions.Repos sessions) {
+            Backend.Users.Repos users, Backend.Sessions.Repos sessions)
+            throws IllegalArgumentException {
         this.genero = genero;
         this.date = date;
         this.produtor = produtor;
@@ -41,7 +43,7 @@ public class Album implements Serializable, Comparable<Album> {
     }
 
     // only used for testing
-    public Album(String titulo){
+    public Album(String titulo) throws IllegalArgumentException{
         this.instrumentsRepo = new Backend.Instruments.Repos();
         this.albumsRepo = new Backend.Albums.Repos();
         this.usersRepo = new Backend.Users.Repos();
@@ -54,6 +56,7 @@ public class Album implements Serializable, Comparable<Album> {
     public boolean addArtist(Musician artist) {
         boolean a = artists.add(artist);
         boolean b = artist.addAlbum(this);
+        artist.addAlbum(this);
         return a && b;
     }
 
@@ -94,8 +97,9 @@ public class Album implements Serializable, Comparable<Album> {
         return this.titulo;
     }
 
-    public boolean setTitulo(String titulo) {
-        if (!this.albumsRepo.isTituloValid(titulo)) return false;
+    public boolean setTitulo(String titulo) throws IllegalArgumentException {
+        if (!this.albumsRepo.isTituloValid(titulo)) throw new
+                                                    IllegalArgumentException(titulo + " already exists");
         this.titulo = titulo;
         return true;
     }
@@ -120,7 +124,9 @@ public class Album implements Serializable, Comparable<Album> {
     }
 
     public void setProdutor(Produtor produtor) {
+        if (produtor == null) { return; }
         this.produtor = produtor;
+        this.produtor.addOldAlbum(this);
     }
 
     public Produtor getProdutor() {
@@ -129,11 +135,24 @@ public class Album implements Serializable, Comparable<Album> {
 
     @Override
     public String toString() {
-        return "titulo=" + titulo + ", genero=" + genero + ", date=" + date;
+        String aux = "";
+        if(this.produtor != null){
+            aux = "produtor=" + this.produtor.getUsername();
+        }
+
+        aux += "titulo=" + titulo + ", genero=" + genero + ", date=" + date;
+
+        int i = 0;
+        for(Musician m: this.artists){
+            i++;
+            aux += "\n" + i + " " + m.getUsername();
+        }
+        return aux;
     }
 
     @Override
     public int compareTo(Album o) {
+        if (o == null) return -1;
         return this.getTitulo().compareTo(o.getTitulo());
     }
 
@@ -152,5 +171,23 @@ public class Album implements Serializable, Comparable<Album> {
 
     public Backend.Albums.Repos getAlbumsRepo() {
         return albumsRepo;
+    }
+
+    public void setGenero(String genre) {
+        this.genero = genre;
+    }
+
+    public boolean removeTrack(String trackname) {
+        if(!this.doesTrackExist(trackname)) {return false;};
+        tracks.remove(trackname);
+        return true;
+    }
+
+    public Map<String, Track> getTracks() {
+        return tracks;
+    }
+
+    public boolean doesTrackExist(String trackname){
+        return this.getTracks().containsKey(trackname);
     }
 }

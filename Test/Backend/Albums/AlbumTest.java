@@ -1,6 +1,8 @@
 package Backend.Albums;
 
+import Backend.Tracks.Track;
 import Backend.Users.Musician;
+import Backend.Users.Produtor;
 import org.junit.Test;
 
 import java.time.LocalDate;
@@ -76,29 +78,63 @@ public class AlbumTest {
 
     @Test
     public void getGenero() {
+        assertNull(album.getGenero());
+        album.setGenero("Rock");
+        assertEquals(album.getGenero(), "Rock");
     }
 
     @Test
     public void addTrack() {
+        Backend.Tracks.Track track = new Track("Track1", "Pop", 120);
+        Backend.Tracks.Track track2 = new Track("Track1", "Rock", 320);
+        boolean success = album.addTrack(track);
+        assertTrue(success);
+        success = album.addTrack(track2);
+        assertFalse(success);
+        assertEquals(album.getTracks().size(), 1);
     }
 
     @Test
     public void removeTrack() {
+        addTrack();
+        boolean success = album.removeTrack("Track1");
+        assertTrue(success);
+        success = album.removeTrack("Track1");
+        assertFalse(success);
+        assertEquals(album.getTracks().size(), 0);
     }
 
     @Test
     public void setProdutor() {
+        Produtor p = new Produtor("Nome", "Nome@gmail.com", "nome", "nome",
+                                    album.getUsersRepo(), album.getInstrumentsRepo(), album.getAlbumsRepo(),
+                                        album.getSessionsRepo());
+
+        album.setProdutor(p);
+        assertEquals(album.getProdutor().getUsername(), "nome");
+        assertEquals(p.getOldAlbums().size(), 1);
+        assertEquals(p.getOldAlbum("Random").toString(), album.toString());
     }
 
     @Test
     public void getProdutor() {
-    }
-
-    @Test
-    public void testToString() {
+        setProdutor();
+        assertEquals(album.getProdutor().getUsername(), "nome");
+        album.setProdutor(null);
+        assertNotNull(album.getProdutor());
     }
 
     @Test
     public void compareTo() {
+        try {
+            Album album1 = new Album("Random", "Rock",
+                    Frontend.Utils.Generics.stringToDate("11/12/2000"),null,
+                    album.getInstrumentsRepo(), album.getAlbumsRepo(), album.getUsersRepo(),
+                    album.getSessionsRepo());
+            assertEquals(album.compareTo(album1), 0);
+        } catch(IllegalArgumentException e){
+            System.out.println(e.getMessage());
+            assertEquals(album.compareTo(null), -1);
+        }
     }
 }

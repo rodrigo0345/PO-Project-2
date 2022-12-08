@@ -1,5 +1,6 @@
 package Backend.Users;
 
+import Backend.Albums.Album;
 import Backend.Albums.AlbumEditado;
 import Backend.Sessions.Session;
 
@@ -15,6 +16,7 @@ public class Produtor extends User {
     public Produtor(String name, String email, String username, String password, Backend.Users.Repos users,
             Backend.Instruments.Repos instruments, Backend.Albums.Repos albums, Backend.Sessions.Repos sessions) {
         super(name, email, username, password, users, instruments, albums, sessions);
+        this.usersRepo.addUser(this);
     }
 
     public void addProjeto(Backend.Albums.AlbumEditado projeto) {
@@ -78,5 +80,9 @@ public class Produtor extends User {
             }
         }
         return null;
+    }
+
+    public Album getOldAlbum(String nome) {
+        return albumsRepo.getAlbum(nome);
     }
 }

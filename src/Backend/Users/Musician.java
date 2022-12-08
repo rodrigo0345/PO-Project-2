@@ -15,6 +15,7 @@ public class Musician extends User {
     public Musician(String name, String email, String username, String password, Backend.Users.Repos users,
             Backend.Instruments.Repos instruments, Backend.Albums.Repos albums, Backend.Sessions.Repos sessions) {
         super(name, email, username, password, users, instruments, albums, sessions);
+        usersRepo.addUser(this);
     }
 
     public boolean addAlbum(Backend.Albums.Album album) {

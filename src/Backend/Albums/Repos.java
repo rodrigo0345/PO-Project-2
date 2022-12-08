@@ -20,7 +20,7 @@ public class Repos implements Serializable {
         return albums;
     }
 
-    public boolean addAlbum(Album album) {
+    public boolean addAlbum(Album album) throws NullPointerException {
         if (album.getTitulo() == null) return false;
         if (!isTituloValid(album.getTitulo())) return false;
         albums.put(album.getTitulo(), album);
