@@ -322,7 +322,7 @@ public class Mprodutor implements Menu {
                 this.user = null;
                 break;
             default:
-
+                System.out.println("Invalid selection");
                 break;
         }
 
