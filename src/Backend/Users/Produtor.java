@@ -20,8 +20,7 @@ public class Produtor extends User {
     }
 
     public void addProjeto(Backend.Albums.AlbumEditado projeto) {
-        if (projeto.getProducer() != null)
-            return;
+        if (projeto.getProducer() != null && !projeto.getProducer().equals(this)) return;
         projetos.add(projeto);
     }
 
