@@ -3,7 +3,7 @@ package Backend.Users;
 import java.io.Serializable;
 
 public abstract class User implements Comparable<User>, Serializable {
-    private static long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
     private String name;
     private String email;
     private String username;
@@ -18,12 +18,12 @@ public abstract class User implements Comparable<User>, Serializable {
             Backend.Instruments.Repos instruments, Backend.Albums.Repos albums, Backend.Sessions.Repos sessions) {
         this.name = name;
         this.email = email;
-        this.username = username;
         this.password = password;
         this.usersRepo = users;
         this.instrumentsRepo = instruments;
         this.albumsRepo = albums;
         this.sessionsRepo = sessions;
+        this.setUsername(username);
     }
 
     public Backend.Sessions.Repos getSessionsRepo() {

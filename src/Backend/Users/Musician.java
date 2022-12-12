@@ -8,17 +8,18 @@ import Backend.Instruments.Instrument;
 import Backend.Sessions.Session;
 
 public class Musician extends User {
-    private Set<Backend.Albums.Album> albums = new TreeSet<>();
-    private Set<Instrument> instruments = new TreeSet<>();
-    private Set<Backend.Sessions.Session> sessions = new TreeSet<>();
+    private final Set<Backend.Albums.Album> albums = new TreeSet<>();
+    private final Set<Instrument> instruments = new TreeSet<>();
+    private final Set<Backend.Sessions.Session> sessions = new TreeSet<>();
 
     public Musician(String name, String email, String username, String password, Backend.Users.Repos users,
             Backend.Instruments.Repos instruments, Backend.Albums.Repos albums, Backend.Sessions.Repos sessions) {
         super(name, email, username, password, users, instruments, albums, sessions);
+        usersRepo.addUser(this);
     }
 
-    public void addAlbum(Backend.Albums.Album album) {
-        albums.add(album);
+    public boolean addAlbum(Backend.Albums.Album album) {
+        return albums.add(album);
     }
 
     public void removeAlbum(Backend.Albums.Album album) {
@@ -53,9 +54,7 @@ public class Musician extends User {
     @Override
     public boolean equals(Object a) {
         if (a instanceof Musician) {
-            if (this.getUsername() == ((Musician) a).getUsername()) {
-                return true;
-            }
+            return this.getUsername() == ((Musician) a).getUsername();
         }
         return false;
     }

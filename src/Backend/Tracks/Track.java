@@ -7,7 +7,7 @@ import java.util.TreeSet;
 public class Track implements Serializable {
     private static final long serialVersionUID = 9L;
 
-    private Set<Backend.Users.Musician> artists = new TreeSet<>();
+    private final Set<Backend.Users.Musician> artists = new TreeSet<>();
     private String titulo;
     private String genero;
     private int duration;

@@ -4,11 +4,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Scanner;
-import java.util.Set;
+import java.util.*;
 
 import Backend.Instruments.Repos;
 import Backend.Users.Admin;
@@ -113,7 +109,7 @@ public class Madmin implements Menu {
                     return;
                 }
                 System.out.print("Select a session request: ");
-                int id = sc.nextInt();
+                UUID id = UUID.fromString(sc.nextLine());
                 System.out.println("Accept or reject? (y/n)");
                 String answer = sc.nextLine();
                 if (answer.equals("y")) {
@@ -197,7 +193,7 @@ public class Madmin implements Menu {
                 }
 
                 // adicionar musicas ao album
-                String answer2 = new String("y");
+                String answer2 = "y";
                 while (answer2.equals("y")) {
                     System.out.println("Add a song to the album? (y/n)");
                     answer2 = sc.nextLine();
@@ -241,7 +237,7 @@ public class Madmin implements Menu {
                 user.addTrackToAlbum(titleOfTheAlbum, t);
 
                 // add musicians to the track
-                String answer3 = new String("y");
+                String answer3 = "y";
                 while (answer3.equals("y")) {
                     System.out.println("Add a new musician to the track? (y/n)");
                     answer3 = sc.nextLine();

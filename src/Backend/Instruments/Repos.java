@@ -5,8 +5,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Repos implements Serializable {
-    private Map<String, Instrument> instruments = new HashMap<>();
-    private static long serialVersionUID = 5L;
+    private final Map<String, Instrument> instruments = new HashMap<>();
+    private static final long serialVersionUID = 5L;
 
     public void addInstrument(Instrument instrument) {
         instruments.put(instrument.getName(), instrument);

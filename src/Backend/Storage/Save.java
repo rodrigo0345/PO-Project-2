@@ -15,7 +15,7 @@ public class Save extends Thread {
         this.pathToStore = path;
     }
 
-    public synchronized boolean save() throws IOException, FileNotFoundException {
+    public synchronized boolean save() throws IOException {
         FileOutputStream fos = new FileOutputStream(pathToStore);
         ObjectOutputStream oos = new ObjectOutputStream(fos);
         try {

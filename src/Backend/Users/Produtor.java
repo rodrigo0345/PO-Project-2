@@ -1,21 +1,26 @@
 package Backend.Users;
 
+import Backend.Albums.Album;
+import Backend.Albums.AlbumEditado;
+import Backend.Sessions.Session;
+
 import java.text.DateFormat;
+import java.time.LocalDate;
 import java.util.Set;
 import java.util.TreeSet;
 
 public class Produtor extends User {
-    private Set<Backend.Albums.AlbumEditado> projetos = new TreeSet<>();
-    private Set<Backend.Albums.Album> oldAlbums = new TreeSet<>();
+    private final Set<Backend.Albums.AlbumEditado> projetos = new TreeSet<>();
+    private final Set<Backend.Albums.Album> oldAlbums = new TreeSet<>();
 
     public Produtor(String name, String email, String username, String password, Backend.Users.Repos users,
             Backend.Instruments.Repos instruments, Backend.Albums.Repos albums, Backend.Sessions.Repos sessions) {
         super(name, email, username, password, users, instruments, albums, sessions);
+        this.usersRepo.addUser(this);
     }
 
     public void addProjeto(Backend.Albums.AlbumEditado projeto) {
-        if (projeto.getProducer() != null)
-            return;
+        if (projeto.getProducer() != null && !projeto.getProducer().equals(this)) return;
         projetos.add(projeto);
     }
 
@@ -27,6 +32,7 @@ public class Produtor extends User {
         return projetos;
     }
 
+    // when the album is added by the admin
     public void addOldAlbum(Backend.Albums.Album album) {
         oldAlbums.add(album);
     }
@@ -65,4 +71,17 @@ public class Produtor extends User {
         return albumEdit;
     }
 
+    public Session findSessionByDate(LocalDate d) {
+        for(AlbumEditado a: projetos) {
+            Set<Backend.Sessions.Session> associatedSessions = a.getAllSessions();
+            for (Backend.Sessions.Session s : associatedSessions) {
+                if (s.getDate().equals(d)) return s;
+            }
+        }
+        return null;
+    }
+
+    public Album getOldAlbum(String nome) {
+        return albumsRepo.getAlbum(nome);
+    }
 }

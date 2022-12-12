@@ -4,9 +4,9 @@ import java.io.Serializable;
 import java.util.UUID;
 
 public class Instrument implements Serializable {
-    private static long serialVersionUID = 6L;
-    private String name;
-    private UUID id;
+    private static final long serialVersionUID = 6L;
+    private final String name;
+    private final UUID id;
 
     public Instrument(String name) {
         this.name = name;

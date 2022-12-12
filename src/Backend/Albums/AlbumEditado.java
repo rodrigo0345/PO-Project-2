@@ -20,15 +20,23 @@ public class AlbumEditado extends Album {
         this.producer = producer;
     }
 
+    public AlbumEditado(String titulo){
+        super(titulo);
+        this.isEdited = false;
+        this.producer = null;
+    }
+
     public void setProducer(Backend.Users.Produtor producer) {
+        if (producer == null) return;
         this.producer = producer;
+        this.producer.addProjeto(this);
     }
 
     public Backend.Users.Produtor getProducer() {
         return producer;
     }
 
-    private void setEdited() {
+    public void setAlbumAsComplete() {
         this.isEdited = true;
         this.setDate(LocalDate.now());
     }
@@ -69,5 +77,9 @@ public class AlbumEditado extends Album {
         if (sessions.contains(session)) {
             session.setCompleted(true);
         }
+    }
+
+    public Set<Backend.Sessions.Session> getAllSessions() {
+        return sessions;
     }
 }

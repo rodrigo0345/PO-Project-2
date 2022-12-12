@@ -87,7 +87,7 @@ public class Mmusico implements Menu {
 
                 for (Backend.Albums.Album album : aux) {
                     if (album instanceof Backend.Albums.Album) {
-                        System.out.println(album.toString());
+                        System.out.println(album);
                     }
                 }
                 sc.nextLine();
