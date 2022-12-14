@@ -9,7 +9,7 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.util.*;
 
-public class Session implements Serializable {
+public class Session implements Serializable, Comparable<Session> {
     private static final long serialVersionUID = 4L;
     private final Map<String, Musician> invitedArtists = new HashMap<>();
     private final Set<Instrument> pendentInstruments = new TreeSet<>();
@@ -62,7 +62,9 @@ public class Session implements Serializable {
         Session other = (Session) obj;
         if (id == null) {
             return other.id == null;
-        } else return id.equals(other.id);
+        }
+        return other.getId().equals(this.id)
+                || other.getDate().equals(this.id);
     }
 
     // used for exceptions
@@ -112,5 +114,22 @@ public class Session implements Serializable {
 
     public Set<Instrument> getApprovedInstruments(){
         return this.instruments;
+    }
+
+    @Override
+    public int compareTo(Session o) {
+        if(o.date.isBefore(this.date)){
+            return -1;
+        } else if(o.date.equals(this.date)) {
+            return 0;
+        }
+        return 1;
+    }
+
+    public boolean equals(Session o){
+        if(o.date.equals(this.date)) { return true; }
+        else if(o.id.equals(o.getId())) { return true; }
+
+        return false;
     }
 }

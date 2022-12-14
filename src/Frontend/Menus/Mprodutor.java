@@ -135,7 +135,8 @@ public class Mprodutor implements Menu {
                         try {
                             DateTimeFormatter df = DateTimeFormatter.ofPattern("dd MM yyyy", Locale.ITALY);
                             newDateFormatted = LocalDate.parse(newDate, df);
-                            newSession = album.addSession(newDateFormatted);
+                            album.addSession(newDateFormatted);
+                            newSession = album.getLastSessionAdded();
                         } catch (IllegalArgumentException e){
                             System.out.println(e.getMessage());
                         } catch (Exception e) {
