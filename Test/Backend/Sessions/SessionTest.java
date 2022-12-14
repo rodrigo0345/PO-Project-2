@@ -45,15 +45,29 @@ public class SessionTest {
         Admin su = new Admin("Teste", "Teste@gmail.com", "admin", "admin", album.getInstrumentsRepo(),
                                                     album.getAlbumsRepo(), album.getUsersRepo(), album.getSessionsRepo() );
         su.addInstrument("Guitarra");
+        su.addInstrument("Violino");
         session.addPendingInstrument(i);
     }
 
     @Test
     public void getPendentInstruments() {
+        addPendendingInstrument();
+        session.addPendingInstrument(new Instrument("violino"));
+        assertEquals(2, session.getPendentInstruments().size());
     }
 
     @Test
     public void approveInstrument() {
+        getPendentInstruments();
+        Admin su = new Admin("Teste", "Teste@gmail.com", "admin", "admin", album.getInstrumentsRepo(),
+                album.getAlbumsRepo(), album.getUsersRepo(), album.getSessionsRepo() );
+        su.acceptInstrumentRequest("guitarra", session);
+        assertEquals(1, session.getApprovedInstruments().size());
+        assertEquals(1, session.getPendentInstruments().size());
+
+        su.denyInstrumentRequest("violino", session);
+        assertEquals(0, session.getPendentInstruments().size());
+        assertEquals(1, session.getApprovedInstruments().size());
     }
 
     @Test

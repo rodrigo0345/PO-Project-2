@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.UUID;
 
 import Backend.Instruments.*;
+import Backend.Sessions.Session;
 
 public class Admin extends User {
 
@@ -18,6 +19,14 @@ public class Admin extends User {
     public void addInstrument(String name) {
         Instrument instrument = new Instrument(name);
         getInstrumentsRepo().addInstrument(instrument);
+    }
+
+    public void acceptInstrumentRequest(String name, Session session){
+        session.approveInstrument(instrumentsRepo.getInstrument(name));
+    }
+
+    public void denyInstrumentRequest(String name, Session session){
+        session.denyInstrument(instrumentsRepo.getInstrument(name));
     }
 
     public void removeInstrument(String name) {
