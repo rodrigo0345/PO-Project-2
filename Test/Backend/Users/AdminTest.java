@@ -1,16 +1,25 @@
 package Backend.Users;
 
 import Backend.Albums.Album;
+import Backend.Albums.AlbumEditado;
 import Backend.Instruments.Instrument;
 import Backend.Sessions.Session;
 import org.junit.Test;
+
+import java.util.Set;
+import java.util.TreeSet;
 
 import static org.junit.Assert.*;
 
 public class AdminTest {
 
-    Admin admin = new Admin("Teste", "Teste@gmail.com", "admin", "admin",
+    private Admin admin = new Admin("Teste", "Teste@gmail.com", "admin", "admin",
             new Backend.Instruments.Repos(), new Backend.Albums.Repos(), new Backend.Users.Repos(), new Backend.Sessions.Repos());
+
+    private Produtor produtor = new Produtor("name", "email@email.com", "name", "name",
+            admin.getUsersRepo(), admin.getInstrumentsRepo(), admin.getAlbumsRepo(), admin.getSessionsRepo());
+    private AlbumEditado album = new AlbumEditado("R", "rock",
+                admin.getInstrumentsRepo(), admin.getAlbumsRepo(), produtor.getUsersRepo(), admin.getSessionsRepo(), produtor);
     @Test
     public void addInstrument() {
         admin.addInstrument("flute");
@@ -21,7 +30,7 @@ public class AdminTest {
     @Test
     public void removeInstrument() {
         addInstrument();
-        Session s = new Session(Frontend.Utils.Generics.stringToDate("21/12/2000"), admin.getSessionsRepo(), admin.getUsersRepo(),
+        Session s = new Session(Frontend.Utils.Generics.stringToDate("21/12/2040"), album, admin.getSessionsRepo(), admin.getUsersRepo(),
                 admin.getInstrumentsRepo(), admin.getAlbumsRepo());
         s.addPendingInstrument(new Instrument("flute"));
         admin.removeInstrument("flute");
@@ -42,7 +51,7 @@ public class AdminTest {
 
         admin.addMusician("teste", "teste@gmail.com", "teste3", "teste");
         assertNotNull(admin.getUsersRepo().getUser("teste3"));
-        assertEquals(2, admin.getUsersRepo().getUsers().size());
+        assertEquals(3, admin.getUsersRepo().getUsers().size());
     }
 
     @Test
@@ -57,7 +66,7 @@ public class AdminTest {
 
         admin.addProdutor("teste", "teste@gmail.com", "teste3", "teste");
         assertNotNull(admin.getUsersRepo().getUser("teste3"));
-        assertEquals(2, admin.getUsersRepo().getUsers().size());
+        assertEquals(3, admin.getUsersRepo().getUsers().size());
     }
 
     @Test
@@ -89,11 +98,29 @@ public class AdminTest {
             throw new RuntimeException(e);
         }
         assertNull(admin.getUsersRepo().getUser("teste3"));
-        assertEquals(2, admin.getUsersRepo().getUsers().size());
+        assertEquals(3, admin.getUsersRepo().getUsers().size());
     }
 
     @Test
-    public void showAllSessionRequests() {
+    public void getAllSessionRequests() {
+        AlbumEditado album = new AlbumEditado(
+                "Something",
+                "Rock",
+                admin.getInstrumentsRepo(),
+                admin.getAlbumsRepo(),
+                admin.getUsersRepo(),
+                admin.getSessionsRepo(),
+                produtor
+        );
+        Session s1 = new Session(Frontend.Utils.Generics.stringToDate("11/12/2023"), album, admin.getSessionsRepo(),
+                admin.getUsersRepo(), admin.getInstrumentsRepo(), admin.getAlbumsRepo());
+        Session s2 = new Session(Frontend.Utils.Generics.stringToDate("14/12/2023"), album, admin.getSessionsRepo(),
+                admin.getUsersRepo(), admin.getInstrumentsRepo(), admin.getAlbumsRepo());
+
+        Set<Session> aux = new TreeSet<>();
+        aux.add(s1); aux.add(s2);
+        Set<Session> s = admin.getAllSessionRequests();
+        assertEquals(aux, s);
     }
 
     @Test

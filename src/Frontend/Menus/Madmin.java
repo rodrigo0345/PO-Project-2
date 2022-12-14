@@ -104,7 +104,7 @@ public class Madmin implements Menu {
                 }
                 break;
             case 5:
-                if (this.user.showAllSessionRequests() == -1) {
+                if (this.user.getAllSessionRequests() == null) {
                     System.out.println("No session requests");
                     return;
                 }

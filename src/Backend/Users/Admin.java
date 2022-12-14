@@ -3,6 +3,8 @@ package Backend.Users;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.UUID;
 
 import Backend.Albums.Album;
@@ -92,22 +94,23 @@ public class Admin extends User {
     }
 
     // returns -1 if the Sessions repo is empty
-    public int showAllSessionRequests() {
-        if (getSessionsRepo().getSessions().size() == 0) {
-            return -1;
+    public Set<Session> getAllSessionRequests() {
+        Set<Session> s = new TreeSet<Session>();
+        if (getSessionsRepo().getPendingSessions().size() == 0) {
+            return null;
         } else {
-            for (Backend.Sessions.Session session : getSessionsRepo().getSessions()) {
-                if (session.getAccepted() == null) {
-                    System.out.println(session);
+            for (Backend.Sessions.Session session : getSessionsRepo().getPendingSessions()) {
+                if (session.isAccepted() == false) {
+                    s.add(session);
                 }
             }
         }
-        return 0;
+        return s;
     }
 
     public void showAllRecordingSessions() {
         for (Backend.Sessions.Session session : getSessionsRepo().getSessions()) {
-            if (session.getAccepted().equals(true)) {
+            if (session.isAccepted() == true) {
                 System.out.println(session);
             }
         }

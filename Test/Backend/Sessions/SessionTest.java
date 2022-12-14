@@ -1,6 +1,7 @@
 package Backend.Sessions;
 
 import Backend.Albums.Album;
+import Backend.Albums.AlbumEditado;
 import Backend.Instruments.Instrument;
 import Backend.Users.Admin;
 import Backend.Users.Musician;
@@ -9,8 +10,8 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class SessionTest {
-    Album album = new Album("Random");
-    Session session = new Session(Frontend.Utils.Generics.stringToDate("11/03/2050"), album.getSessionsRepo(),
+    AlbumEditado album = new AlbumEditado("Random");
+    Session session = new Session(Frontend.Utils.Generics.stringToDate("11/03/2050"), album, album.getSessionsRepo(),
                                             album.getUsersRepo(), album.getInstrumentsRepo(), album.getAlbumsRepo());
 
     @Test

@@ -1,5 +1,7 @@
 package Backend.Albums;
 
+import Backend.Sessions.Session;
+
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.Set;
@@ -10,7 +12,6 @@ public class AlbumEditado extends Album {
     private boolean isEdited;
     private final Set<Backend.Sessions.Session> sessions = new TreeSet<>();
     private Backend.Users.Produtor producer;
-
     private Backend.Sessions.Session lastSessionAdded;
 
     public AlbumEditado(String titulo, String genero,
@@ -54,10 +55,21 @@ public class AlbumEditado extends Album {
         if (date.isBefore(LocalDate.now())) {
             throw new IllegalArgumentException("The given date is a past date");
         }
-        Backend.Sessions.Session session = new Backend.Sessions.Session(date, getSessionsRepo(),
+        Backend.Sessions.Session session = new Backend.Sessions.Session(date, this, getSessionsRepo(),
                                                             getUsersRepo(), getInstrumentsRepo(), getAlbumsRepo());
         this.lastSessionAdded = session;
         return sessions.add(session);
+    }
+
+    public boolean addSession(Session s){
+        if (this.isEdited) {
+            throw new IllegalArgumentException("The album is already finished");
+        }
+        if (s.getDate().isBefore(LocalDate.now())) {
+            throw new IllegalArgumentException("The given date is a past date");
+        }
+        this.lastSessionAdded = s;
+        return sessions.add(s);
     }
 
     public Backend.Sessions.Session getLastSessionAdded(){

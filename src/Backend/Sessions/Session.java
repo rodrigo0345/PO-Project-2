@@ -1,5 +1,6 @@
 package Backend.Sessions;
 
+import Backend.Albums.AlbumEditado;
 import Backend.Instruments.Instrument;
 import Backend.Users.Musician;
 
@@ -16,22 +17,23 @@ public class Session implements Serializable, Comparable<Session> {
     private LocalDate date;
     private UUID id = UUID.randomUUID();
     private boolean completed = false;
-
     private boolean accepted = false;
-
+    private AlbumEditado album = null;
     private Backend.Sessions.Repos sessionRepos;
     private Backend.Users.Repos userRepos;
     private Backend.Instruments.Repos instrumentRepos;
     private Backend.Albums.Repos albumRepos;
 
-    public Session(LocalDate date, Backend.Sessions.Repos sessions, Backend.Users.Repos users,
-                   Backend.Instruments.Repos instruments, Backend.Albums.Repos albums) {
-
+    public Session(LocalDate date, AlbumEditado album, Backend.Sessions.Repos sessions, Backend.Users.Repos users,
+                   Backend.Instruments.Repos instruments, Backend.Albums.Repos albums) throws IllegalArgumentException {
         this.date = date;
         this.sessionRepos = sessions;
         this.userRepos = users;
         this.instrumentRepos = instruments;
         this.albumRepos = albums;
+        this.album = album;
+        album.addSession(this);
+        sessions.addPendingSession(this);
     }
 
     public LocalDate getDate() {
@@ -83,7 +85,7 @@ public class Session implements Serializable, Comparable<Session> {
         this.id = id2;
     }
 
-    public Object getAccepted() {
+    public boolean isAccepted() {
         return accepted;
     }
 
