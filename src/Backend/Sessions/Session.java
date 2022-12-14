@@ -19,8 +19,21 @@ public class Session implements Serializable, Comparable<Session> {
     private UUID id = UUID.randomUUID();
     private boolean completed = false;
 
-    public Session(LocalDate date) {
+    private boolean accepted = false;
+
+    private Backend.Sessions.Repos sessionRepos;
+    private Backend.Users.Repos userRepos;
+    private Backend.Instruments.Repos instrumentRepos;
+    private Backend.Albums.Repos albumRepos;
+
+    public Session(LocalDate date, Backend.Sessions.Repos sessions, Backend.Users.Repos users,
+                   Backend.Instruments.Repos instruments, Backend.Albums.Repos albums) {
+
         this.date = date;
+        this.sessionRepos = sessions;
+        this.userRepos = users;
+        this.instrumentRepos = instruments;
+        this.albumRepos = albums;
     }
 
     public LocalDate getDate() {
@@ -73,10 +86,11 @@ public class Session implements Serializable, Comparable<Session> {
     }
 
     public Object getAccepted() {
-        return null;
+        return accepted;
     }
 
-    public void setAccepted(boolean b) {
+    public void setAccepted(boolean accepted) {
+        this.accepted = accepted;
     }
 
     public void addInvitedMusician(Backend.Users.Musician m){
@@ -87,7 +101,7 @@ public class Session implements Serializable, Comparable<Session> {
         return this.invitedArtists.get(musician.getUsername());
     }
 
-    public Backend.Users.Musician getInviteMusician(String username){
+    public Backend.Users.Musician getInvitedMusician(String username){
         return this.invitedArtists.get(username);
     }
 
@@ -96,7 +110,10 @@ public class Session implements Serializable, Comparable<Session> {
     }
 
     // waits for the permission of the administrator
-    public void addPendendingInstrument(Instrument instrument) {
+    public void addPendingInstrument(Instrument instrument) throws IllegalArgumentException {
+        if(!instrumentRepos.getInstruments().containsKey(instrument.getName().toLowerCase())) {
+            throw new IllegalArgumentException("The instrument you requested does not exist in the studio yet.");
+        }
         this.pendentInstruments.add(instrument);
     }
 
@@ -104,10 +121,12 @@ public class Session implements Serializable, Comparable<Session> {
         return this.pendentInstruments;
     }
 
+    // only Administrators can have access to this method
     public boolean approveInstrument(Instrument instrument){
         return this.pendentInstruments.remove(instrument) && this.instruments.add(instrument);
     }
 
+    // only Administrators can have access to this method
     public boolean denyInstrument(Instrument instrument){
         return this.pendentInstruments.remove(instrument);
     }

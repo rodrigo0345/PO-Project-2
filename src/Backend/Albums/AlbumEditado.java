@@ -54,7 +54,8 @@ public class AlbumEditado extends Album {
         if (date.isBefore(LocalDate.now())) {
             throw new IllegalArgumentException("The given date is a past date");
         }
-        Backend.Sessions.Session session = new Backend.Sessions.Session(date);
+        Backend.Sessions.Session session = new Backend.Sessions.Session(date, getSessionsRepo(),
+                                                            getUsersRepo(), getInstrumentsRepo(), getAlbumsRepo());
         this.lastSessionAdded = session;
         return sessions.add(session);
     }

@@ -52,7 +52,8 @@ public class Album implements Serializable, Comparable<Album> {
         this.albumsRepo.addAlbum(this); // dependency
     }
 
-    // automatically adds the album to the musician's list of albums
+    // automatically adds the album to the musician's list of albums,
+    // should not be used to add artists to an edited album
     public boolean addArtist(Musician artist) {
         boolean a = artists.add(artist);
         boolean b = artist.addAlbum(this);

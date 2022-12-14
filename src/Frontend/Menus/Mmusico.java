@@ -115,7 +115,7 @@ public class Mmusico implements Menu {
                 Instrument instrument = instruments.getInstrument(instrumentName);
 
                 // the admin will then be able to accept or deny the request
-                selectedSession.addPendendingInstrument(instrument);
+                selectedSession.addPendingInstrument(instrument);
                 break;
             case 5:
                 System.out.println("See the state of all recording sessions");

@@ -3,7 +3,7 @@ package Backend.Instruments;
 import java.io.Serializable;
 import java.util.UUID;
 
-public class Instrument implements Serializable {
+public class Instrument implements Serializable, Comparable<Instrument> {
     private static final long serialVersionUID = 6L;
     private final String name;
     private final UUID id;
@@ -24,5 +24,10 @@ public class Instrument implements Serializable {
     @Override
     public String toString() {
         return "Instrument=" + name + ", id=" + id;
+    }
+
+    @Override
+    public int compareTo(Instrument o) {
+        return o.getName().toLowerCase().compareTo(this.name.toLowerCase());
     }
 }
