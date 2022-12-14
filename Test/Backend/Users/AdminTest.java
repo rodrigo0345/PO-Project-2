@@ -81,10 +81,15 @@ public class AdminTest {
             error = e.getMessage();
         }
         assertNotNull(error);
-
+        admin.addProdutor("r", "teste@gmail.com", "rodrigo", "0");
+        album.setProdutor((Produtor)admin.getUsersRepo().getUser("rodrigo", "0"));
+        try {
+            admin.removeUser("teste3");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         assertNull(admin.getUsersRepo().getUser("teste3"));
-        assertEquals(1, admin.getUsersRepo().getUsers().size());
-        assertNull(album.getProdutor());
+        assertEquals(2, admin.getUsersRepo().getUsers().size());
     }
 
     @Test
