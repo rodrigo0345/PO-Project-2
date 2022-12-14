@@ -68,9 +68,23 @@ public class SessionTest {
         su.denyInstrumentRequest("violino", session);
         assertEquals(0, session.getPendentInstruments().size());
         assertEquals(1, session.getApprovedInstruments().size());
+
+        su.denyInstrumentRequest("random", session);
     }
 
     @Test
     public void denyInstrument() {
+        getPendentInstruments();
+        Admin su = new Admin("Teste", "Teste@gmail.com", "admin", "admin", album.getInstrumentsRepo(),
+                album.getAlbumsRepo(), album.getUsersRepo(), album.getSessionsRepo() );
+        su.denyInstrumentRequest("guitarra", session);
+        assertEquals(0, session.getApprovedInstruments().size());
+        assertEquals(1, session.getPendentInstruments().size());
+
+        su.denyInstrumentRequest("violino", session);
+        assertEquals(0, session.getPendentInstruments().size());
+        assertEquals(0, session.getApprovedInstruments().size());
+
+        su.denyInstrumentRequest("random", session);
     }
 }

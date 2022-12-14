@@ -22,10 +22,12 @@ public class Admin extends User {
     }
 
     public void acceptInstrumentRequest(String name, Session session){
+        if (instrumentsRepo.getInstrument(name) == null) return; // does not exist
         session.approveInstrument(instrumentsRepo.getInstrument(name));
     }
 
     public void denyInstrumentRequest(String name, Session session){
+        if (instrumentsRepo.getInstrument(name) == null) return; // does not exist
         session.denyInstrument(instrumentsRepo.getInstrument(name));
     }
 
