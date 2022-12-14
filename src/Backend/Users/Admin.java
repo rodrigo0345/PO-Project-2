@@ -5,8 +5,10 @@ import java.time.LocalDate;
 import java.util.Date;
 import java.util.UUID;
 
+import Backend.Albums.Album;
 import Backend.Instruments.*;
 import Backend.Sessions.Session;
+import Backend.Tracks.Track;
 
 public class Admin extends User {
 
@@ -14,6 +16,7 @@ public class Admin extends User {
             Backend.Instruments.Repos instruments, Backend.Albums.Repos albums,
             Backend.Users.Repos users, Backend.Sessions.Repos sessions) {
         super(name, email, username, password, users, instruments, albums, sessions);
+        super.getUsersRepo().addUser(this);
     }
 
     public void addInstrument(String name) {
@@ -22,43 +25,69 @@ public class Admin extends User {
     }
 
     public void acceptInstrumentRequest(String name, Session session){
-        if (instrumentsRepo.getInstrument(name) == null) return; // does not exist
-        session.approveInstrument(instrumentsRepo.getInstrument(name));
+        if (super.getInstrumentsRepo().getInstrument(name) == null) return; // does not exist
+        session.approveInstrument(super.getInstrumentsRepo().getInstrument(name));
     }
 
     public void denyInstrumentRequest(String name, Session session){
-        if (instrumentsRepo.getInstrument(name) == null) return; // does not exist
-        session.denyInstrument(instrumentsRepo.getInstrument(name));
+        if (super.getInstrumentsRepo().getInstrument(name) == null) return; // does not exist
+        session.denyInstrument(super.getInstrumentsRepo().getInstrument(name));
     }
 
     public void removeInstrument(String name) {
+        Instrument ref = getInstrumentsRepo().getInstrument(name);
+
+        // preciso eliminar todas as referencias do objeto que vai ser eliminado
+        for(Backend.Sessions.Session s: super.getSessionsRepo().getSessions()){
+            s.getPendentInstruments().remove(ref);
+            s.getApprovedInstruments().remove(ref);
+        }
+        for(Backend.Sessions.Session s: super.getSessionsRepo().getPendingSessions()){
+            s.getApprovedInstruments().remove(ref);
+            s.getPendentInstruments().remove(ref);
+        }
         getInstrumentsRepo().removeInstrument(name);
     }
 
     public void addMusician(String name, String email, String username, String password)
             throws IllegalArgumentException {
-        Musician musician = new Musician(name, email, username, password, getUsersRepo(), getInstrumentsRepo(),
-                getAlbumsRepo(), getSessionsRepo());
-        if (getUsersRepo().isUserValid(musician)) {
-            getUsersRepo().addUser(musician);
-        } else {
+        if (!getUsersRepo().isUserValid(username)) {
             throw new IllegalArgumentException("Username already exists");
         }
+        // automatically adds it to the user repos
+        new Musician(name, email, username, password, getUsersRepo(), getInstrumentsRepo(),
+                getAlbumsRepo(), getSessionsRepo());
     }
 
     public void addProdutor(String name, String email, String username, String password)
             throws IllegalArgumentException {
-        Produtor produtor = new Produtor(name, email, username, password, getUsersRepo(), getInstrumentsRepo(),
-                getAlbumsRepo(), getSessionsRepo());
-        if (getUsersRepo().isUserValid(produtor)) {
-            getUsersRepo().addUser(produtor);
-        } else {
+        if (!getUsersRepo().isUserValid(username)) {
             throw new IllegalArgumentException("Username already exists");
         }
+        // automatically adds it to the user repos
+        new Produtor(name, email, username, password, getUsersRepo(), getInstrumentsRepo(),
+                getAlbumsRepo(), getSessionsRepo());
     }
 
-    public void removeUser(String username) {
+    public void removeUser(String username) throws Exception {
         // implement a way of removing all the associated albums and musics
+        User user = getUsersRepo().getUser(username);
+
+        if(user instanceof Musician) {
+            for(Album a: super.getAlbumsRepo().getAlbums().values()){
+                a.removeArtist(username);
+
+                for(Track t: a.getTracks().values()){
+                    t.removeArtist((Musician) user);
+                }
+            }
+        } else if(user instanceof Produtor){
+            for(Album a : super.getAlbumsRepo().getAlbums().values()){
+                if(a.getProdutor().getUsername().equals(username)) throw new Exception("The user you are trying to remove " +
+                        "has produced albums associated to him, in order to fix this issue.");
+            }
+        }
+
         getUsersRepo().removeUser(username);
     }
 
@@ -112,9 +141,8 @@ public class Admin extends User {
     }
 
     public void addAlbum(String name, String genre, LocalDate date, Backend.Users.Produtor produtor) {
-        Backend.Albums.Album album = new Backend.Albums.Album(name, genre, date, produtor, instrumentsRepo, albumsRepo,
-                usersRepo,
-                sessionsRepo);
+        Backend.Albums.Album album = new Backend.Albums.Album(name, genre, date, produtor, super.getInstrumentsRepo(),
+                super.getAlbumsRepo(), super.getUsersRepo(), super.getSessionsRepo());
         getAlbumsRepo().addAlbum(album);
         produtor.addOldAlbum(album);
     }
@@ -142,5 +170,4 @@ public class Admin extends User {
             musician.addAlbum(album);
         }
     }
-
 }

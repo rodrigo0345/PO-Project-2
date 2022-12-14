@@ -2,10 +2,8 @@ package Backend.Sessions;
 
 import Backend.Instruments.Instrument;
 import Backend.Users.Musician;
-import com.sun.source.tree.Tree;
 
 import java.io.Serializable;
-import java.sql.Date;
 import java.time.LocalDate;
 import java.util.*;
 

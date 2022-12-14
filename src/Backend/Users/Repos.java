@@ -51,6 +51,10 @@ public class Repos implements Serializable {
         return !users.containsKey(u.getUsername());
     }
 
+    public boolean isUserValid(String u) {
+        return !users.containsKey(u);
+    }
+
     public boolean isUsernameValid(String u) {
         return !users.containsKey(u);
     }

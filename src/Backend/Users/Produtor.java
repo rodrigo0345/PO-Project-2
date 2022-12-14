@@ -16,7 +16,7 @@ public class Produtor extends User {
     public Produtor(String name, String email, String username, String password, Backend.Users.Repos users,
             Backend.Instruments.Repos instruments, Backend.Albums.Repos albums, Backend.Sessions.Repos sessions) {
         super(name, email, username, password, users, instruments, albums, sessions);
-        this.usersRepo.addUser(this);
+        super.getUsersRepo().addUser(this);
     }
 
     public void addProjeto(Backend.Albums.AlbumEditado projeto) {
@@ -82,6 +82,6 @@ public class Produtor extends User {
     }
 
     public Album getOldAlbum(String nome) {
-        return albumsRepo.getAlbum(nome);
+        return super.getAlbumsRepo().getAlbum(nome);
     }
 }
