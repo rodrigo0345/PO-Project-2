@@ -137,7 +137,7 @@ public class Madmin implements Menu {
                 sc.nextLine();
                 break;
             case 8:
-                this.user.showStats();
+                this.user.getStats();
                 break;
             case 9:
                 Map<String, Backend.Users.User> list = users.getUsers();

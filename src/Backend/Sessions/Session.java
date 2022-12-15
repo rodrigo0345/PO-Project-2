@@ -91,6 +91,14 @@ public class Session implements Serializable, Comparable<Session> {
 
     public void setAccepted(boolean accepted) {
         this.accepted = accepted;
+
+        if(accepted == true) {
+            this.sessionRepos.getSessions().add(this);
+        } else {
+            this.album.getAllSessions().remove(this);
+        }
+        this.sessionRepos.getPendingSessions().remove(this);
+
     }
 
     public void addInvitedMusician(Backend.Users.Musician m){

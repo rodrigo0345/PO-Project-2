@@ -1,16 +1,15 @@
 package Backend.Users;
 
-import java.io.Serializable;
+import Backend.Albums.Album;
+import Backend.Albums.AlbumEditado;
+import Backend.Instruments.Instrument;
+import Backend.Sessions.Session;
+import Backend.Tracks.Track;
+
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.UUID;
-
-import Backend.Albums.Album;
-import Backend.Instruments.*;
-import Backend.Sessions.Session;
-import Backend.Tracks.Track;
 
 public class Admin extends User {
 
@@ -110,9 +109,7 @@ public class Admin extends User {
 
     public void showAllRecordingSessions() {
         for (Backend.Sessions.Session session : getSessionsRepo().getSessions()) {
-            if (session.isAccepted() == true) {
-                System.out.println(session);
-            }
+            System.out.println(session);
         }
     }
 
@@ -132,11 +129,36 @@ public class Admin extends User {
         }
     }
 
-    public void showStats() {
+    public String getStats() {
+        // total de albums em edição
+        int countNotFinishedAlbums = 0, countFinishedAlbums = 0;
+        for(Album a: super.getAlbumsRepo().getAlbums().values()){
+              if(a instanceof AlbumEditado && !((AlbumEditado)a).isEdited()){
+                  countNotFinishedAlbums++;
+              }
+              if(a instanceof AlbumEditado && ((AlbumEditado)a).isEdited()){
+                  countFinishedAlbums++;
+              }
+        }
+
+        int countSessionsCompleted = 0;
+        for(Session s: super.getSessionsRepo().getSessions()){
+            if(s.isCompleted()){
+                countSessionsCompleted++;
+            }
+        }
+        double percentage = (double)countSessionsCompleted /
+                                (double)(super.getSessionsRepo().getSessions().size() + super.getSessionsRepo().getPendingSessions().size())
+                            * 100;
+        return "Not finished albums: " + countNotFinishedAlbums + "\n" +
+                "Finished albums: " + countFinishedAlbums + "\n" +
+                "Percentage of sessions completed: " + percentage + "%";
     }
 
     public void acceptSessionRequest(UUID id) {
-        (getSessionsRepo().getSession(id)).setAccepted(true);
+        for(Session s:getSessionsRepo().getPendingSessions()){
+            if (s.getId().equals(id)) {s.setAccepted(true); return; };
+        }
     }
 
     public void rejectSessionRequest(UUID id) {

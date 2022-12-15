@@ -103,18 +103,9 @@ public class AdminTest {
 
     @Test
     public void getAllSessionRequests() {
-        AlbumEditado album = new AlbumEditado(
-                "Something",
-                "Rock",
-                admin.getInstrumentsRepo(),
-                admin.getAlbumsRepo(),
-                admin.getUsersRepo(),
-                admin.getSessionsRepo(),
-                produtor
-        );
-        Session s1 = new Session(Frontend.Utils.Generics.stringToDate("11/12/2023"), album, admin.getSessionsRepo(),
+        Session s1 = new Session(Frontend.Utils.Generics.stringToDate("11/12/2023"), this.album, admin.getSessionsRepo(),
                 admin.getUsersRepo(), admin.getInstrumentsRepo(), admin.getAlbumsRepo());
-        Session s2 = new Session(Frontend.Utils.Generics.stringToDate("14/12/2023"), album, admin.getSessionsRepo(),
+        Session s2 = new Session(Frontend.Utils.Generics.stringToDate("14/12/2023"), this.album, admin.getSessionsRepo(),
                 admin.getUsersRepo(), admin.getInstrumentsRepo(), admin.getAlbumsRepo());
 
         Set<Session> aux = new TreeSet<>();
@@ -124,19 +115,23 @@ public class AdminTest {
     }
 
     @Test
-    public void showAllRecordingSessions() {
-    }
-
-    @Test
-    public void showAllAlbumsBeingEdited() {
-    }
-
-    @Test
-    public void showAllAlbumsEdited() {
-    }
-
-    @Test
-    public void showStats() {
+    public void getStats() {
+        AlbumEditado album = new AlbumEditado(
+                "Something",
+                "Rock",
+                admin.getInstrumentsRepo(),
+                admin.getAlbumsRepo(),
+                admin.getUsersRepo(),
+                admin.getSessionsRepo(),
+                produtor
+        );
+        getAllSessionRequests();
+        this.album.setAlbumAsComplete();
+        admin.acceptSessionRequest(this.album.getLastSessionAdded().getId());
+        this.album.getLastSessionAdded().setCompleted(true);
+        assertEquals( "Not finished albums: 1\n" +
+                "Finished albums: 1\n" +
+                "Percentage of sessions completed: 50.0%",admin.getStats());
     }
 
     @Test
