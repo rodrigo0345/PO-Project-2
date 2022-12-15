@@ -91,10 +91,10 @@ public class AlbumTest {
 
     @Test
     public void addTrack() {
-        Backend.Tracks.Track track = new Track("Track1", "Pop", 120);
-        Backend.Tracks.Track track2 = new Track("Track1", "Rock", 320);
+        Backend.Tracks.Track track = new Track(album, "Track1", "Pop", 120);
+        Backend.Tracks.Track track2 = new Track(album, "Track1", "Rock", 320);
         boolean success = album.addTrack(track);
-        assertTrue(success);
+        assertFalse(success); // bc the track already exists
         success = album.addTrack(track2);
         assertFalse(success);
         assertEquals(album.getTracks().size(), 1);

@@ -180,7 +180,7 @@ public class Admin extends User {
     }
 
     // aqui tratamos de adicionar albums que não foram editados na editora
-    public void setProdutorToAlbum(String username, String titleOfTheAlbum) {
+    public void addProdutorToAlbum(String username, String titleOfTheAlbum) {
         Backend.Albums.Album album = getAlbumsRepo().getAlbum(titleOfTheAlbum);
         Backend.Users.Produtor produtor = (Backend.Users.Produtor) getUsersRepo().getUser(username);
         album.setProdutor(produtor);
@@ -194,5 +194,13 @@ public class Admin extends User {
         for (Backend.Users.Musician musician : track.getArtists()) {
             musician.addAlbum(album);
         }
+    }
+
+    public Set<Instrument> getPendentInstruments(){
+        Set<Instrument> i = new TreeSet<>();
+        for(Session s: getSessionsRepo().getPendingSessions()){
+            i.addAll(s.getPendentInstruments());
+        }
+        return i;
     }
 }

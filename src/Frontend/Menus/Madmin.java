@@ -220,6 +220,7 @@ public class Madmin implements Menu {
     private void addTrackToAlbum(String ans, Backend.Users.Admin user, Backend.Users.Repos users,
             String titleOfTheAlbum) {
         Scanner sc = new Scanner(System.in);
+        Backend.Albums.Album a = user.getAlbumsRepo().getAlbum(titleOfTheAlbum);
         if (ans.equals("y")) {
             System.out.println("Title of the song: ");
             String titleOfTheSong = sc.nextLine();
@@ -231,7 +232,7 @@ public class Madmin implements Menu {
             System.out.println("Musician: ");
             String musician = sc.nextLine();
             try {
-                Backend.Tracks.Track t = new Backend.Tracks.Track(titleOfTheSong,
+                Backend.Tracks.Track t = new Backend.Tracks.Track(a, titleOfTheSong,
                         genre, duration);
                 t.addArtist((Backend.Users.Musician) users.getUser(musician));
                 user.addTrackToAlbum(titleOfTheAlbum, t);

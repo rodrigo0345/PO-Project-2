@@ -30,8 +30,8 @@ public class Musician extends User {
         return albums;
     }
 
-    public void addInstrument(Instrument instrument) {
-        instruments.add(instrument);
+    public void requestInstrument(Instrument instrument, Session s) {
+        s.addPendingInstrument(instrument);
     }
 
     public void removeInstrument(Instrument instrument) {

@@ -135,32 +135,44 @@ public class AdminTest {
     }
 
     @Test
-    public void acceptSessionRequest() {
-    }
-
-    @Test
-    public void rejectSessionRequest() {
-    }
-
-    @Test
     public void addAlbum() {
+        admin.addAlbum("Hello", "Rock", Frontend.Utils.Generics.stringToDate("11/12/2030"), produtor);
+        assertNotNull(produtor.getOldAlbum("Hello"));
+        assertNotNull(admin.getAlbumsRepo().getAlbum("Hello"));
     }
 
     @Test
     public void addMusicianToAlbum() {
+        addAlbum();
+        new Musician("teste", "test@gmail.com", "test003", "test",
+                admin.getUsersRepo(), admin.getInstrumentsRepo(), admin.getAlbumsRepo(), admin.getSessionsRepo());
+        admin.addMusicianToAlbum("test003", "R");
+        assertNotNull(admin.getAlbumsRepo().getAlbum("R"));
     }
 
     @Test
-    public void setProdutorToAlbum() {
+    public void addProdutorToAlbum() {
+        addAlbum();
+        admin.addProdutorToAlbum("name", "R");
+        assertNotNull(produtor.getOldAlbum("R"));
     }
 
     @Test
     public void addTrackToAlbum() {
+        // already adds the track to a given album
+        Backend.Tracks.Track t = new Backend.Tracks.Track(album, "Something", "Rock", 140);
+        admin.addTrackToAlbum(album.getTitulo(), t);
+        assertNotNull(album.getTracks().get("Something"));
     }
 
     @Test
     public void acceptInstrumentRequest() {
-
+        Musician m = new Musician("Teste", "test@gmail.com", "tes", "tes", admin.getUsersRepo(),
+                    admin.getInstrumentsRepo(), admin.getAlbumsRepo(), admin.getSessionsRepo());
+        m.requestInstrument("", ); // make sure the musician is in that session
+        Set<Instrument> instruments = admin.getPendentInstruments();
+        System.out.println(instruments);
+        //admin.acceptInstrumentRequest("");
     }
 
     @Test
