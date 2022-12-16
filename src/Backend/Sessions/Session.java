@@ -98,12 +98,13 @@ public class Session implements Serializable, Comparable<Session> {
             this.album.getAllSessions().remove(this);
         }
         this.sessionRepos.getPendingSessions().remove(this);
-
     }
 
-    public void addInvitedMusician(Backend.Users.Musician m){
+    public void addInvitedMusician(Backend.Users.Musician m) throws IllegalArgumentException {
+        if(!this.isAccepted()) throw new IllegalArgumentException("The session you are trying to modify wasn't yet approved!");
         this.invitedArtists.put(m.getUsername(), m);
     }
+
 
     public Backend.Users.Musician getInvitedMusician(Musician musician){
         return this.invitedArtists.get(musician.getUsername());
@@ -117,12 +118,29 @@ public class Session implements Serializable, Comparable<Session> {
         return this.invitedArtists;
     }
 
-    // waits for the permission of the administrator
-    public void addPendingInstrument(Instrument instrument) throws IllegalArgumentException {
+    // waits for the permission of the administrator the session itself needs to be approved by the admin too
+    // only accessed by the musician
+    public Instrument addPendingInstrument(Instrument instrument) throws IllegalArgumentException {
+        if(!this.isAccepted()) throw new IllegalArgumentException("The session you are trying to modify wasn't yet approved!");
+
         if(!instrumentRepos.getInstruments().containsKey(instrument.getName().toLowerCase())) {
             throw new IllegalArgumentException("The instrument you requested does not exist in the studio yet.");
         }
         this.pendentInstruments.add(instrument);
+        return instrument;
+    }
+
+    // waits for the permission of the administrator the session itself needs to be approved by the admin too
+    // only accessed by the musician
+    public Instrument addPendingInstrument(String name) throws IllegalArgumentException {
+        if(!this.isAccepted()) throw new IllegalArgumentException("The session you are trying to modify wasn't yet approved!");
+
+        if(!instrumentRepos.getInstruments().containsKey(name.toLowerCase())){
+            throw new IllegalArgumentException("The instrument you requested does not exist in the studio yet.");
+        }
+        Instrument i = instrumentRepos.getInstrument(name.toLowerCase());
+        this.pendentInstruments.add(i);
+        return i;
     }
 
     public Set<Instrument> getPendentInstruments(){

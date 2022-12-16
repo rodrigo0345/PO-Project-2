@@ -34,8 +34,7 @@ public class AlbumEditadoTest {
 
     @Test
     public void addSession() {
-        boolean success = album.addSession(Frontend.Utils.Generics.stringToDate("10/01/2023"));
-        assertTrue(success);
+        album.addSession(Frontend.Utils.Generics.stringToDate("15/01/2023"));
 
         try{
             album.addSession(Frontend.Utils.Generics.stringToDate("10/01/2020"));

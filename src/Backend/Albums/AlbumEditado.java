@@ -48,17 +48,18 @@ public class AlbumEditado extends Album {
         return isEdited;
     }
 
-    public boolean addSession(LocalDate date) throws IllegalArgumentException {
+    public void addSession(LocalDate date) throws IllegalArgumentException {
         if (this.isEdited) {
             throw new IllegalArgumentException("The album is already finished");
         }
         if (date.isBefore(LocalDate.now())) {
             throw new IllegalArgumentException("The given date is a past date");
         }
+
+        // the constructor of session is responsible for also adding the session into the specified album
         Backend.Sessions.Session session = new Backend.Sessions.Session(date, this, getSessionsRepo(),
                                                             getUsersRepo(), getInstrumentsRepo(), getAlbumsRepo());
         this.lastSessionAdded = session;
-        return sessions.add(session);
     }
 
     public boolean addSession(Session s){

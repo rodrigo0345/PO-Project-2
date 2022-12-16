@@ -30,6 +30,11 @@ public class Admin extends User {
         session.approveInstrument(super.getInstrumentsRepo().getInstrument(name));
     }
 
+    public void acceptInstrumentRequest(Instrument instrument, Session session){
+        if (instrument == null) return; // does not exist
+        session.approveInstrument(instrument);
+    }
+
     public void denyInstrumentRequest(String name, Session session){
         if (super.getInstrumentsRepo().getInstrument(name) == null) return; // does not exist
         session.denyInstrument(super.getInstrumentsRepo().getInstrument(name));
@@ -198,7 +203,7 @@ public class Admin extends User {
 
     public Set<Instrument> getPendentInstruments(){
         Set<Instrument> i = new TreeSet<>();
-        for(Session s: getSessionsRepo().getPendingSessions()){
+        for(Session s: getSessionsRepo().getSessions()){
             i.addAll(s.getPendentInstruments());
         }
         return i;

@@ -14,10 +14,16 @@ public class SessionTest {
     Session session = new Session(Frontend.Utils.Generics.stringToDate("11/03/2050"), album, album.getSessionsRepo(),
                                             album.getUsersRepo(), album.getInstrumentsRepo(), album.getAlbumsRepo());
 
+    private Admin admin = new Admin("Teste", "Teste@gmail.com", "admin", "admin",
+            album.getInstrumentsRepo(), album.getAlbumsRepo(), album.getUsersRepo(), album.getSessionsRepo());
+
     @Test
     public void addInvitedMusician() {
+        admin.acceptSessionRequest(session.getId());
+
         Backend.Users.Musician m = new Musician("Teste", "Teste@gmail.com", "teste", "teste",
                 album.getUsersRepo(), album.getInstrumentsRepo(), album.getAlbumsRepo(), album.getSessionsRepo());
+
         session.addInvitedMusician(m);
         assertEquals(1, session.getInvitedMusicians().size());
     }
@@ -35,6 +41,8 @@ public class SessionTest {
 
     @Test
     public void addPendendingInstrument() {
+        admin.acceptSessionRequest(session.getId());
+
         Instrument i = new Instrument("guitarra");
 
         try {
@@ -52,6 +60,8 @@ public class SessionTest {
 
     @Test
     public void getPendentInstruments() {
+        admin.acceptSessionRequest(session.getId());
+
         addPendendingInstrument();
         session.addPendingInstrument(new Instrument("violino"));
         assertEquals(2, session.getPendentInstruments().size());
@@ -59,6 +69,8 @@ public class SessionTest {
 
     @Test
     public void approveInstrument() {
+        admin.acceptSessionRequest(session.getId());
+
         getPendentInstruments();
         Admin su = new Admin("Teste", "Teste@gmail.com", "admin", "admin", album.getInstrumentsRepo(),
                 album.getAlbumsRepo(), album.getUsersRepo(), album.getSessionsRepo() );
@@ -75,6 +87,8 @@ public class SessionTest {
 
     @Test
     public void denyInstrument() {
+        admin.acceptSessionRequest(session.getId());
+
         getPendentInstruments();
         Admin su = new Admin("Teste", "Teste@gmail.com", "admin", "admin", album.getInstrumentsRepo(),
                 album.getAlbumsRepo(), album.getUsersRepo(), album.getSessionsRepo() );

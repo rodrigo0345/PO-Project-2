@@ -30,7 +30,9 @@ public class Musician extends User {
         return albums;
     }
 
-    public void requestInstrument(Instrument instrument, Session s) {
+    public void requestInstrument(Instrument instrument, Session s) throws IllegalArgumentException {
+        if(!s.getInvitedMusicians().containsKey(this.getUsername()))
+            throw new IllegalArgumentException("This musician was not invited to the specified session!");
         s.addPendingInstrument(instrument);
     }
 

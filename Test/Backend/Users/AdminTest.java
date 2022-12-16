@@ -32,6 +32,9 @@ public class AdminTest {
         addInstrument();
         Session s = new Session(Frontend.Utils.Generics.stringToDate("21/12/2040"), album, admin.getSessionsRepo(), admin.getUsersRepo(),
                 admin.getInstrumentsRepo(), admin.getAlbumsRepo());
+
+        admin.acceptSessionRequest(s.getId()); // needs to be approved first
+
         s.addPendingInstrument(new Instrument("flute"));
         admin.removeInstrument("flute");
         assertFalse(s.getApprovedInstruments().contains(s));
@@ -169,14 +172,49 @@ public class AdminTest {
     public void acceptInstrumentRequest() {
         Musician m = new Musician("Teste", "test@gmail.com", "tes", "tes", admin.getUsersRepo(),
                     admin.getInstrumentsRepo(), admin.getAlbumsRepo(), admin.getSessionsRepo());
-        m.requestInstrument("", ); // make sure the musician is in that session
+
+
+        // new session
+        Session s = new Session(Frontend.Utils.Generics.stringToDate("11/12/2030"), album, album.getSessionsRepo(),
+                admin.getUsersRepo(), admin.getInstrumentsRepo(), admin.getAlbumsRepo());
+
+        admin.acceptSessionRequest(s.getId());
+        admin.addInstrument("guitarra");
+
+        s.addInvitedMusician(m);
+
+        Instrument ins = s.addPendingInstrument("Guitarra");
+
         Set<Instrument> instruments = admin.getPendentInstruments();
         System.out.println(instruments);
-        //admin.acceptInstrumentRequest("");
+
+        m.requestInstrument(ins, s); // make sure the musician is in that session
+        admin.acceptInstrumentRequest(ins, s);
+        assertNotNull(s.getApprovedInstruments());
     }
 
     @Test
     public void denyInstrumentRequest() {
+        Musician m = new Musician("Teste", "test@gmail.com", "tes", "tes", admin.getUsersRepo(),
+                admin.getInstrumentsRepo(), admin.getAlbumsRepo(), admin.getSessionsRepo());
 
+
+        // new session
+        Session s = new Session(Frontend.Utils.Generics.stringToDate("11/12/2030"), album, album.getSessionsRepo(),
+                admin.getUsersRepo(), admin.getInstrumentsRepo(), admin.getAlbumsRepo());
+
+        admin.acceptSessionRequest(s.getId());
+        admin.addInstrument("guitarra");
+
+        s.addInvitedMusician(m);
+
+        Instrument ins = s.addPendingInstrument("Guitarra");
+
+        Set<Instrument> instruments = admin.getPendentInstruments();
+        System.out.println(instruments);
+
+        m.requestInstrument(ins, s); // make sure the musician is in that session
+        admin.denyInstrumentRequest(ins.getName(), s);
+        assertEquals(0, s.getApprovedInstruments().size());
     }
 }
