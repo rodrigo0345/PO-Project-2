@@ -20,10 +20,9 @@ public class Admin extends User {
         super.getUsersRepo().addUser(this);
     }
 
-    public Instrument addInstrument(String name) {
+    public void addInstrument(String name) {
         Instrument instrument = new Instrument(name);
         getInstrumentsRepo().addInstrument(instrument);
-
     }
 
     public void acceptInstrumentRequest(String name, Session session){

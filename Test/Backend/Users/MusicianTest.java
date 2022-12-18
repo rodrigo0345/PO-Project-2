@@ -38,31 +38,63 @@ public class MusicianTest {
     }
 
     @Test
-    public void addInstrument() {
+    public void addArtistInstrument() {
         Backend.Albums.AlbumEditado a = new Backend.Albums.AlbumEditado("R", "rock",
                 admin.getInstrumentsRepo(), admin.getAlbumsRepo(), admin.getUsersRepo(), admin.getSessionsRepo(), produtor);
 
         Backend.Sessions.Session s = a.addSession(Frontend.Utils.Generics.stringToDate("21/12/2040"));
         admin.acceptSessionRequest(s.getId());
+        s.addInvitedMusician(m);
         admin.addInstrument("flute");
+        m.addArtistInstrument(admin.getInstrumentsRepo().getInstrument("flute"));
         m.requestInstrument(admin.getInstrumentsRepo().getInstrument("flute"), s);
-        assertTrue(m.getInstruments().contains("flute"));
+        assertTrue(m.getInstruments().contains(admin.getInstrumentsRepo().getInstrument("flute")));
         assertEquals(1, m.getInstruments().size());
     }
 
     @Test
-    public void removeInstrument() {
+    public void removeArtistInstrument() {
     }
 
     @Test
     public void getInstruments() {
+        addArtistInstrument();
+        assertEquals(1, m.getInstruments().size());
     }
 
     @Test
     public void addSession() {
+        Backend.Albums.AlbumEditado a = new Backend.Albums.AlbumEditado("R", "rock",
+                admin.getInstrumentsRepo(), admin.getAlbumsRepo(), admin.getUsersRepo(), admin.getSessionsRepo(), produtor);
+
+        Backend.Sessions.Session s = a.addSession(Frontend.Utils.Generics.stringToDate("21/12/2040"));
+        admin.acceptSessionRequest(s.getId());
+
+        // already uses addSession
+        s.addInvitedMusician(m);
+
+        admin.addInstrument("flute");
+        m.addArtistInstrument(admin.getInstrumentsRepo().getInstrument("flute"));
+        m.requestInstrument(admin.getInstrumentsRepo().getInstrument("flute"), s);
+
+        try{
+            m.addSession(a,s);
+        } catch (Exception e) {
+            assertEquals("Musician was already in this session", e.getMessage());
+        }
+
+        int count = 0;
+        for (Backend.Sessions.Session session : admin.getSessionsRepo().getSessions()) {
+            if (session.getInvitedMusicians().containsKey(m.getUsername())) {
+                count++;
+            }
+        }
+        assertEquals(1, count);
     }
 
     @Test
     public void testEquals() {
+        addSession();
+        m.equals(admin.getAlbumsRepo().getAlbum("R").getArtist("teste3"));
     }
 }
