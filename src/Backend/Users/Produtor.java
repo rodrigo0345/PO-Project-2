@@ -23,9 +23,9 @@ public class Produtor extends User {
         if(projeto.getProdutor() != null && projeto.getProdutor().equals(this)){
             throw new IllegalArgumentException("This producer is already the producer of the given project!");
         }
-        if (projeto.getProdutor() != null) {
-            throw new IllegalArgumentException("The given album is already associated with another producer");
-        }
+        //if (projeto.getProdutor() != null) {
+        //    throw new IllegalArgumentException("The given album is already associated with another producer");
+        //}
         projetos.add(projeto);
     }
 
@@ -40,6 +40,9 @@ public class Produtor extends User {
 
     // when the album is added by the admin
     public void addOldAlbum(Backend.Albums.Album album) {
+        if(album instanceof Backend.Albums.AlbumEditado && !((Backend.Albums.AlbumEditado) album).isEdited()){
+            return; // simply continue the program.
+        }
         oldAlbums.add(album);
     }
 
