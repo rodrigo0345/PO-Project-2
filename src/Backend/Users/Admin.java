@@ -65,13 +65,13 @@ public class Admin extends User {
                 getAlbumsRepo(), getSessionsRepo());
     }
 
-    public void addProdutor(String name, String email, String username, String password)
+    public Produtor addProdutor(String name, String email, String username, String password)
             throws IllegalArgumentException {
         if (!getUsersRepo().isUserValid(username)) {
             throw new IllegalArgumentException("Username already exists");
         }
         // automatically adds it to the user repos
-        new Produtor(name, email, username, password, getUsersRepo(), getInstrumentsRepo(),
+        return new Produtor(name, email, username, password, getUsersRepo(), getInstrumentsRepo(),
                 getAlbumsRepo(), getSessionsRepo());
     }
 
@@ -188,7 +188,7 @@ public class Admin extends User {
     public void addProdutorToAlbum(String username, String titleOfTheAlbum) {
         Backend.Albums.Album album = getAlbumsRepo().getAlbum(titleOfTheAlbum);
         Backend.Users.Produtor produtor = (Backend.Users.Produtor) getUsersRepo().getUser(username);
-        album.setProdutor(produtor);
+        album.setProdutorOriginal(produtor);
         produtor.addOldAlbum(album);
     }
 

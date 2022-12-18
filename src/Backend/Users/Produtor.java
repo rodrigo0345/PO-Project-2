@@ -19,13 +19,19 @@ public class Produtor extends User {
         super.getUsersRepo().addUser(this);
     }
 
-    public void addProjeto(Backend.Albums.AlbumEditado projeto) {
-        if (projeto.getProducer() != null && !projeto.getProducer().equals(this)) return;
+    public void addProjeto(Backend.Albums.AlbumEditado projeto) throws IllegalArgumentException {
+        if(projeto.getProdutor() != null && projeto.getProdutor().equals(this)){
+            throw new IllegalArgumentException("This producer is already the producer of the given project!");
+        }
+        if (projeto.getProdutor() != null) {
+            throw new IllegalArgumentException("The given album is already associated with another producer");
+        }
         projetos.add(projeto);
     }
 
-    public void removeProjeto(Backend.Albums.AlbumEditado projeto) {
+    public void removeProjeto(Backend.Albums.AlbumEditado projeto, Produtor backup) {
         projetos.remove(projeto);
+        projeto.setProdutor(backup);
     }
 
     public Set<Backend.Albums.AlbumEditado> getProjetos() {
@@ -65,7 +71,7 @@ public class Produtor extends User {
         }
         // create the new album edit
         Backend.Albums.AlbumEditado albumEdit = new Backend.Albums.AlbumEditado(
-            newAlbumName, original.getGenero(), getInstrumentsRepo(),
+            newAlbumName, original.getGenero(), original, getInstrumentsRepo(),
             getAlbumsRepo(), getUsersRepo(), getSessionsRepo(), this);
         this.addProjeto(albumEdit);
         return albumEdit;

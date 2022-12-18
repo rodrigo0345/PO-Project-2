@@ -11,32 +11,40 @@ import java.util.UUID;
 public class AlbumEditado extends Album {
     private boolean isEdited;
     private final Set<Backend.Sessions.Session> sessions = new TreeSet<>();
-    private Backend.Users.Produtor producer;
     private Backend.Sessions.Session lastSessionAdded;
 
+    // there are 2 produtores, one for the original album and one for the edited album
+    private Backend.Users.Produtor produtor;
+
     public AlbumEditado(String titulo, String genero,
+            Album original,
             Backend.Instruments.Repos instruments,
             Backend.Albums.Repos albums,
             Backend.Users.Repos users, Backend.Sessions.Repos sessions, Backend.Users.Produtor producer) {
-        super(titulo, genero, null, producer, instruments, albums, users, sessions);
+
+        super(titulo, genero, null, // still being edited
+                original.getProdutor(), instruments, albums, users, sessions);
+
         this.isEdited = false;
-        this.producer = producer;
+        producer.addProjeto(this);
+        this.setProdutor(producer);
     }
 
     public AlbumEditado(String titulo){
         super(titulo);
         this.isEdited = false;
-        this.producer = null;
+        this.setProdutor(null);
     }
 
-    public void setProducer(Backend.Users.Produtor producer) {
-        if (producer == null) return;
-        this.producer = producer;
-        this.producer.addProjeto(this);
+    public void setProdutor(Backend.Users.Produtor produtor) {
+        if (produtor == null) return;
+        produtor.addProjeto(this);
+        this.produtor = produtor;
     }
 
-    public Backend.Users.Produtor getProducer() {
-        return producer;
+    @Override
+    public Backend.Users.Produtor getProdutor() {
+        return this.produtor;
     }
 
     public void setAlbumAsComplete() {

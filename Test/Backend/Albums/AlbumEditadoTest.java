@@ -17,10 +17,10 @@ public class AlbumEditadoTest {
                             "rodrigo", "rodrigo", album.getUsersRepo(),
                                 album.getInstrumentsRepo(), album.getAlbumsRepo(),
                                     album.getSessionsRepo());
-        album.setProducer(p1);
-        assertEquals(album.getProducer().toString(), p1.toString());
-        album.setProducer(null);
-        assertEquals(album.getProducer().toString(), p1.toString());
+        album.setProdutor(p1);
+        assertEquals(album.getProdutor().toString(), p1.toString());
+        album.setProdutor(null);
+        assertEquals(album.getProdutor().toString(), p1.toString());
         assertEquals(p1.getProjeto("Random").toString(), album.toString());
     }
 

@@ -19,28 +19,27 @@ public class Album implements Serializable, Comparable<Album> {
     private String titulo;
     private String genero;
     private LocalDate date;
-    private Produtor produtor;
+    private Produtor produtorOriginal;
 
     private Backend.Instruments.Repos instrumentsRepo;
     private Backend.Albums.Repos albumsRepo;
     private Backend.Users.Repos usersRepo;
     private Backend.Sessions.Repos sessionsRepo;
 
-    public Album(String titulo, String genero, LocalDate date, Produtor produtor, Backend.Instruments.Repos instruments,
+    public Album(String titulo, String genero, LocalDate date, Produtor produtorOriginal, Backend.Instruments.Repos instruments,
             Backend.Albums.Repos albums,
             Backend.Users.Repos users, Backend.Sessions.Repos sessions)
             throws IllegalArgumentException {
         this.genero = genero;
         this.date = date;
-
-        if(produtor == null) throw new IllegalArgumentException("Produtor is invalid");
-        this.produtor = produtor;
-
         this.instrumentsRepo = instruments;
         this.albumsRepo = albums;
         this.usersRepo = users;
         this.sessionsRepo = sessions;
+
         this.setTitulo(titulo);
+        if(produtorOriginal == null) throw new IllegalArgumentException("Produtor is invalid");
+        this.setProdutorOriginal(produtorOriginal);
         this.albumsRepo.addAlbum(this); // dependency
     }
 
@@ -129,23 +128,23 @@ public class Album implements Serializable, Comparable<Album> {
     }
 
     // only use for albums that are not editable
-    public void setProdutor(Produtor produtor) {
+    public void setProdutorOriginal(Produtor produtor) {
         if (produtor == null) {
-            return;
+            return; // just to avoid exceptions as there are cases where this needs to continue
         }
-        this.produtor = produtor;
-        this.produtor.addOldAlbum(this);
+        this.produtorOriginal = produtor;
+        this.produtorOriginal.addOldAlbum(this);
     }
 
     public Produtor getProdutor() {
-        return this.produtor;
+        return this.produtorOriginal;
     }
 
     @Override
     public String toString() {
         String aux = "";
-        if (this.produtor != null) {
-            aux = "produtor=" + this.produtor.getUsername();
+        if (this.produtorOriginal != null) {
+            aux = "produtor=" + this.produtorOriginal.getUsername();
         }
 
         aux += "titulo=" + titulo + ", genero=" + genero + ", date=" + date;
@@ -189,7 +188,6 @@ public class Album implements Serializable, Comparable<Album> {
         if (!this.doesTrackExist(trackname)) {
             return false;
         }
-        ;
         tracks.remove(trackname);
         return true;
     }

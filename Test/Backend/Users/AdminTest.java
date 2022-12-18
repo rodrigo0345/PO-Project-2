@@ -18,7 +18,10 @@ public class AdminTest {
 
     private Produtor produtor = new Produtor("name", "email@email.com", "name", "name",
             admin.getUsersRepo(), admin.getInstrumentsRepo(), admin.getAlbumsRepo(), admin.getSessionsRepo());
-    private AlbumEditado album = new AlbumEditado("R", "rock",
+
+    private Album original = new Album("original", "rock", Frontend.Utils.Generics.stringToDate("10/11/2000"), produtor,
+            admin.getInstrumentsRepo(), admin.getAlbumsRepo(), admin.getUsersRepo(), admin.getSessionsRepo());
+    private AlbumEditado album = new AlbumEditado("R", "rock", original,
                 admin.getInstrumentsRepo(), admin.getAlbumsRepo(), produtor.getUsersRepo(), admin.getSessionsRepo(), produtor);
     @Test
     public void addInstrument() {
@@ -94,7 +97,7 @@ public class AdminTest {
         }
         assertNotNull(error);
         admin.addProdutor("r", "teste@gmail.com", "rodrigo", "0");
-        album.setProdutor((Produtor)admin.getUsersRepo().getUser("rodrigo", "0"));
+        album.setProdutorOriginal((Produtor)admin.getUsersRepo().getUser("rodrigo", "0"));
         try {
             admin.removeUser("teste3");
         } catch (Exception e) {
@@ -122,12 +125,13 @@ public class AdminTest {
         AlbumEditado album = new AlbumEditado(
                 "Something",
                 "Rock",
+                original,
                 admin.getInstrumentsRepo(),
                 admin.getAlbumsRepo(),
                 admin.getUsersRepo(),
                 admin.getSessionsRepo(),
                 produtor
-        );
+        ); // not finished
         getAllSessionRequests();
         this.album.setAlbumAsComplete();
         admin.acceptSessionRequest(this.album.getLastSessionAdded().getId());
@@ -187,7 +191,7 @@ public class AdminTest {
 
         Set<Instrument> instruments = admin.getPendentInstruments();
         System.out.println(instruments);
-
+        m.addArtistInstrument(ins);
         m.requestInstrument(ins, s); // make sure the musician is in that session
         admin.acceptInstrumentRequest(ins, s);
         assertNotNull(s.getApprovedInstruments());
@@ -213,6 +217,7 @@ public class AdminTest {
         Set<Instrument> instruments = admin.getPendentInstruments();
         System.out.println(instruments);
 
+        m.addArtistInstrument(ins);
         m.requestInstrument(ins, s); // make sure the musician is in that session
         admin.denyInstrumentRequest(ins.getName(), s);
         assertEquals(0, s.getApprovedInstruments().size());

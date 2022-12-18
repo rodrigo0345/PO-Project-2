@@ -116,7 +116,7 @@ public class AlbumTest {
                                     album.getUsersRepo(), album.getInstrumentsRepo(), album.getAlbumsRepo(),
                                         album.getSessionsRepo());
 
-        album.setProdutor(p);
+        album.setProdutorOriginal(p);
         assertEquals(album.getProdutor().getUsername(), "nome");
         assertEquals(p.getOldAlbums().size(), 1);
         assertEquals(p.getOldAlbum("Random").toString(), album.toString());
@@ -126,7 +126,7 @@ public class AlbumTest {
     public void getProdutor() {
         setProdutor();
         assertEquals(album.getProdutor().getUsername(), "nome");
-        album.setProdutor(null);
+        album.setProdutorOriginal(null);
         assertNotNull(album.getProdutor());
     }
 

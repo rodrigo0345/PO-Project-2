@@ -13,6 +13,9 @@ public class MusicianTest {
     private Produtor produtor = new Produtor("name", "email@email.com", "name", "name",
             admin.getUsersRepo(), admin.getInstrumentsRepo(), admin.getAlbumsRepo(), admin.getSessionsRepo());
 
+    private Album original = new Album("original", "rock", Frontend.Utils.Generics.stringToDate("10/11/2000"), produtor,
+            admin.getInstrumentsRepo(), admin.getAlbumsRepo(), admin.getUsersRepo(), admin.getSessionsRepo());
+
     private Musician m = admin.addMusician("teste", "teste@gmail.com", "teste3", "teste");
 
 
@@ -27,7 +30,7 @@ public class MusicianTest {
     @Test
     public void getAlbums() {
         assertEquals(0, m.getAlbums().size());
-        Backend.Albums.AlbumEditado a = new Backend.Albums.AlbumEditado("R", "rock",
+        Backend.Albums.AlbumEditado a = new Backend.Albums.AlbumEditado("R", "rock", original,
                 admin.getInstrumentsRepo(), admin.getAlbumsRepo(), admin.getUsersRepo(), admin.getSessionsRepo(), produtor);
 
         Backend.Sessions.Session s = a.addSession(Frontend.Utils.Generics.stringToDate("21/12/2040"));
@@ -39,7 +42,7 @@ public class MusicianTest {
 
     @Test
     public void addArtistInstrument() {
-        Backend.Albums.AlbumEditado a = new Backend.Albums.AlbumEditado("R", "rock",
+        Backend.Albums.AlbumEditado a = new Backend.Albums.AlbumEditado("R", "rock", original,
                 admin.getInstrumentsRepo(), admin.getAlbumsRepo(), admin.getUsersRepo(), admin.getSessionsRepo(), produtor);
 
         Backend.Sessions.Session s = a.addSession(Frontend.Utils.Generics.stringToDate("21/12/2040"));
@@ -64,7 +67,7 @@ public class MusicianTest {
 
     @Test
     public void addSession() {
-        Backend.Albums.AlbumEditado a = new Backend.Albums.AlbumEditado("R", "rock",
+        Backend.Albums.AlbumEditado a = new Backend.Albums.AlbumEditado("R", "rock", original,
                 admin.getInstrumentsRepo(), admin.getAlbumsRepo(), admin.getUsersRepo(), admin.getSessionsRepo(), produtor);
 
         Backend.Sessions.Session s = a.addSession(Frontend.Utils.Generics.stringToDate("21/12/2040"));
