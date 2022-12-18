@@ -18,7 +18,7 @@ public class Session implements Serializable, Comparable<Session> {
     private UUID id = UUID.randomUUID();
     private boolean completed = false;
     private boolean accepted = false;
-    private AlbumEditado album = null;
+    private AlbumEditado album;
     private Backend.Sessions.Repos sessionRepos;
     private Backend.Users.Repos userRepos;
     private Backend.Instruments.Repos instrumentRepos;
@@ -102,7 +102,9 @@ public class Session implements Serializable, Comparable<Session> {
 
     public void addInvitedMusician(Backend.Users.Musician m) throws IllegalArgumentException {
         if(!this.isAccepted()) throw new IllegalArgumentException("The session you are trying to modify wasn't yet approved!");
+        if(this.isCompleted()) throw new IllegalArgumentException("The session you are trying to access is already completed!");
         this.invitedArtists.put(m.getUsername(), m);
+        m.addSession(album, this);
     }
 
 

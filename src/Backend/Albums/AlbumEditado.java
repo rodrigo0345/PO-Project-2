@@ -48,7 +48,7 @@ public class AlbumEditado extends Album {
         return isEdited;
     }
 
-    public void addSession(LocalDate date) throws IllegalArgumentException {
+    public Session addSession(LocalDate date) throws IllegalArgumentException {
         if (this.isEdited) {
             throw new IllegalArgumentException("The album is already finished");
         }
@@ -60,6 +60,7 @@ public class AlbumEditado extends Album {
         Backend.Sessions.Session session = new Backend.Sessions.Session(date, this, getSessionsRepo(),
                                                             getUsersRepo(), getInstrumentsRepo(), getAlbumsRepo());
         this.lastSessionAdded = session;
+        return session;
     }
 
     public boolean addSession(Session s){

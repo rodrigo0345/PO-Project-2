@@ -22,6 +22,7 @@ public class Musician extends User {
         return albums.add(album);
     }
 
+    // do not use it yet
     public void removeAlbum(Backend.Albums.Album album) {
         albums.remove(album);
     }
@@ -45,11 +46,11 @@ public class Musician extends User {
     }
 
     public void addSession(AlbumEditado album, Session newSession)
-        throws Exception{
+        throws IllegalArgumentException{
         this.addAlbum(album);
         boolean add = this.sessions.add(newSession);
         if (add == false){
-            throw new Exception("Musician was already in this session");
+            throw new IllegalArgumentException("Musician was already in this session");
         }
     }
 

@@ -20,9 +20,10 @@ public class Admin extends User {
         super.getUsersRepo().addUser(this);
     }
 
-    public void addInstrument(String name) {
+    public Instrument addInstrument(String name) {
         Instrument instrument = new Instrument(name);
         getInstrumentsRepo().addInstrument(instrument);
+
     }
 
     public void acceptInstrumentRequest(String name, Session session){
@@ -55,13 +56,13 @@ public class Admin extends User {
         getInstrumentsRepo().removeInstrument(name);
     }
 
-    public void addMusician(String name, String email, String username, String password)
+    public Backend.Users.Musician addMusician(String name, String email, String username, String password)
             throws IllegalArgumentException {
         if (!getUsersRepo().isUserValid(username)) {
             throw new IllegalArgumentException("Username already exists");
         }
         // automatically adds it to the user repos
-        new Musician(name, email, username, password, getUsersRepo(), getInstrumentsRepo(),
+        return new Musician(name, email, username, password, getUsersRepo(), getInstrumentsRepo(),
                 getAlbumsRepo(), getSessionsRepo());
     }
 

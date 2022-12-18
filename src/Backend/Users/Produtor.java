@@ -84,4 +84,8 @@ public class Produtor extends User {
     public Album getOldAlbum(String nome) {
         return super.getAlbumsRepo().getAlbum(nome);
     }
+
+    public void addMusicianToSession(Musician m, Session s) throws IllegalArgumentException {
+        s.addInvitedMusician(m);
+    }
 }
