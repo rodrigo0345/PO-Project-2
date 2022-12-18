@@ -1,6 +1,5 @@
 package Backend.Albums;
 
-import Backend.Tracks.Track;
 import Backend.Users.Musician;
 import Backend.Users.Produtor;
 
@@ -33,7 +32,10 @@ public class Album implements Serializable, Comparable<Album> {
             throws IllegalArgumentException {
         this.genero = genero;
         this.date = date;
+
+        if(produtor == null) throw new IllegalArgumentException("Produtor is invalid");
         this.produtor = produtor;
+
         this.instrumentsRepo = instruments;
         this.albumsRepo = albums;
         this.usersRepo = users;
@@ -43,7 +45,7 @@ public class Album implements Serializable, Comparable<Album> {
     }
 
     // only used for testing
-    public Album(String titulo) throws IllegalArgumentException{
+    public Album(String titulo) throws IllegalArgumentException {
         this.instrumentsRepo = new Backend.Instruments.Repos();
         this.albumsRepo = new Backend.Albums.Repos();
         this.usersRepo = new Backend.Users.Repos();
@@ -52,7 +54,8 @@ public class Album implements Serializable, Comparable<Album> {
         this.albumsRepo.addAlbum(this); // dependency
     }
 
-    // automatically adds the album to the musician's list of albums
+    // automatically adds the album to the musician's list of albums,
+    // should not be used to add artists to an edited album
     public boolean addArtist(Musician artist) {
         boolean a = artists.add(artist);
         boolean b = artist.addAlbum(this);
@@ -61,23 +64,25 @@ public class Album implements Serializable, Comparable<Album> {
     }
 
     public Musician getArtist(String username) {
-        for(Musician m: artists){
-            if (m.getUsername().equals(username)) return m;
+        for (Musician m : artists) {
+            if (m.getUsername().equals(username))
+                return m;
         }
         return null;
     }
 
-    public Set<Musician> getArtists(){
+    public Set<Musician> getArtists() {
         return this.artists;
     }
 
     public boolean removeArtist(String username) {
         Musician aux = getArtist(username);
-        if (aux == null) return false;
+        if (aux == null)
+            return false;
         return artists.remove(aux);
     }
 
-    public boolean deleteArtist(Musician user){
+    public boolean deleteArtist(Musician user) {
         return artists.remove(user);
     }
 
@@ -98,8 +103,8 @@ public class Album implements Serializable, Comparable<Album> {
     }
 
     public boolean setTitulo(String titulo) throws IllegalArgumentException {
-        if (!this.albumsRepo.isTituloValid(titulo)) throw new
-                                                    IllegalArgumentException(titulo + " already exists");
+        if (!this.albumsRepo.isTituloValid(titulo))
+            throw new IllegalArgumentException(titulo + " already exists");
         this.titulo = titulo;
         return true;
     }
@@ -123,27 +128,30 @@ public class Album implements Serializable, Comparable<Album> {
         tracks.remove(track.getTitulo());
     }
 
+    // only use for albums that are not editable
     public void setProdutor(Produtor produtor) {
-        if (produtor == null) { return; }
+        if (produtor == null) {
+            return;
+        }
         this.produtor = produtor;
         this.produtor.addOldAlbum(this);
     }
 
     public Produtor getProdutor() {
-        return produtor;
+        return this.produtor;
     }
 
     @Override
     public String toString() {
         String aux = "";
-        if(this.produtor != null){
+        if (this.produtor != null) {
             aux = "produtor=" + this.produtor.getUsername();
         }
 
         aux += "titulo=" + titulo + ", genero=" + genero + ", date=" + date;
 
         int i = 0;
-        for(Musician m: this.artists){
+        for (Musician m : this.artists) {
             i++;
             aux += "\n" + i + " " + m.getUsername();
         }
@@ -152,10 +160,10 @@ public class Album implements Serializable, Comparable<Album> {
 
     @Override
     public int compareTo(Album o) {
-        if (o == null) return -1;
+        if (o == null)
+            return -1;
         return this.getTitulo().compareTo(o.getTitulo());
     }
-
 
     public Backend.Instruments.Repos getInstrumentsRepo() {
         return instrumentsRepo;
@@ -178,16 +186,19 @@ public class Album implements Serializable, Comparable<Album> {
     }
 
     public boolean removeTrack(String trackname) {
-        if(!this.doesTrackExist(trackname)) {return false;};
+        if (!this.doesTrackExist(trackname)) {
+            return false;
+        }
+        ;
         tracks.remove(trackname);
         return true;
     }
 
-    public Map<String, Track> getTracks() {
+    public Map<String, Backend.Tracks.Track> getTracks() {
         return tracks;
     }
 
-    public boolean doesTrackExist(String trackname){
+    public boolean doesTrackExist(String trackname) {
         return this.getTracks().containsKey(trackname);
     }
 }

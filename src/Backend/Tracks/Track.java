@@ -1,5 +1,7 @@
 package Backend.Tracks;
 
+import Backend.Albums.Album;
+
 import java.io.Serializable;
 import java.util.Set;
 import java.util.TreeSet;
@@ -12,10 +14,14 @@ public class Track implements Serializable {
     private String genero;
     private int duration;
 
-    public Track(String titulo, String genero, int duration) {
+    private Album album;
+
+    public Track(Album album, String titulo, String genero, int duration) {
         this.titulo = titulo;
         this.genero = genero;
         this.duration = duration;
+        this.album = album;
+        album.addTrack(this);
     }
 
     public String getTitulo() {

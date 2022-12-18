@@ -15,13 +15,14 @@ public class Musician extends User {
     public Musician(String name, String email, String username, String password, Backend.Users.Repos users,
             Backend.Instruments.Repos instruments, Backend.Albums.Repos albums, Backend.Sessions.Repos sessions) {
         super(name, email, username, password, users, instruments, albums, sessions);
-        usersRepo.addUser(this);
+        super.getUsersRepo().addUser(this);
     }
 
     public boolean addAlbum(Backend.Albums.Album album) {
         return albums.add(album);
     }
 
+    // do not use it yet
     public void removeAlbum(Backend.Albums.Album album) {
         albums.remove(album);
     }
@@ -30,8 +31,10 @@ public class Musician extends User {
         return albums;
     }
 
-    public void addInstrument(Instrument instrument) {
-        instruments.add(instrument);
+    public void requestInstrument(Instrument instrument, Session s) throws IllegalArgumentException {
+        if(!s.getInvitedMusicians().containsKey(this.getUsername()))
+            throw new IllegalArgumentException("This musician was not invited to the specified session!");
+        s.addPendingInstrument(instrument);
     }
 
     public void removeInstrument(Instrument instrument) {
@@ -43,11 +46,11 @@ public class Musician extends User {
     }
 
     public void addSession(AlbumEditado album, Session newSession)
-        throws Exception{
+        throws IllegalArgumentException{
         this.addAlbum(album);
         boolean add = this.sessions.add(newSession);
         if (add == false){
-            throw new Exception("Musician was already in this session");
+            throw new IllegalArgumentException("Musician was already in this session");
         }
     }
 

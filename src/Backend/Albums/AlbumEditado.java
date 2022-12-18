@@ -1,5 +1,7 @@
 package Backend.Albums;
 
+import Backend.Sessions.Session;
+
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.Set;
@@ -10,6 +12,7 @@ public class AlbumEditado extends Album {
     private boolean isEdited;
     private final Set<Backend.Sessions.Session> sessions = new TreeSet<>();
     private Backend.Users.Produtor producer;
+    private Backend.Sessions.Session lastSessionAdded;
 
     public AlbumEditado(String titulo, String genero,
             Backend.Instruments.Repos instruments,
@@ -45,37 +48,76 @@ public class AlbumEditado extends Album {
         return isEdited;
     }
 
-    public Backend.Sessions.Session addSession(LocalDate date) throws IllegalArgumentException {
+    public Session addSession(LocalDate date) throws IllegalArgumentException {
         if (this.isEdited) {
-            throw new IllegalArgumentException("The given album is already finished");
+            throw new IllegalArgumentException("The album is already finished");
         }
         if (date.isBefore(LocalDate.now())) {
             throw new IllegalArgumentException("The given date is a past date");
         }
-        Backend.Sessions.Session session = new Backend.Sessions.Session(date);
-        sessions.add(session);
+
+        // the constructor of session is responsible for also adding the session into the specified album
+        Backend.Sessions.Session session = new Backend.Sessions.Session(date, this, getSessionsRepo(),
+                                                            getUsersRepo(), getInstrumentsRepo(), getAlbumsRepo());
+        this.lastSessionAdded = session;
         return session;
     }
 
-    public void removeSession(LocalDate date) throws IllegalArgumentException {
+    public boolean addSession(Session s){
+        if (this.isEdited) {
+            throw new IllegalArgumentException("The album is already finished");
+        }
+        if (s.getDate().isBefore(LocalDate.now())) {
+            throw new IllegalArgumentException("The given date is a past date");
+        }
+        this.lastSessionAdded = s;
+        return sessions.add(s);
+    }
+
+    public Backend.Sessions.Session getLastSessionAdded(){
+        return this.lastSessionAdded;
+    }
+
+    public boolean removeSession(LocalDate date) throws IllegalArgumentException {
         if (this.isEdited) {
             throw new IllegalArgumentException("The album you are trying to edit is already finished.");
         }
         if (date.isBefore(LocalDate.now())) {
             throw new IllegalArgumentException("You cannot delete a session that has already finished.");
         }
-        Backend.Sessions.Session session = new Backend.Sessions.Session(date);
-        sessions.remove(session);
+
+        Backend.Sessions.Session found = null;
+        for(Backend.Sessions.Session s: sessions){
+            if(s.getDate().equals(date)) {
+                found = s;
+            }
+        }
+        if (found == null) return false;
+        return sessions.remove(found);
+    }
+
+    public boolean removeSession(UUID id) throws IllegalArgumentException {
+        if (this.isEdited) {
+            throw new IllegalArgumentException("The album you are trying to edit is already finished.");
+        }
+        Backend.Sessions.Session found = null;
+        for (Backend.Sessions.Session s: sessions){
+            if(s.getId().equals(id)) {
+                found = s;
+            }
+        }
+        if (found == null) return false;
+        return sessions.remove(found);
     }
 
     public void markSessionAsCompleted(UUID id) {
         if (this.isEdited) {
             return;
         }
-        Backend.Sessions.Session session = new Backend.Sessions.Session(null);
-        session.setId(id);
-        if (sessions.contains(session)) {
-            session.setCompleted(true);
+        for(Backend.Sessions.Session s: sessions){
+            if(s.getId().equals(id)){
+                s.setCompleted(true);
+            }
         }
     }
 

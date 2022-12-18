@@ -9,7 +9,7 @@ public class Repos implements Serializable {
     private static final long serialVersionUID = 5L;
 
     public void addInstrument(Instrument instrument) {
-        instruments.put(instrument.getName(), instrument);
+        instruments.put(instrument.getName().toLowerCase(), instrument);
     }
 
     public Instrument getInstrument(String name) {

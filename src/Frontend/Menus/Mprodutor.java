@@ -135,7 +135,8 @@ public class Mprodutor implements Menu {
                         try {
                             DateTimeFormatter df = DateTimeFormatter.ofPattern("dd MM yyyy", Locale.ITALY);
                             newDateFormatted = LocalDate.parse(newDate, df);
-                            newSession = album.addSession(newDateFormatted);
+                            album.addSession(newDateFormatted);
+                            newSession = album.getLastSessionAdded();
                         } catch (IllegalArgumentException e){
                             System.out.println(e.getMessage());
                         } catch (Exception e) {
@@ -240,8 +241,11 @@ public class Mprodutor implements Menu {
                             String genre = sc.nextLine();
                             System.out.println("Duration: ");
                             int duration = sc.nextInt();
+                            System.out.println("Name of the associated album: ");
+                            String nameAlbum = sc.nextLine();
+                            Album a = user.getProjeto(nameAlbum) == null? user.getProjeto(nameAlbum): user.getOldAlbum(nameAlbum);
 
-                            Backend.Tracks.Track newTrack = new Track(trackName, genre ,duration);
+                            Backend.Tracks.Track newTrack = new Track(a, trackName, genre ,duration);
                             boolean success3 = album.addTrack(newTrack);
                             if (!success3) {
                                 System.out.println("The name of the track needs to be unique inside the album!");
