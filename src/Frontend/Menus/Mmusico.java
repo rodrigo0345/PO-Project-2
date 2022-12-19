@@ -29,9 +29,10 @@ public class Mmusico implements Menu {
         System.out.println("3. Future recording sessions");
         System.out.println("4. Request an instrument for a specific recording session");
         System.out.println("5. See the state of all recording sessions");
-        System.out.println("6. Log out");
+        System.out.println("6. Consultar dados");
+        System.out.println("7. Log out");
 
-        option = Generics.checkInt("Introduza a opção: ");
+        option = Generics.checkOption("Introduza a opção: ");
     }
 
     public void executeOption(Backend.Instruments.Repos instruments, Backend.Albums.Repos albums,
@@ -125,6 +126,14 @@ public class Mmusico implements Menu {
                 sc.nextLine();
                 break;
             case 6:
+                System.out.println("Name: " + user.getName());
+                System.out.println("Username: " + user.getUsername());
+                System.out.println("Email: " + user.getEmail());
+                System.out.println("Password: " + user.getPassword());
+                //falta a lista de instrumentos que cada músico toca
+                sc.nextLine();
+                break;
+            case 7:
                 this.user = null;
                 break;
             default:

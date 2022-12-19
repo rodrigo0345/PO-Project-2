@@ -1,6 +1,7 @@
 package Frontend.Menus;
 
 import java.awt.*;
+import java.rmi.StubNotFoundException;
 import java.text.DateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -39,7 +40,7 @@ public class Mprodutor implements Menu {
         System.out.println("7. Consultar dados");   //NÃO FUNCIONA
         System.out.println("8. Log out");
 
-        option = Generics.checkInt("Introduza a opção: ");
+        option = Generics.checkOption("Introduza a opção: ");
     }
 
     public Produtor getUser() {
@@ -57,7 +58,7 @@ public class Mprodutor implements Menu {
                 System.out.println("[3] - Edit email");
                 System.out.println("[4] - Edit password");
 
-                option = Generics.checkInt("Introduza a opção: ");
+                option = Generics.checkOption("Introduza a opção: ");
 
                 try {
                     switch (option) {
@@ -307,8 +308,12 @@ public class Mprodutor implements Menu {
                 System.out.println(session);
                 break;
             case 7:
-                    System.out.println("username: "+ user.getUsername());   //NÃO FUNCIONA
-                    break;
+                System.out.println("Name: " + user.getName());
+                System.out.println("Username: " + user.getUsername());
+                System.out.println("Email: " + user.getEmail());
+                System.out.println("Password: " + user.getPassword());
+                sc.nextLine();
+                break;
             case 8:
                 this.user = null;
                 break;

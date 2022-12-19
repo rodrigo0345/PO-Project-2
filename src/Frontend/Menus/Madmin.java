@@ -41,7 +41,7 @@ public class Madmin implements Menu {
         System.out.println("12. Show all albums");
         System.out.println("13. Log out");
 
-        option = Generics.checkInt("Introduza a opção: ");
+        option = Generics.checkOption("Introduza a opção: ");
 
     }
 

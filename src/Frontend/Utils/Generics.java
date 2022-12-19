@@ -83,5 +83,24 @@ public class Generics {
         return number;
     }
 
+    public static int checkOption(String message){
+
+        Integer number = null;
+        String text;
+
+        do{
+            write(message);
+            text = sc.nextLine();
+
+            try{
+                number = Integer.parseInt(text);
+            }catch(NumberFormatException e){
+                outputError(text + " is an invalid option.");
+                sc.nextLine();
+            }
+        }while(number == null);
+
+        return number;
+    }
 
 }
