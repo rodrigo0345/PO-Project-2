@@ -7,6 +7,7 @@ import java.util.Set;
 import Backend.Instruments.Instrument;
 import Backend.Sessions.Session;
 import Backend.Users.Musician;
+import Frontend.Utils.Generics;
 
 public class Mmusico implements Menu {
     private int option;
@@ -22,7 +23,6 @@ public class Mmusico implements Menu {
 
     @Override
     public void mostrarMenu() {
-        Scanner sc = new Scanner(System.in);
         System.out.println("Menu de Musico - Logged as " + user.getUsername());
         System.out.println("1. Edit profile");
         System.out.println("2. Associated albums");
@@ -31,11 +31,7 @@ public class Mmusico implements Menu {
         System.out.println("5. See the state of all recording sessions");
         System.out.println("6. Log out");
 
-        try {
-            this.option = sc.nextInt();
-        } catch (Exception e) {
-            System.out.println("Invalid option");
-        }
+        option = Generics.checkInt("Introduza a opção: ");
     }
 
     public void executeOption(Backend.Instruments.Repos instruments, Backend.Albums.Repos albums,
@@ -53,24 +49,21 @@ public class Mmusico implements Menu {
                 try {
                     int option = sc.nextInt();
                     switch (option) {
+
                         case 1:
-                            System.out.println("New name: ");
-                            String name = sc.next();
+                            String name = Generics.readString("New name: ");
                             user.setName(name);
                             break;
                         case 2:
-                            System.out.println("New username: ");
-                            String surname = sc.next();
+                            String surname = Generics.readString("New username: ");
                             user.setUsername(surname);
                             break;
                         case 3:
-                            System.out.println("New email: ");
-                            String email = sc.next();
+                            String email = Generics.readString("New email: ");
                             user.setEmail(email);
                             break;
                         case 4:
-                            System.out.println("New password: ");
-                            String password = sc.next();
+                            String password = Generics.readString("New password: ");
                             user.setPassword(password);
                             break;
                         default:
@@ -109,8 +102,7 @@ public class Mmusico implements Menu {
                 for(Backend.Instruments.Instrument i: availableInstruments){
                     System.out.println(i);
                 }
-                System.out.println("Instrument's name: ");
-                String instrumentName = sc.nextLine();
+                String instrumentName = Generics.readString("Instrument's name: ");
                 Instrument instrument = instruments.getInstrument(instrumentName);
 
                 // the admin will then be able to accept or deny the request
