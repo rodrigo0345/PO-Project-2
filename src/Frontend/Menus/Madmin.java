@@ -8,6 +8,7 @@ import java.util.*;
 
 import Backend.Instruments.Repos;
 import Backend.Users.Admin;
+import Frontend.Utils.Generics;
 
 // Menu of the administrators
 public class Madmin implements Menu {
@@ -24,7 +25,7 @@ public class Madmin implements Menu {
 
     @Override
     public void mostrarMenu() {
-        Scanner sc = new Scanner(System.in);
+       
         System.out.println("Menu de Administrador - Logged as " + user.getUsername());
         System.out.println("1. Add a new producer");
         System.out.println("2. Add a new musician");
@@ -40,45 +41,37 @@ public class Madmin implements Menu {
         System.out.println("12. Show all albums");
         System.out.println("13. Log out");
 
-        try {
-            option = sc.nextInt();
-        } catch (Exception e) {
-            System.out.println("Invalid option");
-        }
+        option = Generics.checkInt("Introduza a opção: ");
+
     }
 
     @Override
     public void executeOption(Backend.Instruments.Repos instruments, Backend.Albums.Repos albums,
             Backend.Users.Repos users, Backend.Sessions.Repos sessions) {
+       
         Scanner sc = new Scanner(System.in);
+
         switch (option) {
             case 1:
-                System.out.println("Name: ");
-                String name = sc.nextLine();
-                System.out.println("Username: ");
-                String username = sc.nextLine();
-                System.out.println("Password: ");
-                String password = sc.nextLine();
-                System.out.println("Email: ");
-                String email = sc.nextLine();
+                String name = Generics.readString("Name: ");
+                String username = Generics.readString("Username: ");
+                String password = Generics.readString("Password: ");
+                String email = Generics.readString("Email: ");
 
-                try {
-                    user.addProdutor(name, email, username, password);
-                } catch (Exception e) {
-                    System.out.println(e.getMessage());
-                }
+               try {
+                   user.addProdutor(name, email, username, password);
+               } catch (Exception e) {
+                   System.out.println(e.getMessage());
+               }
                 
                 break;
             case 2:
-                System.out.println("Name: ");
-                name = sc.nextLine();
-                System.out.println("Username: ");
-                username = sc.nextLine();
-                System.out.println("Password: ");
-                password = sc.nextLine();
-                System.out.println("Email: ");
-                email = sc.nextLine();
 
+                name = Generics.readString("Name: ");
+                username = Generics.readString("Username: ");
+                password = Generics.readString("Password: ");
+                email = Generics.readString("Email: ");
+               
                 try {
                     user.addMusician(name, username, password, email);
                 } catch (Exception e) {
@@ -86,32 +79,34 @@ public class Madmin implements Menu {
                 }
                 break;
             case 3:
-                System.out.println("Username: ");
-                username = sc.nextLine();
+            
+                username = Generics.readString("Username: ");
                 try {
                     user.removeUser(username);
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
                 }
                 break;
+
             case 4:
-                System.out.println("Name of the instrument: ");
-                name = sc.nextLine();
+            
+                name = Generics.readString("Name of the instrument: ");
+                
                 try {
                     user.addInstrument(name);
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
                 }
                 break;
-            case 5:
+
+            case 5:                                                         
                 if (this.user.getAllSessionRequests() == null) {
                     System.out.println("No session requests");
                     return;
                 }
                 System.out.print("Select a session request: ");
-                UUID id = UUID.fromString(sc.nextLine());
-                System.out.println("Accept or reject? (y/n)");
-                String answer = sc.nextLine();
+                UUID id = UUID.fromString(sc.nextLine());                       //FALTA ALTERAR
+                String answer = Generics.readString("Accept or reject? (y/n)");
                 if (answer.equals("y")) {
                     try {
                         this.user.acceptSessionRequest(id);
@@ -155,26 +150,16 @@ public class Madmin implements Menu {
                 break;
             case 11:
                 // creating an album
-                System.out.println("Name of the album: ");
-                String titleOfTheAlbum = sc.nextLine();
-                System.out.println("Producer: ");
-                String producer = sc.nextLine();
-                System.out.println("Genre: ");
-                String genre = sc.nextLine();
-                System.out.println("Date of release (dd MM yyyy): ");
-                String d = sc.nextLine();
+                
+                String titleOfTheAlbum = Generics.readString("Name of the album: ");
+                String producer = Generics.readString("Producer: ");
+                String genre = Generics.readString("Genre: ");
+                String d = Generics.readString("Date of release (dd MM yyyy): ");
                 LocalDate date = null;
-
+                
                 // verify that the inserted date is valid
-                try {
-                    DateTimeFormatter df = DateTimeFormatter.ofPattern("dd MM yyyy", Locale.FRANCE);
-                    date = LocalDate.parse(d, df);
-                } catch (Exception e) {
-                    System.out.println("Invalid date");
-                    sc.nextLine();
-                    return;
-                }
-
+                date = Generics.stringToDate(d);
+            
                 // verify that the inserted producer is valid
                 try {
                     Backend.Users.User aux = users.getUser(producer);
@@ -195,8 +180,7 @@ public class Madmin implements Menu {
                 // adicionar musicas ao album
                 String answer2 = "y";
                 while (answer2.equals("y")) {
-                    System.out.println("Add a song to the album? (y/n)");
-                    answer2 = sc.nextLine();
+                    answer2 = Generics.readString("Add a song to the album? (y/n)");
                     this.addTrackToAlbum(answer2, user, users, titleOfTheAlbum);
                 }
                 break;
@@ -222,15 +206,12 @@ public class Madmin implements Menu {
         Scanner sc = new Scanner(System.in);
         Backend.Albums.Album a = user.getAlbumsRepo().getAlbum(titleOfTheAlbum);
         if (ans.equals("y")) {
-            System.out.println("Title of the song: ");
-            String titleOfTheSong = sc.nextLine();
-            System.out.println("Duration: ");
-            int duration = sc.nextInt();
-            System.out.println("Genre: ");
+
+            String titleOfTheSong = Generics.readString("Title of the song: ");
+            int duration = Generics.checkInt("Duration: ");
             sc.nextLine(); // flush
-            String genre = sc.nextLine();
-            System.out.println("Musician: ");
-            String musician = sc.nextLine();
+            String genre = Generics.readString("Genre: ");
+            String musician = Generics.readString("Musician: ");
             try {
                 Backend.Tracks.Track t = new Backend.Tracks.Track(a, titleOfTheSong,
                         genre, duration);
@@ -240,8 +221,7 @@ public class Madmin implements Menu {
                 // add musicians to the track
                 String answer3 = "y";
                 while (answer3.equals("y")) {
-                    System.out.println("Add a new musician to the track? (y/n)");
-                    answer3 = sc.nextLine();
+                    answer3 = Generics.readString("Add a new musician to the track? (y/n)");
                     this.addArtistToTrack(answer3, user, users, t);
                 }
 
@@ -260,8 +240,8 @@ public class Madmin implements Menu {
             Backend.Tracks.Track t) {
         Scanner sc = new Scanner(System.in);
         if (ans.equals("y")) {
-            System.out.println("Musician: ");
-            String musician2 = sc.nextLine();
+            System.out.println("");
+            String musician2 = Generics.readString("Musician: ");
             t.addArtist((Backend.Users.Musician) users.getUser(musician2));
         } else if (ans.equals("n")) {
             option = -1;

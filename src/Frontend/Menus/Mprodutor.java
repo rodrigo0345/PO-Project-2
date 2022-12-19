@@ -14,6 +14,7 @@ import Backend.Albums.AlbumEditado;
 import Backend.Tracks.Track;
 import Backend.Users.Musician;
 import Backend.Users.Produtor;
+import Frontend.Utils.Generics;
 
 public class Mprodutor implements Menu {
     private int option;
@@ -35,13 +36,10 @@ public class Mprodutor implements Menu {
         System.out.println("4. See the state of an album");
         System.out.println("5. Your Albums");
         System.out.println("6. Recording Sessions of a day");
-        System.out.println("7. Log out");
+        System.out.println("7. Consultar dados");   //NÃO FUNCIONA
+        System.out.println("8. Log out");
 
-        try {
-            option = sc.nextInt();
-        } catch (Exception e) {
-            System.out.println("Invalid option");
-        }
+        option = Generics.checkInt("Introduza a opção: ");
     }
 
     public Produtor getUser() {
@@ -59,34 +57,28 @@ public class Mprodutor implements Menu {
                 System.out.println("[3] - Edit email");
                 System.out.println("[4] - Edit password");
 
-                try {
-                    int option = sc.nextInt();
-                } catch (Exception e) {
-                    System.out.println("Invalid option");
-                    sc.nextLine();
-                    return;
-                }
+                option = Generics.checkInt("Introduza a opção: ");
 
                 try {
                     switch (option) {
                         case 1:
-                            System.out.println("New name: ");
-                            String name = sc.next();
+                            
+                            String name = Generics.readString("Name: ");
                             user.setName(name);
                             break;
                         case 2:
-                            System.out.println("New username: ");
-                            String surname = sc.next();
+                            
+                            String surname = Generics.readString("New username: ");
                             user.setUsername(surname); // throws exception
                             break;
                         case 3:
-                            System.out.println("New email: ");
-                            String email = sc.next();
+                            
+                            String email = Generics.readString("New email: ");
                             user.setEmail(email);
                             break;
                         case 4:
-                            System.out.println("New password: ");
-                            String password = sc.next();
+                            
+                            String password = Generics.readString("New password: ");
                             user.setPassword(password);
                             break;
                         default:
@@ -111,10 +103,9 @@ public class Mprodutor implements Menu {
                 }
 
                 if (option2 == 1) {
-                    System.out.println("Original Album's name: ");
-                    String albumName = sc.nextLine();
-                    System.out.println("New Album's name: ");
-                    String newAlbumName = sc.nextLine();
+
+                    String albumName = Generics.readString("Original Album's name: ");
+                    String newAlbumName = Generics.readString("New Album's name: ");
 
                     Backend.Albums.AlbumEditado album;
                     try {
@@ -124,11 +115,9 @@ public class Mprodutor implements Menu {
                         return;
                     }
 
-                    System.out.println("Plan a new recording session? (y/n)");
-                    String choice = sc.nextLine();
+                    String choice = Generics.readString("Plan a new recording session? (y/n)");
                     while(choice.equals("y")) {
-                        System.out.println("Date of the session (dd mm yyyy): ");
-                        String newDate = sc.nextLine();
+                        String newDate = Generics.readString("Date of the session (dd mm yyyy): ");
                         LocalDate newDateFormatted = null;
                         Backend.Sessions.Session newSession = null;
 
@@ -145,11 +134,11 @@ public class Mprodutor implements Menu {
                             return;
                         }
 
-                        System.out.println("Add new artist? (y/n)");
-                        String artist = sc.nextLine();
+                        
+                        String artist = Generics.readString("Add new artist? (y/n)");
                         while(artist.equals("y")) {
-                            System.out.println("Artist's username: ");
-                            artist = sc.nextLine();
+                            
+                            artist = Generics.readString("Artist's username: ");
 
                             Backend.Users.User aux = users.getUser(artist);
                             if (!(aux instanceof Backend.Users.Musician) || aux == null) {
@@ -167,17 +156,16 @@ public class Mprodutor implements Menu {
                                 // no need to return
                             }
 
-                            System.out.println("Add new artist? (y/n)");
-                            artist = sc.nextLine();
+                            
+                            artist = Generics.readString("Add new artist? (y/n)");
                         }
 
-                        System.out.println("Plan a new recording session (y/n)");
-                        choice = sc.nextLine();
+                        choice = Generics.readString("Plan a new recording session (y/n)");
                     }
 
                 } else if (option2 == 2) {
-                    System.out.println("Name of the album: ");
-                    String albumName = sc.nextLine();
+                    
+                    String albumName = Generics.readString("Name of the album: ");
                     Backend.Albums.Album album = albums.getAlbum(albumName);
 
                     if (!(album instanceof Backend.Albums.AlbumEditado)){
@@ -194,7 +182,7 @@ public class Mprodutor implements Menu {
                     System.out.println("4. Remove an artist");
                     System.out.println("5. Add a new track");
                     System.out.println("6. End all past recording sessions");
-                    int choice = sc.nextInt();
+                    int choice = Generics.checkInt("Introduza a opção: ");
 
                     switch(choice) {
                         case 1:
@@ -203,15 +191,15 @@ public class Mprodutor implements Menu {
                             ((AlbumEditado) album).addSession(d);
                             break;
                         case 2:
-                            System.out.println("ID of the recording session: ");
-                            String id = sc.nextLine();
+                          
+                            String id = Generics.readString("ID of the recording session: ");
                             boolean success = sessions.deleteSession(UUID.fromString(id));
                             if (!success) { System.out.println("The session you are trying to delete does not exist"); return;}
                             System.out.println("Session deleted with success");
                             break;
                         case 3:
-                            System.out.println("Username of the artist: ");
-                            String username = sc.nextLine();
+                            
+                            String username = Generics.readString("Username of the artist: ");
                             Backend.Users.User artist = users.getUser(username);
                             if (!(artist instanceof Musician) || artist == null) {
                                 System.out.println("Invalid username, the username you " +
@@ -225,8 +213,7 @@ public class Mprodutor implements Menu {
                             album.addArtist((Musician) artist);
                             break;
                         case 4:
-                            System.out.println("Username of the artist: ");
-                            String username2 = sc.nextLine();
+                            String username2 = Generics.readString("Username of the artist: ");
                             boolean success2 = album.removeArtist(username2);
                             if (!success2) {
                                 System.out.println("The system was not able to delete the user you" +
@@ -235,14 +222,11 @@ public class Mprodutor implements Menu {
                             }
                             break;
                         case 5:
-                            System.out.println("Name of the track: ");
-                            String trackName = sc.nextLine();
-                            System.out.println("Genre of the track: ");
-                            String genre = sc.nextLine();
-                            System.out.println("Duration: ");
-                            int duration = sc.nextInt();
-                            System.out.println("Name of the associated album: ");
-                            String nameAlbum = sc.nextLine();
+
+                            String trackName = Generics.readString("Name of the track: ");
+                            String genre = Generics.readString("Genre of the track: ");
+                            int duration = Generics.checkInt("Duration: ");
+                            String nameAlbum = Generics.readString("Name of the associated album: ");
                             Album a = user.getProjeto(nameAlbum) == null? user.getProjeto(nameAlbum): user.getOldAlbum(nameAlbum);
 
                             Backend.Tracks.Track newTrack = new Track(a, trackName, genre ,duration);
@@ -278,8 +262,8 @@ public class Mprodutor implements Menu {
                 }
                 break;
             case 4:
-                System.out.println("Select the album to examine: ");
-                String albumName = sc.nextLine();
+
+                String albumName = Generics.readString("Select the album to examine: ");
                 Backend.Albums.Album album = albums.getAlbum(albumName);
 
                 if (!(album instanceof AlbumEditado)){
@@ -323,6 +307,9 @@ public class Mprodutor implements Menu {
                 System.out.println(session);
                 break;
             case 7:
+                    System.out.println("username: "+ user.getUsername());   //NÃO FUNCIONA
+                    break;
+            case 8:
                 this.user = null;
                 break;
             default:
@@ -331,5 +318,5 @@ public class Mprodutor implements Menu {
         }
 
     }
-
+    
 }
