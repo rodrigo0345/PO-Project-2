@@ -32,6 +32,21 @@ public class Generics {
         return date;
     }
 
+    public static LocalDate stringToHour(String d){
+        LocalDate date = null;
+
+        // verify that the inserted date is valid
+        try {
+            DateTimeFormatter df = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm", Locale.FRANCE);
+            date = LocalDate.parse(d, df);
+        } catch (Exception e) {
+            System.out.println("Invalid date");
+            sc.nextLine();
+            return null;
+        }
+        return date;
+    }
+
     private static void outputError(String message) {
         System.err.println(message);
     }
