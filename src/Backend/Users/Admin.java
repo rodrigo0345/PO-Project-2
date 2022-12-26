@@ -5,6 +5,7 @@ import Backend.Albums.AlbumEditado;
 import Backend.Instruments.Instrument;
 import Backend.Sessions.Session;
 import Backend.Tracks.Track;
+import Backend.Useful.StringChecker;
 
 import java.time.LocalDate;
 import java.util.Set;
@@ -60,6 +61,12 @@ public class Admin extends User {
         if (!getUsersRepo().isUserValid(username)) {
             throw new IllegalArgumentException("Username already exists");
         }
+        try {
+            StringChecker.validName(name);
+            StringChecker.validEmail(email);
+        } catch (IllegalArgumentException e) {
+            throw e;
+        }
         // automatically adds it to the user repos
         return new Musician(name, email, username, password, getUsersRepo(), getInstrumentsRepo(),
                 getAlbumsRepo(), getSessionsRepo());
@@ -69,6 +76,12 @@ public class Admin extends User {
             throws IllegalArgumentException {
         if (!getUsersRepo().isUserValid(username)) {
             throw new IllegalArgumentException("Username already exists");
+        }
+        try {
+            StringChecker.validName(name);
+            StringChecker.validEmail(email);
+        } catch (IllegalArgumentException e) {
+            throw e;
         }
         // automatically adds it to the user repos
         return new Produtor(name, email, username, password, getUsersRepo(), getInstrumentsRepo(),

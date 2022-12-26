@@ -38,8 +38,6 @@ public class Repos implements Serializable {
             Backend.Users.Repos users, Backend.Sessions.Repos sessions) {
         addUser(new Admin("Admin", "admin", "admin", "admin", instruments, albums, users, sessions));
 
-        // Musician
-        addUser(new Musician("Musician", "musician", "musician", "musician", users, instruments, albums, sessions));
     }
 
     // only used to load the data from the files
