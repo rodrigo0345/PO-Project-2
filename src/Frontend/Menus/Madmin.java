@@ -39,7 +39,8 @@ public class Madmin implements Menu {
         System.out.println("10. Show all instruments");
         System.out.println("11. Add a new album");
         System.out.println("12. Show all albums");
-        System.out.println("13. Log out");
+        System.out.println("13. Consultar dados");
+        System.out.println("14. Log out");
 
         option = Generics.checkOption("Introduza a opção: ");
 
@@ -192,6 +193,13 @@ public class Madmin implements Menu {
                 sc.nextLine();
                 break;
             case 13:
+                System.out.println("Name: " + user.getName());
+                System.out.println("Username: " + user.getUsername());
+                System.out.println("Email: " + user.getEmail());
+                System.out.println("Password: " + user.getPassword());
+                sc.nextLine();
+                break;
+            case 14:
                 this.user = null;
                 break;
             default:
