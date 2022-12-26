@@ -55,7 +55,7 @@ public class AdminTest {
         }
         assertEquals("Username already exists", error);
 
-        admin.addMusician("teste", "teste@gmail.com", "teste3", "teste");
+        admin.addMusician("Teste", "teste@gmail.com", "teste3", "teste");
         assertNotNull(admin.getUsersRepo().getUser("teste3"));
         assertEquals(3, admin.getUsersRepo().getUsers().size());
     }
@@ -70,7 +70,7 @@ public class AdminTest {
         }
         assertEquals("Username already exists", error);
 
-        admin.addProdutor("teste", "teste@gmail.com", "teste3", "teste");
+        admin.addProdutor("Teste", "teste@gmail.com", "teste3", "teste");
         assertNotNull(admin.getUsersRepo().getUser("teste3"));
         assertEquals(3, admin.getUsersRepo().getUsers().size());
     }
@@ -96,7 +96,7 @@ public class AdminTest {
             error = e.getMessage();
         }
         assertNotNull(error);
-        admin.addProdutor("r", "teste@gmail.com", "rodrigo", "0");
+        admin.addProdutor("R", "teste@gmail.com", "rodrigo", "0");
         album.setProdutorOriginal((Produtor)admin.getUsersRepo().getUser("rodrigo", "0"));
         try {
             admin.removeUser("teste3");
