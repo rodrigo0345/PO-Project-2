@@ -50,7 +50,8 @@ public class StringChecker {
 
     public static boolean validEmail(String str) throws IllegalArgumentException {
         // check for format of email with regex
-        Pattern p = Pattern.compile("^[A-Za-z0-9+_.-]+@(.+)$");
+        Pattern p = Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+                + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
         Matcher m = p.matcher(str);
         if (!m.find()) {
             throw new IllegalArgumentException("Email inválido");
