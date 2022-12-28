@@ -184,8 +184,8 @@ public class Mprodutor implements Menu {
                     switch(choice) {
                         case 1:
                             //System.out.println("Choose a date to the recording: ");
-                            //LocalDate d = Frontend.Utils.Generics.readDate();
-                            //((AlbumEditado) album).addSession(d);
+                            //LocalDateTime d = Frontend.Utils.Generics.readDate();
+                           // ((AlbumEditado) album).addSession(d);
                             break;
                         case 2:
                           

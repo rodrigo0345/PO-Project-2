@@ -13,7 +13,7 @@ public class Generics {
 
    private final static Scanner sc = new Scanner(System.in); // Pusemos static porque dava erro
 
-    public static LocalDateTime readDate(){
+    public static LocalDate readDate(){
         String d = sc.nextLine();
         return stringToDate(d);
     }
