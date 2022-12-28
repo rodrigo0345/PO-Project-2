@@ -52,13 +52,20 @@ public class Madmin implements Menu {
             Backend.Users.Repos users, Backend.Sessions.Repos sessions) {
        
         Scanner sc = new Scanner(System.in);
+        String name, username, password, email; // used in multiple cases
 
         switch (option) {
-            case 1:
-                String name = Generics.readString("Name: ");
-                String username = Generics.readString("Username: ");
-                String password = Generics.readString("Password: ");
-                String email = Generics.readString("Email: ");
+            case 1:     // aqui está bem
+                try {
+                    name = Generics.readString("Name: ");
+                    username = Generics.readString("Username: ");
+                    password = Generics.readString("Password: ");
+                    email = Generics.readString("Email: ");
+                } catch(Exception e) {
+                    System.out.println("Invalid input");
+                    return;
+                }
+
 
                try {
                    user.addProdutor(name, email, username, password);
@@ -67,12 +74,17 @@ public class Madmin implements Menu {
                }
                 
                 break;
-            case 2:
+            case 2:     // caso o
 
-                name = Generics.readString("Name: ");
-                username = Generics.readString("Username: ");
-                password = Generics.readString("Password: ");
-                email = Generics.readString("Email: ");
+                try {
+                    name = Generics.readString("Name: ");
+                    username = Generics.readString("Username: ");
+                    password = Generics.readString("Password: ");
+                    email = Generics.readString("Email: ");
+                } catch(Exception e) {
+                    System.out.println("Invalid input");
+                    return;
+                }
                
                 try {
                     user.addMusician(name, username, password, email);
@@ -81,8 +93,14 @@ public class Madmin implements Menu {
                 }
                 break;
             case 3:
-            
-                username = Generics.readString("Username: ");
+
+                try {
+                    username = Generics.readString("Username: ");
+                } catch(Exception e) {
+                    System.out.println("Invalid input");
+                    return;
+                }
+
                 try {
                     user.removeUser(username);
                 } catch (Exception e) {
@@ -91,8 +109,14 @@ public class Madmin implements Menu {
                 break;
 
             case 4:
-            
-                name = Generics.readString("Name of the instrument: ");
+
+                try {
+                    name = Generics.readString("Name of the instrument: ");
+                }
+                catch(Exception e) {
+                    System.out.println("Invalid input");
+                    return;
+                }
                 
                 try {
                     user.addInstrument(name);
