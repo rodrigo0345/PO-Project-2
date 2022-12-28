@@ -78,23 +78,23 @@ public class AlbumEditado extends Album {
         return session;
     }
 
-    public boolean addSession(LocalDate d){
+    public boolean addSession(Session s){
         if (this.isEdited) {
             throw new IllegalArgumentException("The album is already finished");
         }
-        if (d.getDataInicio().isBefore(LocalDateTime.now())) {
+        if (s.getDataInicio().isBefore(LocalDateTime.now())) {
             throw new IllegalArgumentException("The given date is a past date");
         }
         // check if any musician in this session has another session at the same time
-        for (Backend.Users.Musician musician : d.getInvitedMusicians().values()) {
+        for (Backend.Users.Musician musician : s.getInvitedMusicians().values()) {
             for (Backend.Sessions.Session session : musician.getSessions()) {
-                if (session.getDataInicio().isBefore(d.getDataFim()) && session.getDataFim().isAfter(d.getDataInicio())) {
+                if (session.getDataInicio().isBefore(s.getDataFim()) && session.getDataFim().isAfter(s.getDataInicio())) {
                     throw new IllegalArgumentException("The musician " + musician.getUsername() + " is already in another session at the same time");
                 }
             }
         }
-        this.lastSessionAdded = d;
-        return sessions.add(d);
+        this.lastSessionAdded = s;
+        return sessions.add(s);
     }
 
     public Backend.Sessions.Session getLastSessionAdded(){
