@@ -36,6 +36,12 @@ public class Repos implements Serializable {
 
     public void devUsers(Backend.Instruments.Repos instruments, Backend.Albums.Repos albums,
             Backend.Users.Repos users, Backend.Sessions.Repos sessions) {
+
+        // check if admin was already created
+        if (users.getUser("admin") == null) {
+            Admin admin = new Admin("admin", "admin", "admin", "admin", "admin", "admin", "admin", "admin", "admin");
+            users.addUser(admin);
+        }
         addUser(new Admin("Admin", "admin", "admin", "admin", instruments, albums, users, sessions));
 
     }
