@@ -87,7 +87,7 @@ public class Madmin implements Menu {
                 }
                
                 try {
-                    user.addMusician(name, username, password, email);
+                    user.addMusician(name, email, username, password);
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
                 }
