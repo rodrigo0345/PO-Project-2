@@ -23,7 +23,7 @@ public abstract class User implements Comparable<User>, Serializable {
         this.instrumentsRepo = instruments;
         this.albumsRepo = albums;
         this.sessionsRepo = sessions;
-        this.setUsername(username);
+        this.setFirstUsername(username);
     }
 
     public Backend.Sessions.Repos getSessionsRepo() {
@@ -63,6 +63,14 @@ public abstract class User implements Comparable<User>, Serializable {
     }
 
     public void setUsername(String username) {
+        if (!usersRepo.isUsernameValid(username))
+            return;
+        usersRepo.removeUser(this.username);
+        this.username = username;
+        usersRepo.addUser(this);
+    }
+
+    private void setFirstUsername(String username) {
         if (!usersRepo.isUsernameValid(username))
             return;
         this.username = username;
