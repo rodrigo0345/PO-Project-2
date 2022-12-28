@@ -99,7 +99,7 @@ public class Mmusico implements Menu {
                 // mudem isto que devem ir buscar a sessao por id e não por data pff
                 System.out.println("Access option 3 to see all the available sessions");
                 System.out.println("Date of the session: ");
-                LocalDateTime date = Frontend.Utils.Generics.readDate();
+                LocalDateTime date = Frontend.Utils.Generics.readDate("");
                 Session selectedSession = sessions.getSession(date);
 
                 Set<Backend.Instruments.Instrument> availableInstruments = this.user.getInstruments();

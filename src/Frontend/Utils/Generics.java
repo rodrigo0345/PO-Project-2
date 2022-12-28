@@ -13,8 +13,16 @@ public class Generics {
 
    private final static Scanner sc = new Scanner(System.in); // Pusemos static porque dava erro
 
-    public static LocalDate readDate(){
-        String d = sc.nextLine();
+    public static LocalDateTime readDate(String msg){
+        System.out.println(msg);
+        String d = null;
+        
+        try {
+             d = sc.nextLine();
+        } catch (Exception e) {
+            System.out.println("Erro! Data inválida");
+            return null;
+        }   
         return stringToDate(d);
     }
 
