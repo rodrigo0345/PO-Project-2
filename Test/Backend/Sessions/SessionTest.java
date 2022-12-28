@@ -11,7 +11,7 @@ import static org.junit.Assert.*;
 
 public class SessionTest {
     AlbumEditado album = new AlbumEditado("Random");
-    Session session = new Session(Frontend.Utils.Generics.stringToDate("11/03/2050"), album, album.getSessionsRepo(),
+    Session session = new Session(Frontend.Utils.Generics.stringToDate("11/03/2050 10:00"), Frontend.Utils.Generics.stringToDate("11/03/2050 12:30"), album, album.getSessionsRepo(),
                                             album.getUsersRepo(), album.getInstrumentsRepo(), album.getAlbumsRepo());
 
     private Admin admin = new Admin("Teste", "Teste@gmail.com", "admin", "admin",
@@ -101,5 +101,12 @@ public class SessionTest {
         assertEquals(0, session.getApprovedInstruments().size());
 
         su.denyInstrumentRequest("random", session);
+    }
+
+    @Test
+    public  void doesSessionOverlap(){
+        Session s = new Session(Frontend.Utils.Generics.stringToDate("11/03/2050 10:00"), Frontend.Utils.Generics.stringToDate("11/03/2050 12:30"), album, album.getSessionsRepo(),
+                album.getUsersRepo(), album.getInstrumentsRepo(), album.getAlbumsRepo());
+        assertTrue(session.doesSessionOverlap(s));
     }
 }

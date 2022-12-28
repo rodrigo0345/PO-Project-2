@@ -6,6 +6,8 @@ import Backend.Users.Produtor;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -18,7 +20,7 @@ public class Album implements Serializable, Comparable<Album> {
     private final Set<Musician> artists = new TreeSet<>();
     private String titulo;
     private String genero;
-    private LocalDate date;
+    private LocalDateTime date;
     private Produtor produtorOriginal;
 
     private Backend.Instruments.Repos instrumentsRepo;
@@ -26,7 +28,7 @@ public class Album implements Serializable, Comparable<Album> {
     private Backend.Users.Repos usersRepo;
     private Backend.Sessions.Repos sessionsRepo;
 
-    public Album(String titulo, String genero, LocalDate date, Produtor produtorOriginal, Backend.Instruments.Repos instruments,
+    public Album(String titulo, String genero, LocalDateTime date, Produtor produtorOriginal, Backend.Instruments.Repos instruments,
             Backend.Albums.Repos albums,
             Backend.Users.Repos users, Backend.Sessions.Repos sessions)
             throws IllegalArgumentException {
@@ -89,12 +91,12 @@ public class Album implements Serializable, Comparable<Album> {
         artists.remove(artist);
     }
 
-    public LocalDate getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
+    public void setDate(LocalDateTime date) {
+        this.date = date.truncatedTo(ChronoUnit.MINUTES);
     }
 
     public String getTitulo() {

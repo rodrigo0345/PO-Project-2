@@ -14,7 +14,7 @@ public class ProdutorTest {
     private Produtor produtor = new Produtor("Name", "email@email.com", "name", "name",
             admin.getUsersRepo(), admin.getInstrumentsRepo(), admin.getAlbumsRepo(), admin.getSessionsRepo());
 
-    private Album original = new Album("original", "rock", Frontend.Utils.Generics.stringToDate("10/11/2000"), produtor,
+    private Album original = new Album("original", "rock", Frontend.Utils.Generics.stringToDate("10/11/2000 15:30"), produtor,
             admin.getInstrumentsRepo(), admin.getAlbumsRepo(), admin.getUsersRepo(), admin.getSessionsRepo());
 
     private Musician m = admin.addMusician("Teste", "teste@gmail.com", "teste3", "teste");
@@ -60,7 +60,7 @@ public class ProdutorTest {
 
         assertEquals(1, produtor.getOldAlbums().size());
 
-        new Album("Reee", "rock", Frontend.Utils.Generics.stringToDate("10/11/2000"), produtor,
+        new Album("Reee", "rock", Frontend.Utils.Generics.stringToDate("10/11/2000 16:40"), produtor,
                 admin.getInstrumentsRepo(), admin.getAlbumsRepo(), admin.getUsersRepo(), admin.getSessionsRepo());
         assertEquals(2, produtor.getOldAlbums().size());
     }
@@ -98,16 +98,16 @@ public class ProdutorTest {
     @Test
     public void findSessionByDate() {
         try{
-            produtor.findSessionByDate(Frontend.Utils.Generics.stringToDate("10/11/2000"));
+            produtor.findSessionByDate(Frontend.Utils.Generics.stringToDate("10/11/2000 10:00"), Frontend.Utils.Generics.stringToDate("10/11/2000 23:00"));
         } catch (Exception e) {
             assertEquals("No sessions found for the given date.", e.getMessage());
         }
 
-        new Backend.Sessions.Session(Frontend.Utils.Generics.stringToDate("10/11/2030"), a,
+        new Backend.Sessions.Session(Frontend.Utils.Generics.stringToDate("10/11/2030 10:30"), Frontend.Utils.Generics.stringToDate("10/11/2030 11:30"), a,
                 a.getSessionsRepo(), a.getUsersRepo(), a.getInstrumentsRepo(), a.getAlbumsRepo());
 
-        System.out.println(produtor.getProjeto("R").getLastSessionAdded().getDate());
-        assertEquals(produtor.getProjeto("R").getLastSessionAdded(), produtor.findSessionByDate(Frontend.Utils.Generics.stringToDate("10/11/2030")));
+        System.out.println(produtor.getProjeto("R").getLastSessionAdded().getDataInicio());
+        assertEquals(produtor.getProjeto("R").getLastSessionAdded(), produtor.findSessionByDate(Frontend.Utils.Generics.stringToDate("10/11/2030 10:29"), Frontend.Utils.Generics.stringToDate("10/11/2030 11:30")));
     }
 
     @Test

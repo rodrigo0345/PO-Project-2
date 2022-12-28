@@ -6,6 +6,7 @@ import Backend.Sessions.Session;
 
 import java.text.DateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -80,11 +81,14 @@ public class Produtor extends User {
         return albumEdit;
     }
 
-    public Session findSessionByDate(LocalDate d) {
+    public Session findSessionByDate(LocalDateTime dateInicio, LocalDateTime dateFim) {
         for(AlbumEditado a: projetos) {
             Set<Backend.Sessions.Session> associatedSessions = a.getAllSessions();
             for (Backend.Sessions.Session s : associatedSessions) {
-                if (s.getDate().equals(d)) return s;
+                // if data inicio is between the session dates
+                if (s.getDataInicio().isAfter(dateInicio) && s.getDataInicio().isBefore(dateFim)) {
+                    return s;
+                }
             }
         }
         return null;

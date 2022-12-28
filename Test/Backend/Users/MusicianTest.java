@@ -13,7 +13,7 @@ public class MusicianTest {
     private Produtor produtor = new Produtor("Name", "email@email.com", "name", "name",
             admin.getUsersRepo(), admin.getInstrumentsRepo(), admin.getAlbumsRepo(), admin.getSessionsRepo());
 
-    private Album original = new Album("original", "rock", Frontend.Utils.Generics.stringToDate("10/11/2000"), produtor,
+    private Album original = new Album("original", "rock", Frontend.Utils.Generics.stringToDate("10/11/2000 15:30"), produtor,
             admin.getInstrumentsRepo(), admin.getAlbumsRepo(), admin.getUsersRepo(), admin.getSessionsRepo());
 
     private Musician m = admin.addMusician("Teste", "teste@gmail.com", "teste3", "teste");
@@ -33,7 +33,7 @@ public class MusicianTest {
         Backend.Albums.AlbumEditado a = new Backend.Albums.AlbumEditado("R", "rock", original,
                 admin.getInstrumentsRepo(), admin.getAlbumsRepo(), admin.getUsersRepo(), admin.getSessionsRepo(), produtor);
 
-        Backend.Sessions.Session s = a.addSession(Frontend.Utils.Generics.stringToDate("21/12/2040"));
+        Backend.Sessions.Session s = a.addSession(Frontend.Utils.Generics.stringToDate("21/12/2040 10:00"), Frontend.Utils.Generics.stringToDate("21/12/2040 12:30"));
         admin.acceptSessionRequest(s.getId());
 
         produtor.addMusicianToSession(m, s);
@@ -45,7 +45,7 @@ public class MusicianTest {
         Backend.Albums.AlbumEditado a = new Backend.Albums.AlbumEditado("R", "rock", original,
                 admin.getInstrumentsRepo(), admin.getAlbumsRepo(), admin.getUsersRepo(), admin.getSessionsRepo(), produtor);
 
-        Backend.Sessions.Session s = a.addSession(Frontend.Utils.Generics.stringToDate("21/12/2040"));
+        Backend.Sessions.Session s = a.addSession(Frontend.Utils.Generics.stringToDate("21/12/2040 10:00"), Frontend.Utils.Generics.stringToDate("21/12/2040 12:30"));
         admin.acceptSessionRequest(s.getId());
         s.addInvitedMusician(m);
         admin.addInstrument("flute");
@@ -70,7 +70,7 @@ public class MusicianTest {
         Backend.Albums.AlbumEditado a = new Backend.Albums.AlbumEditado("R", "rock", original,
                 admin.getInstrumentsRepo(), admin.getAlbumsRepo(), admin.getUsersRepo(), admin.getSessionsRepo(), produtor);
 
-        Backend.Sessions.Session s = a.addSession(Frontend.Utils.Generics.stringToDate("21/12/2040"));
+        Backend.Sessions.Session s = a.addSession(Frontend.Utils.Generics.stringToDate("21/12/2040 10:00"), Frontend.Utils.Generics.stringToDate("21/12/2040 12:30"));
         admin.acceptSessionRequest(s.getId());
 
         // already uses addSession

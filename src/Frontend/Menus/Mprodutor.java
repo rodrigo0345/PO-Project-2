@@ -4,6 +4,7 @@ import java.awt.*;
 import java.rmi.StubNotFoundException;
 import java.text.DateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 import java.util.Scanner;
@@ -118,24 +119,19 @@ public class Mprodutor implements Menu {
 
                     String choice = Generics.readString("Plan a new recording session? (y/n)");
                     while(choice.equals("y")) {
-                        String newDate = Generics.readString("Date of the session (dd mm yyyy): ");
-                        LocalDate newDateFormatted = null;
+                        String newDate = Generics.readString("Date for starting the session (dd/mm/yyyy HH:mm): ");
+                        LocalDateTime newDateStart = Frontend.Utils.Generics.stringToDate(newDate);
+                        newDate = Generics.readString("Date for ending the session (dd/mm/yyyy HH:mm): ");
+                        LocalDateTime newDateEnd = Frontend.Utils.Generics.stringToDate(newDate);
                         Backend.Sessions.Session newSession = null;
 
                         try {
-                            DateTimeFormatter df = DateTimeFormatter.ofPattern("dd MM yyyy", Locale.ITALY);
-                            newDateFormatted = LocalDate.parse(newDate, df);
-                            album.addSession(newDateFormatted);
+                            album.addSession(newDateStart, newDateEnd);
                             newSession = album.getLastSessionAdded();
                         } catch (IllegalArgumentException e){
                             System.out.println(e.getMessage());
-                        } catch (Exception e) {
-                            System.out.println("Invalid date");
-                            sc.nextLine();
-                            return;
                         }
 
-                        
                         String artist = Generics.readString("Add new artist? (y/n)");
                         while(artist.equals("y")) {
                             
@@ -187,9 +183,9 @@ public class Mprodutor implements Menu {
 
                     switch(choice) {
                         case 1:
-                            System.out.println("Choose a date to the recording: ");
-                            LocalDate d = Frontend.Utils.Generics.readDate();
-                            ((AlbumEditado) album).addSession(d);
+                            //System.out.println("Choose a date to the recording: ");
+                            //LocalDate d = Frontend.Utils.Generics.readDate();
+                            //((AlbumEditado) album).addSession(d);
                             break;
                         case 2:
                           
@@ -301,10 +297,11 @@ public class Mprodutor implements Menu {
                 }
                 sc.nextLine();
                 break;
-            case 6: // so encontra uma sessao por dia
-                System.out.println("Select a day: ");
-                LocalDate d = Frontend.Utils.Generics.readDate();
-                Backend.Sessions.Session session = user.findSessionByDate(d);
+            case 6: // já encontra mais do que uma sessao por dia
+                String day = Generics.readString("Select the day to examine D: ");
+                LocalDateTime dInicio = Frontend.Utils.Generics.stringToDate(day + " 00:00");
+                LocalDateTime dFim = Frontend.Utils.Generics.stringToDate(day + " 23:59");
+                Backend.Sessions.Session session = user.findSessionByDate(dInicio, dFim);
                 System.out.println(session);
                 break;
             case 7:

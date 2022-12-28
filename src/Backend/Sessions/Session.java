@@ -6,6 +6,8 @@ import Backend.Users.Musician;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 public class Session implements Serializable, Comparable<Session> {
@@ -14,7 +16,8 @@ public class Session implements Serializable, Comparable<Session> {
     private final Set<Instrument> pendentInstruments = new TreeSet<>();
     private final Set<Instrument> instruments = new TreeSet<>();
 
-    private LocalDate date;
+    private LocalDateTime dateInicio;
+    private LocalDateTime dateFim;
     private UUID id = UUID.randomUUID();
     private boolean completed = false;
     private boolean accepted = false;
@@ -24,9 +27,10 @@ public class Session implements Serializable, Comparable<Session> {
     private Backend.Instruments.Repos instrumentRepos;
     private Backend.Albums.Repos albumRepos;
 
-    public Session(LocalDate date, AlbumEditado album, Backend.Sessions.Repos sessions, Backend.Users.Repos users,
+    public Session(LocalDateTime datainicio, LocalDateTime datafim, AlbumEditado album, Backend.Sessions.Repos sessions, Backend.Users.Repos users,
                    Backend.Instruments.Repos instruments, Backend.Albums.Repos albums) throws IllegalArgumentException {
-        this.date = date;
+        this.dateInicio = datainicio;
+        this.dateFim = datafim;
         this.sessionRepos = sessions;
         this.userRepos = users;
         this.instrumentRepos = instruments;
@@ -36,12 +40,20 @@ public class Session implements Serializable, Comparable<Session> {
         sessions.addPendingSession(this);
     }
 
-    public LocalDate getDate() {
-        return date;
+    public LocalDateTime getDataInicio() {
+        return dateInicio;
     }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
+    public void setDataInicio(LocalDateTime date) {
+        this.dateInicio = date.truncatedTo(ChronoUnit.MINUTES);
+    }
+
+    public LocalDateTime getDataFim() {
+        return dateFim;
+    }
+
+    public void setDataFim(LocalDateTime date) {
+        this.dateFim = date.truncatedTo(ChronoUnit.MINUTES);
     }
 
     public UUID getId() {
@@ -74,10 +86,10 @@ public class Session implements Serializable, Comparable<Session> {
             return false;
         Session other = (Session) obj;
         if (id == null) {
-            return other.id == null;
+            return false;
         }
         return other.getId().equals(this.id)
-                || other.getDate().equals(this.id);
+                || (other.getDataInicio().equals(this.getDataInicio()) && other.getDataFim().equals(this.getDataFim()));
     }
 
     // used for exceptions
@@ -103,6 +115,12 @@ public class Session implements Serializable, Comparable<Session> {
     public void addInvitedMusician(Backend.Users.Musician m) throws IllegalArgumentException {
         if(!this.isAccepted()) throw new IllegalArgumentException("The session you are trying to modify wasn't yet approved!");
         if(this.isCompleted()) throw new IllegalArgumentException("The session you are trying to access is already completed!");
+        // check if the musician does not have other session at the same time
+        for(Session s : m.getSessions()) {
+            if(s.getDataInicio().isBefore(this.getDataFim()) && s.getDataFim().isAfter(this.getDataInicio())) {
+                throw new IllegalArgumentException("The musician you are trying to add is already in another session at the same time!");
+            }
+        }
         this.invitedArtists.put(m.getUsername(), m);
         m.addSession(album, this);
     }
@@ -163,18 +181,25 @@ public class Session implements Serializable, Comparable<Session> {
         return this.instruments;
     }
 
+    public boolean doesSessionOverlap(Session other){
+        if (this.getDataInicio().isAfter(other.getDataFim()) || this.getDataFim().isBefore(other.getDataInicio())) {
+            return false;
+        }
+        return true;
+    }
+
     @Override
     public int compareTo(Session o) {
-        if(o.date.isBefore(this.date)){
+        if(o.getDataInicio().isBefore(this.getDataInicio())){
             return -1;
-        } else if(o.date.equals(this.date)) {
+        } else if(o.getDataInicio().equals(this.getDataInicio())) {
             return 0;
         }
         return 1;
     }
 
     public boolean equals(Session o){
-        if(o.date.equals(this.date)) { return true; }
+        if(o.getDataInicio().equals(this.getDataInicio()) && o.getDataFim().equals(this.getDataFim())) { return true; }
         else if(o.id.equals(o.getId())) { return true; }
 
         return false;

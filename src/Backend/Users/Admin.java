@@ -8,6 +8,7 @@ import Backend.Tracks.Track;
 import Backend.Useful.StringChecker;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.UUID;
@@ -183,7 +184,7 @@ public class Admin extends User {
         (getSessionsRepo().getSession(id)).setAccepted(false);
     }
 
-    public void addAlbum(String name, String genre, LocalDate date, Backend.Users.Produtor produtor) {
+    public void addAlbum(String name, String genre, LocalDateTime date, Backend.Users.Produtor produtor) {
         Backend.Albums.Album album = new Backend.Albums.Album(name, genre, date, produtor, super.getInstrumentsRepo(),
                 super.getAlbumsRepo(), super.getUsersRepo(), super.getSessionsRepo());
         getAlbumsRepo().addAlbum(album);

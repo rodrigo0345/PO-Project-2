@@ -52,9 +52,9 @@ public class AlbumTest {
         album.getDate();
         assertNull("Expect the date to be empty", album.getDate());
 
-        album.setDate(Frontend.Utils.Generics.stringToDate("11/12/2022"));
+        album.setDate(Frontend.Utils.Generics.stringToDate("11/12/2022 13:30"));
         assertNotNull("Expect the date to not be empty", album.getDate());
-        assertEquals(album.getDate().toString(), "2022-12-11");
+        assertEquals(album.getDate().toString(), "2022-12-11T13:30");
     }
 
     @Test
@@ -68,7 +68,7 @@ public class AlbumTest {
         // cannot have albums with the same title
         try{
             Album album1 = new Album("Teste", "Rock",
-                    Frontend.Utils.Generics.stringToDate("11/12/2000"),null,
+                    Frontend.Utils.Generics.stringToDate("11/12/2000 15:30"),null,
                     album.getInstrumentsRepo(), album.getAlbumsRepo(), album.getUsersRepo(),
                     album.getSessionsRepo());
             boolean success = album.setTitulo("Teste");
@@ -134,7 +134,7 @@ public class AlbumTest {
     public void compareTo() {
         try {
             Album album1 = new Album("Random", "Rock",
-                    Frontend.Utils.Generics.stringToDate("11/12/2000"),null,
+                    Frontend.Utils.Generics.stringToDate("11/12/2000 15:30"),null,
                     album.getInstrumentsRepo(), album.getAlbumsRepo(), album.getUsersRepo(),
                     album.getSessionsRepo());
             assertEquals(album.compareTo(album1), 0);

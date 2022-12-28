@@ -61,6 +61,10 @@ public class Musician extends User {
         }
     }
 
+    public Set<Session> getSessions() {
+        return sessions;
+    }
+
     @Override
     public boolean equals(Object a) {
         if (a instanceof Musician) {

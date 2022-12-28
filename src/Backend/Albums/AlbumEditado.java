@@ -4,11 +4,17 @@ import Backend.Sessions.Session;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.UUID;
 
 public class AlbumEditado extends Album {
+    /*
+     Quando se trata de referenciar sessões é muito mais seguro utilizar o ID do que a data, a opção de data é apenas para
+        facilitar a visualização do utilizador
+     */
+
     private boolean isEdited;
     private final Set<Backend.Sessions.Session> sessions = new TreeSet<>();
     private Backend.Sessions.Session lastSessionAdded;
@@ -49,23 +55,24 @@ public class AlbumEditado extends Album {
 
     public void setAlbumAsComplete() {
         this.isEdited = true;
-        this.setDate(LocalDate.now());
+        this.setDate(LocalDateTime.now());
     }
 
     public boolean isEdited() {
         return isEdited;
     }
 
-    public Session addSession(LocalDate date) throws IllegalArgumentException {
+    public Session addSession(LocalDateTime dateInicio, LocalDateTime dateFim) throws IllegalArgumentException {
+        if(dateInicio.isAfter(dateFim)) throw new IllegalArgumentException("Data de inicio tem de ser antes da data de fim");
         if (this.isEdited) {
             throw new IllegalArgumentException("The album is already finished");
         }
-        if (date.isBefore(LocalDate.now())) {
-            throw new IllegalArgumentException("The given date is a past date");
+        if (dateInicio.isBefore(LocalDateTime.now())) {
+            throw new IllegalArgumentException("The given start date is a past date");
         }
 
         // the constructor of session is responsible for also adding the session into the specified album
-        Backend.Sessions.Session session = new Backend.Sessions.Session(date, this, getSessionsRepo(),
+        Backend.Sessions.Session session = new Backend.Sessions.Session(dateInicio, dateFim, this, getSessionsRepo(),
                                                             getUsersRepo(), getInstrumentsRepo(), getAlbumsRepo());
         this.lastSessionAdded = session;
         return session;
@@ -75,8 +82,16 @@ public class AlbumEditado extends Album {
         if (this.isEdited) {
             throw new IllegalArgumentException("The album is already finished");
         }
-        if (s.getDate().isBefore(LocalDate.now())) {
+        if (s.getDataInicio().isBefore(LocalDateTime.now())) {
             throw new IllegalArgumentException("The given date is a past date");
+        }
+        // check if any musician in this session has another session at the same time
+        for (Backend.Users.Musician musician : s.getInvitedMusicians().values()) {
+            for (Backend.Sessions.Session session : musician.getSessions()) {
+                if (session.getDataInicio().isBefore(s.getDataFim()) && session.getDataFim().isAfter(s.getDataInicio())) {
+                    throw new IllegalArgumentException("The musician " + musician.getUsername() + " is already in another session at the same time");
+                }
+            }
         }
         this.lastSessionAdded = s;
         return sessions.add(s);
@@ -86,17 +101,17 @@ public class AlbumEditado extends Album {
         return this.lastSessionAdded;
     }
 
-    public boolean removeSession(LocalDate date) throws IllegalArgumentException {
+    public boolean removeSession(LocalDateTime dateInicio) throws IllegalArgumentException {
         if (this.isEdited) {
             throw new IllegalArgumentException("The album you are trying to edit is already finished.");
         }
-        if (date.isBefore(LocalDate.now())) {
+        if (dateInicio.isBefore(LocalDateTime.now())) {
             throw new IllegalArgumentException("You cannot delete a session that has already finished.");
         }
 
         Backend.Sessions.Session found = null;
         for(Backend.Sessions.Session s: sessions){
-            if(s.getDate().equals(date)) {
+            if(s.getDataInicio().equals(dateInicio)) {
                 found = s;
             }
         }

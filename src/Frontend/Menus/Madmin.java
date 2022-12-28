@@ -3,6 +3,7 @@ package Frontend.Menus;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
@@ -156,10 +157,9 @@ public class Madmin implements Menu {
                 String producer = Generics.readString("Producer: ");
                 String genre = Generics.readString("Genre: ");
                 String d = Generics.readString("Date of release (dd MM yyyy): ");
-                LocalDate date = null;
+                LocalDateTime date = Generics.stringToDate(d);;
                 
                 // verify that the inserted date is valid
-                date = Generics.stringToDate(d);
             
                 // verify that the inserted producer is valid
                 try {

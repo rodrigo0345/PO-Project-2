@@ -19,7 +19,7 @@ public class AdminTest {
     private Produtor produtor = new Produtor("name", "email@email.com", "name", "name",
             admin.getUsersRepo(), admin.getInstrumentsRepo(), admin.getAlbumsRepo(), admin.getSessionsRepo());
 
-    private Album original = new Album("original", "rock", Frontend.Utils.Generics.stringToDate("10/11/2000"), produtor,
+    private Album original = new Album("original", "rock", Frontend.Utils.Generics.stringToDate("10/11/2000 15:30"), produtor,
             admin.getInstrumentsRepo(), admin.getAlbumsRepo(), admin.getUsersRepo(), admin.getSessionsRepo());
     private AlbumEditado album = new AlbumEditado("R", "rock", original,
                 admin.getInstrumentsRepo(), admin.getAlbumsRepo(), produtor.getUsersRepo(), admin.getSessionsRepo(), produtor);
@@ -33,8 +33,8 @@ public class AdminTest {
     @Test
     public void removeInstrument() {
         addInstrument();
-        Session s = new Session(Frontend.Utils.Generics.stringToDate("21/12/2040"), album, admin.getSessionsRepo(), admin.getUsersRepo(),
-                admin.getInstrumentsRepo(), admin.getAlbumsRepo());
+        Session s = new Session(Frontend.Utils.Generics.stringToDate("21/12/2040 10:00"), Frontend.Utils.Generics.stringToDate("21/12/2040 12:30"), album, album.getSessionsRepo(),
+                album.getUsersRepo(), album.getInstrumentsRepo(), album.getAlbumsRepo());
 
         admin.acceptSessionRequest(s.getId()); // needs to be approved first
 
@@ -81,7 +81,7 @@ public class AdminTest {
         Album album = new Album(
                             "Something",
                             "Rock",
-                            Frontend.Utils.Generics.stringToDate("11/12/2000"),
+                            Frontend.Utils.Generics.stringToDate("11/12/2000 15:30"),
                             (Produtor) admin.getUsersRepo().getUser("teste3"),
                             admin.getInstrumentsRepo(),
                             admin.getAlbumsRepo(),
@@ -109,10 +109,10 @@ public class AdminTest {
 
     @Test
     public void getAllSessionRequests() {
-        Session s1 = new Session(Frontend.Utils.Generics.stringToDate("11/12/2023"), this.album, admin.getSessionsRepo(),
-                admin.getUsersRepo(), admin.getInstrumentsRepo(), admin.getAlbumsRepo());
-        Session s2 = new Session(Frontend.Utils.Generics.stringToDate("14/12/2023"), this.album, admin.getSessionsRepo(),
-                admin.getUsersRepo(), admin.getInstrumentsRepo(), admin.getAlbumsRepo());
+        Session s1 = new Session(Frontend.Utils.Generics.stringToDate("11/12/2023 10:00"), Frontend.Utils.Generics.stringToDate("11/12/2023 12:30"), album, album.getSessionsRepo(),
+                album.getUsersRepo(), album.getInstrumentsRepo(), album.getAlbumsRepo());
+        Session s2 = new Session(Frontend.Utils.Generics.stringToDate("14/12/2023 10:00"), Frontend.Utils.Generics.stringToDate("14/12/2023 12:30"), album, album.getSessionsRepo(),
+                album.getUsersRepo(), album.getInstrumentsRepo(), album.getAlbumsRepo());
 
         Set<Session> aux = new TreeSet<>();
         aux.add(s1); aux.add(s2);
@@ -143,7 +143,7 @@ public class AdminTest {
 
     @Test
     public void addAlbum() {
-        admin.addAlbum("Hello", "Rock", Frontend.Utils.Generics.stringToDate("11/12/2030"), produtor);
+        admin.addAlbum("Hello", "Rock", Frontend.Utils.Generics.stringToDate("11/12/2030 20:00"), produtor);
         assertNotNull(produtor.getOldAlbum("Hello"));
         assertNotNull(admin.getAlbumsRepo().getAlbum("Hello"));
     }
@@ -179,8 +179,8 @@ public class AdminTest {
 
 
         // new session
-        Session s = new Session(Frontend.Utils.Generics.stringToDate("11/12/2030"), album, album.getSessionsRepo(),
-                admin.getUsersRepo(), admin.getInstrumentsRepo(), admin.getAlbumsRepo());
+        Session s = new Session(Frontend.Utils.Generics.stringToDate("11/12/2030 10:00"), Frontend.Utils.Generics.stringToDate("11/12/2030 12:30"), album, album.getSessionsRepo(),
+                album.getUsersRepo(), album.getInstrumentsRepo(), album.getAlbumsRepo());
 
         admin.acceptSessionRequest(s.getId());
         admin.addInstrument("guitarra");
@@ -204,8 +204,8 @@ public class AdminTest {
 
 
         // new session
-        Session s = new Session(Frontend.Utils.Generics.stringToDate("11/12/2030"), album, album.getSessionsRepo(),
-                admin.getUsersRepo(), admin.getInstrumentsRepo(), admin.getAlbumsRepo());
+        Session s = new Session(Frontend.Utils.Generics.stringToDate("11/12/2030 10:00"), Frontend.Utils.Generics.stringToDate("11/12/2030 12:30"), album, album.getSessionsRepo(),
+                album.getUsersRepo(), album.getInstrumentsRepo(), album.getAlbumsRepo());
 
         admin.acceptSessionRequest(s.getId());
         admin.addInstrument("guitarra");

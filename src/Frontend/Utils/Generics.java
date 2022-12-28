@@ -1,6 +1,7 @@
 package Frontend.Utils;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 import java.util.Scanner;
@@ -12,33 +13,18 @@ public class Generics {
 
    private final static Scanner sc = new Scanner(System.in); // Pusemos static porque dava erro
 
-    public static LocalDate readDate(){
+    public static LocalDateTime readDate(){
         String d = sc.nextLine();
         return stringToDate(d);
     }
 
-    public static LocalDate stringToDate(String d){
-        LocalDate date = null;
+    public static LocalDateTime stringToDate(String d){
+        LocalDateTime date = null;
 
         // verify that the inserted date is valid
         try {
-            DateTimeFormatter df = DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.FRANCE);
-            date = LocalDate.parse(d, df);
-        } catch (Exception e) {
-            System.out.println("Invalid date");
-            sc.nextLine();
-            return null;
-        }
-        return date;
-    }
-
-    public static LocalDate stringToHour(String d){
-        LocalDate date = null;
-
-        // verify that the inserted date is valid
-        try {
-            DateTimeFormatter df = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm", Locale.FRANCE);
-            date = LocalDate.parse(d, df);
+            DateTimeFormatter df = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm", Locale.ITALY);
+            date = LocalDateTime.parse(d, df);
         } catch (Exception e) {
             System.out.println("Invalid date");
             sc.nextLine();

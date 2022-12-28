@@ -4,6 +4,7 @@ import Backend.Users.Musician;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.UUID;
@@ -32,9 +33,9 @@ public class Repos implements Serializable {
         return pendingSessions.remove(getSession(id)) || sessions.remove(getSession(id));
     }
 
-    public Session getSession(LocalDate date){
+    public Session getSession(LocalDateTime date){
         for(Session s: sessions){
-            if(s.getDate().equals(date)) {
+            if(s.getDataInicio().equals(date)) {
                 return s;
             }
         }
@@ -62,9 +63,9 @@ public class Repos implements Serializable {
         return this.pendingSessions.add(session);
     }
 
-    public Session getPendingSession(LocalDate date){
+    public Session getPendingSession(LocalDateTime date){
         for(Session s: pendingSessions){
-            if(s.getDate().equals(date)){
+            if(s.getDataInicio().equals(date)){
                 return s;
             }
         }
@@ -84,7 +85,7 @@ public class Repos implements Serializable {
 
         // pending sessions do not count here
         for (Session s:sessions) {
-            if(s.getDate().isBefore(LocalDate.now()) && s.isCompleted() == false){
+            if(s.getDataFim().isBefore(LocalDateTime.now()) && s.isCompleted() == false){
                 s.setCompleted(true);
                 count++;
             }
