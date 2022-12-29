@@ -1,5 +1,6 @@
 package Backend.Sessions;
 
+import Backend.Instruments.Instrument;
 import Backend.Users.Musician;
 
 import java.io.Serializable;
