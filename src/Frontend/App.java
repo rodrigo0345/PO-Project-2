@@ -26,8 +26,9 @@ public class App {
     private static void program() {
 
         // login system
-        User auth = Authentication.login();
-        Frontend.Utils.UserHolder.setUser(auth);
+
+        User user = Authentication.login();
+        Frontend.Utils.UserHolder.setUser(user);
 
         // initiate Mprodutor, Mmusico or Madmin
         while (Frontend.Utils.UserHolder.getUser() != null) {

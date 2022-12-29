@@ -37,7 +37,7 @@ public class UserHolder {
             Frontend.Utils.Prompt.cleanPrompt();
         }
         else {
-            throw new IllegalArgumentException("User is not a Produtor, Musician or Admin");
+            throw new IllegalArgumentException("User neither a Produtor, Musician or Admin");
         }
     }
 

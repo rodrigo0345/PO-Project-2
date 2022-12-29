@@ -46,7 +46,8 @@ public abstract class User implements Comparable<User>, Serializable {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(String name) throws IllegalArgumentException {
+        Backend.Useful.StringChecker.validName(name);  // already throws IllegalArgumentException
         this.name = name;
     }
 
@@ -54,7 +55,8 @@ public abstract class User implements Comparable<User>, Serializable {
         return email;
     }
 
-    public void setEmail(String email) {
+    public void setEmail(String email) throws IllegalArgumentException {
+        Backend.Useful.StringChecker.validEmail(email);
         this.email = email;
     }
 
@@ -62,7 +64,7 @@ public abstract class User implements Comparable<User>, Serializable {
         return username;
     }
 
-    public void setUsername(String username) {
+    public void setUsername(String username) throws IllegalArgumentException {
         if (!usersRepo.isUsernameValid(username))
             return;
         usersRepo.removeUser(this.username);
