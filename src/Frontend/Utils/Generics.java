@@ -9,12 +9,15 @@ import java.util.Scanner;
 import javax.sound.midi.Soundbank;
 
 public class Generics {
-    // already has the scanner
 
-   private final static Scanner sc = new Scanner(System.in); // Pusemos static porque dava erro
+    // used accross the frontend
+    public final static Scanner sc = new Scanner(System.in);
 
-    public static LocalDateTime readDate(){
-        String d = sc.nextLine();
+    // exit the program
+    private static boolean exit = false;
+
+    public static LocalDateTime readDate(String msg){
+        String d = Frontend.Utils.Prompt.readString(msg);
         return stringToDate(d);
     }
 
@@ -26,82 +29,18 @@ public class Generics {
             DateTimeFormatter df = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm", Locale.ITALY);
             date = LocalDateTime.parse(d, df);
         } catch (Exception e) {
-            System.out.println("Invalid date");
-            sc.nextLine();
+            Frontend.Utils.Prompt.outputError("Data inválida");
+            Frontend.Utils.Prompt.pressEnterToContinue();
             return null;
         }
         return date;
     }
 
-    private static void outputError(String message) {
-        System.err.println(message);
+    public static boolean isExit() {
+        return exit;
     }
 
-    private static void write(String message) {
-        System.out.println(message);
+    public static void setExit(boolean exit) {
+        Generics.exit = exit;
     }
-
-    public static String readString(String message){
-        write(message);
-        return sc.nextLine();
-    }
-
-    public static Double readDouble(String message){
-        Double number = null;
-        String text;
-
-        do{
-            write(message);
-            text = sc.nextLine();
-
-            try{
-                number = Double.parseDouble(text);
-            }catch(NumberFormatException e){
-                outputError(text + " não é um número decimal válido.");
-            }
-        }while(number == null);
-    
-        return number;
-    }
-
-    public static int checkInt(String message){
-
-        Integer number = null;
-        String text;
-
-        do{
-            write(message);
-            text = sc.nextLine();
-
-            try{
-                number = Integer.parseInt(text);
-             }
-             catch(NumberFormatException e){
-                outputError(text + " não é um número inteiro válido");
-             }
-        }while(number == null);
-
-        return number;
-    }
-
-    public static int checkOption(String message){
-
-        Integer number = null;
-        String text;
-
-        do{
-            write(message);
-            text = sc.nextLine();
-
-            try{
-                number = Integer.parseInt(text);
-            }catch(NumberFormatException e){
-                outputError(text + " is an invalid option.");
-                sc.nextLine();
-            }
-        }while(number == null);
-
-        return number;
-    }
-
 }

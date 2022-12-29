@@ -126,26 +126,32 @@ public class Admin extends User {
         return s;
     }
 
-    public void showAllRecordingSessions() {
+    public String getAllRecordingSessions() {
+        String s = "";
         for (Backend.Sessions.Session session : getSessionsRepo().getSessions()) {
-            System.out.println(session);
+            s += " " + session.toString();
         }
+        return s;
     }
 
-    public void showAllAlbumsBeingEdited() {
+    public String getAllAlbumsBeingEdited() {
+        String s = "";
         for (Backend.Albums.Album album : getAlbumsRepo().getAlbums().values()) {
             if (album instanceof Backend.Albums.AlbumEditado && !((Backend.Albums.AlbumEditado) album).isEdited()) {
-                System.out.println(album);
+                s += " " + album.toString();
             }
         }
+        return s;
     }
 
-    public void showAllAlbumsEdited() {
+    public String getAllAlbumsEdited() {
+        String s = "";
         for (Backend.Albums.Album album : getAlbumsRepo().getAlbums().values()) {
             if (album instanceof Backend.Albums.AlbumEditado && ((Backend.Albums.AlbumEditado) album).isEdited()) {
-                System.out.println(album);
+                s += " " + album.toString();
             }
         }
+        return s;
     }
 
     public String getStats() {
