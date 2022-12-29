@@ -39,7 +39,16 @@ public class Repos implements Serializable {
 
         // check if admin was already created
         if (users.getUser("admin") == null) {
-            addUser(new Admin("Admin", "admin", "admin", "admin", instruments, albums, users, sessions));
+            addUser(new Admin(
+                    "Admin",
+                    "admin",
+                    "admin",
+                    "admin",
+                    instruments,
+                    albums,
+                    users,
+                    sessions)
+            );
         }
 
     }

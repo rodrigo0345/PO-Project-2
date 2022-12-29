@@ -1,25 +1,29 @@
 package Frontend;
 
+import Frontend.Utils.ReposHolder;
+
 import java.io.IOException;
 
 public class Prep {
 
     /* Responsible for loading in program's data in the beginning of the application */
     public static void init() {
+        // prepare to load data
+        Backend.Storage.Load load = new Backend.Storage.Load("users.txt", "instruments.txt", "albums.txt",
+                "sessions.txt");
+
         Backend.Instruments.Repos instruments;
         Backend.Albums.Repos albums;
         Backend.Users.Repos users;
         Backend.Sessions.Repos sessions;
 
-        // prepare to load data
-        Backend.Storage.Load load = new Backend.Storage.Load("users.txt", "instruments.txt", "albums.txt",
-                "sessions.txt");
-
         try {
-            instruments = load.loadInstruments();
-            albums = load.loadAlbums();
             users = load.loadUsers();
-            sessions = load.loadSessions();
+
+            // if I don't load from the admin, all the repos will be different
+            instruments = users.getUser("admin").getInstrumentsRepo();
+            albums = users.getUser("admin").getAlbumsRepo();
+            sessions = users.getUser("admin").getSessionsRepo();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
             return;
@@ -31,11 +35,12 @@ public class Prep {
             sessions = new Backend.Sessions.Repos();
         }
 
-        // create test users
-        users.devUsers(instruments, albums, users, sessions);
-
         // load all actions
         Frontend.Utils.ReposHolder.init(instruments, albums, users, sessions);
+
+        // create test users
+        ReposHolder.getUsers().devUsers(ReposHolder.getInstruments(), ReposHolder.getAlbums(),
+                                ReposHolder.getUsers(), ReposHolder.getSessions());
     }
 
     public static void saveData() {

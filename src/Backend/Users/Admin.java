@@ -23,12 +23,14 @@ public class Admin extends User {
         super.getUsersRepo().addUser(this);
     }
 
-    public void addInstrument(String name, int quantidade) {
+    public void addInstrument(String name, int quantidade) throws IllegalArgumentException {
+        if (quantidade < 0) { throw new IllegalArgumentException("Quantidade inválida"); }
         Instrument instrument = new Instrument(name, quantidade);
         getInstrumentsRepo().addInstrument(instrument);
     }
 
-    public void addQuantityToInstrument(String name, int quantidade){
+    public void addQuantityToInstrument(String name, int quantidade) throws IllegalArgumentException {
+        if (quantidade < 0) { throw new IllegalArgumentException("Quantidade inválida"); }
         String nameLowerCase = name.toLowerCase();
         int quant = super.getInstrumentsRepo().getInstrument(nameLowerCase).getQuantidade();
         quant += quantidade;

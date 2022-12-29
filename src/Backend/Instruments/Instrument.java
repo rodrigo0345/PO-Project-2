@@ -13,7 +13,6 @@ public class Instrument implements Serializable, Comparable<Instrument> {
         this.name = name;
         this.quantidade = quantidade;
         this.id = UUID.randomUUID();
-       
     }
 
     public String getName() {

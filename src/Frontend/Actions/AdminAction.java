@@ -94,7 +94,7 @@ public class AdminAction {
             name = Prompt.readString("Name of the instrument: ");
         }
         catch(Exception e) {
-            System.out.println("Invalid input");
+            Prompt.outputError("Nome inválido");
             return;
         }
 
@@ -103,8 +103,11 @@ public class AdminAction {
         try{
             Instrument i = ReposHolder.getInstruments().getInstrument(nameLowerCase);
             if(i == null){
-            int quantidade = Prompt.checkInt("Introduza a quantidade: ");
-            user.addInstrument(name, quantidade);}
+                ReposHolder.getInstruments();
+                user.getInstrumentsRepo();
+                int quantidade = Prompt.checkInt("Introduza a quantidade: ");
+                user.addInstrument(name, quantidade);
+            }
             else{
                 int quant = Prompt.checkInt("Introduza a quantidade a adicionar: ");
                 user.addQuantityToInstrument(name, quant);
