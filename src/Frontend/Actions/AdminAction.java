@@ -1,5 +1,6 @@
 package Frontend.Actions;
 
+import Backend.Instruments.Instrument;
 import Backend.Instruments.Repos;
 import Backend.Users.User;
 import Frontend.Utils.Generics;
@@ -84,6 +85,7 @@ public class AdminAction {
         }
     }
 
+    
     public static void addInstrument() {
 
         String name;
@@ -96,12 +98,20 @@ public class AdminAction {
             return;
         }
 
-        try {
-            user.addInstrument(name);
-        } catch (Exception e) {
+        String nameLowerCase = name.toLowerCase();
+
+        try{
+            Instrument i = ReposHolder.getInstruments().getInstrument(nameLowerCase);
+            if(i == null){
+            int quantidade = Prompt.checkInt("Introduza a quantidade: ");
+            user.addInstrument(name, quantidade);}
+            else{
+                int quant = Prompt.checkInt("Introduza a quantidade a adicionar: ");
+                user.addQuantityToInstrument(name, quant);
+            }
+        }catch(Exception e){
             System.out.println(e.getMessage());
         }
-
     }
 
     public static void showAllSessionRequests() {
@@ -120,7 +130,7 @@ public class AdminAction {
             }
         } else if (answer.equals("n")) {
             try {
-                user.acceptSessionRequest(id);
+                user.rejectSessionRequest(id);
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }

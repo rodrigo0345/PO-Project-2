@@ -6,6 +6,7 @@ import Backend.Instruments.Instrument;
 import Backend.Sessions.Session;
 import Backend.Tracks.Track;
 import Backend.Useful.StringChecker;
+import Frontend.Utils.Generics;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -22,9 +23,16 @@ public class Admin extends User {
         super.getUsersRepo().addUser(this);
     }
 
-    public void addInstrument(String name) {
-        Instrument instrument = new Instrument(name);
+    public void addInstrument(String name, int quantidade) {
+        Instrument instrument = new Instrument(name, quantidade);
         getInstrumentsRepo().addInstrument(instrument);
+    }
+
+    public void addQuantityToInstrument(String name, int quantidade){
+        String nameLowerCase = name.toLowerCase();
+        int quant = super.getInstrumentsRepo().getInstrument(nameLowerCase).getQuantidade();
+        quant += quantidade;
+        getInstrumentsRepo().getInstrument(nameLowerCase).setQuantidade(quant);
     }
 
     public void acceptInstrumentRequest(String name, Session session){

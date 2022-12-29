@@ -1,14 +1,12 @@
 package Backend.Instruments;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.UUID;
 
 public class Request implements Serializable{
     private UUID id;
     private int quantidade;
-    private Date dataInicial;
-    private Date dataFinal;
+    private UUID id_sessao;
 
     public UUID getId() {
         return id;
@@ -23,22 +21,15 @@ public class Request implements Serializable{
         this.quantidade = quantidade;
     }
 
-    public Date getDataInicial() {
-        return dataInicial;
+    public UUID getId_sessao() {
+        return id_sessao;
     }
-    public void setDataInicial(Date dataInicial) {
-        this.dataInicial = dataInicial;
-    }
-    public Date getDataFinal() {
-        return dataFinal;
-    }
-    public void setDataFinal(Date dataFinal) {
-        this.dataFinal = dataFinal;
+    public void setId_sessao(UUID id_sessao) {
+        this.id_sessao = id_sessao;
     }
 
     @Override
     public String toString() {
-        return "ID = " + id + ", quantidade = " + quantidade + ", data inicial = " + dataInicial + 
-                ", data final = " + dataFinal;
+        return "ID = " + id + ", quantidade = " + quantidade + ", id_sessao = " + id_sessao;
     }
 }
