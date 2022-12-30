@@ -22,7 +22,7 @@ public class Produtor extends User {
 
     public void addProjeto(Backend.Albums.AlbumEditado projeto) throws IllegalArgumentException {
         if(projeto.getProdutor() != null && projeto.getProdutor().equals(this)){
-            throw new IllegalArgumentException("This producer is already the producer of the given project!");
+            throw new IllegalArgumentException("O produtor já é o produtor do dado projeto!");
         }
         //if (projeto.getProdutor() != null) {
         //    throw new IllegalArgumentException("The given album is already associated with another producer");
@@ -69,9 +69,9 @@ public class Produtor extends User {
         // checking for possible errors
         Backend.Albums.Album original = getAlbumsRepo().getAlbum(albumName);
         if (original == null) {
-            throw new ClassNotFoundException(albumName + " not found.");
+            throw new ClassNotFoundException(albumName + " não foi encontrado.");
         } else if (getAlbumsRepo().isTituloValid(newAlbumName) == false) {
-            throw new IllegalArgumentException(newAlbumName + " already exists.");
+            throw new IllegalArgumentException(newAlbumName + " já existe.");
         }
         // create the new album edit
         Backend.Albums.AlbumEditado albumEdit = new Backend.Albums.AlbumEditado(

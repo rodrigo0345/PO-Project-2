@@ -5,7 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 
-public class Save extends Thread {
+public class Save extends Thread { //Traduzido
 
     private Object itemToStore = null;
     private String pathToStore = null;
@@ -23,9 +23,9 @@ public class Save extends Thread {
             oos.close();
             return true;
         } catch (IOException e) {
-            System.out.println("Save - Error saving all information " + e.getMessage());
+            System.out.println("Save - Erro ao gravar a informação " + e.getMessage());
         } catch (NullPointerException e) {
-            System.out.println("Save - The provided path is not valid " + e.getMessage());
+            System.out.println("Save - A path providenciada não é valida " + e.getMessage());
         } finally {
             oos.close();
         }
@@ -35,12 +35,12 @@ public class Save extends Thread {
     public void run() {
         try {
             if (!save()) {
-                System.out.println("Error saving...");
+                System.out.println("Erro ao guardar...");
             }
         } catch (FileNotFoundException e) {
-            System.out.println("Save - The provided path is not valid " + e.getMessage());
+            System.out.println("Save - A path providenciada não é valida " + e.getMessage());
         } catch (IOException e) {
-            System.out.println("Save - Error saving all information " + e.getMessage());
+            System.out.println("Save - Erro ao gravar a informação " + e.getMessage());
         }
     }
 }

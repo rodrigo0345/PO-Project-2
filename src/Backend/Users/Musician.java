@@ -8,7 +8,7 @@ import Backend.Albums.AlbumEditado;
 import Backend.Instruments.Instrument;
 import Backend.Sessions.Session;
 
-public class Musician extends User {
+public class Musician extends User {//Traduzidos
     private final Set<Backend.Albums.Album> albums = new TreeSet<>();
     private final Set<Instrument> instruments = new TreeSet<>();
     private final Set<Backend.Sessions.Session> sessions = new TreeSet<>();
@@ -35,10 +35,10 @@ public class Musician extends User {
     //não está a funcionar
     public void requestInstrument(Instrument instrument, Session s) throws IllegalArgumentException {
         if(!instruments.contains(instrument)) {
-            throw new IllegalArgumentException("This musician does not play the given instrument!");
+            throw new IllegalArgumentException("O músico não toca o instrumento requerido!");
         }
         if(!s.getInvitedMusicians().containsKey(this.getUsername()))
-            throw new IllegalArgumentException("This musician was not invited to the specified session!");
+            throw new IllegalArgumentException("O músico não foi convidado para a sessão em específico!");
         
         //possibilidade de resolucao, não muito convincente
         UUID idInstrumento = instrument.getId();
@@ -64,7 +64,7 @@ public class Musician extends User {
         this.addAlbum(album);
         boolean add = this.sessions.add(newSession);
         if (add == false){
-            throw new IllegalArgumentException("Musician was already in this session");
+            throw new IllegalArgumentException("O músico já estava na sessão");
         }
     }
 

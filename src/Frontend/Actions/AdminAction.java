@@ -14,7 +14,7 @@ import java.util.Scanner;
 import java.util.Set;
 import java.util.UUID;
 
-public class AdminAction {
+public class AdminAction { // TRADUZIDO
 
     private static Backend.Users.Admin user;
 
@@ -22,7 +22,7 @@ public class AdminAction {
         if (user instanceof Backend.Users.Admin) {
             AdminAction.user = (Backend.Users.Admin) user;
         } else {
-            throw new IllegalArgumentException("User is not a Produtor");
+            throw new IllegalArgumentException("O utilizador não é um produtor");
         }
     }
 
@@ -31,12 +31,12 @@ public class AdminAction {
         String name, username, email, password;
 
         try {
-            name = Prompt.readString("Name: ");
+            name = Prompt.readString("Nome: ");
             username = Prompt.readString("Username: ");
             password = Prompt.readString("Password: ");
             email = Prompt.readString("Email: ");
         } catch(Exception e) {
-            System.out.println("Invalid input");
+            System.out.println("Input inválido");
             return; // exit
         }
 
@@ -54,12 +54,12 @@ public class AdminAction {
         String name, username, email, password;
 
         try {
-            name = Prompt.readString("Name: ");
+            name = Prompt.readString("Nome: ");
             username = Prompt.readString("Username: ");
             password = Prompt.readString("Password: ");
             email = Prompt.readString("Email: ");
         } catch(Exception e) {
-            Prompt.outputError("Invalid input");
+            Prompt.outputError("Input inválido");
             return; // exit
         }
 
@@ -78,7 +78,7 @@ public class AdminAction {
         try {
             username = Prompt.readString("Username: ");
         } catch(Exception e) {
-            System.out.println("Invalid input");
+            System.out.println("Input inválido");
             return;
         }
 
@@ -95,7 +95,7 @@ public class AdminAction {
         String name;
 
         try {
-            name = Prompt.readString("Name of the instrument: ");
+            name = Prompt.readString("Nome do instrumento: ");
         }
         catch(Exception e) {
             Prompt.outputError("Nome inválido");
@@ -123,12 +123,12 @@ public class AdminAction {
 
     public static void showAllSessionRequests() {
         if (user.getAllSessionRequests() == null) {
-            System.out.println("No session requests");
+            System.out.println("Não existem pedidos de sessão");
             return;
         }
-        System.out.print("Select a session request: ");
+        System.out.print("Selecione um pedido de sessão: ");
         UUID id = UUID.fromString(Generics.sc.nextLine()); //FALTA ALTERAR
-        String answer = Prompt.readString("Accept or reject? (y/n)");
+        String answer = Prompt.readString("Aceitar ou rejeitar? (y/n)");
         if (answer.equals("y")) {
             try {
                 user.acceptSessionRequest(id);
@@ -142,7 +142,7 @@ public class AdminAction {
                 System.out.println(e.getMessage());
             }
         } else {
-            System.out.println("Invalid option");
+            System.out.println("Opção inválido");
         }
 
     }
@@ -186,7 +186,7 @@ public class AdminAction {
     }
 
     public static void checkData() {
-        System.out.println("Name: " + user.getName());
+        System.out.println("Nome: " + user.getName());
         System.out.println("Username: " + user.getUsername());
         System.out.println("Email: " + user.getEmail());
         System.out.println("Password: " + user.getPassword());
@@ -194,10 +194,10 @@ public class AdminAction {
     }
 
     public static void addAlbum() {
-        String titleOfTheAlbum = Prompt.readString("Name of the album: ");
-        String producer = Prompt.readString("Producer: ");
-        String genre = Prompt.readString("Genre: ");
-        String d = Prompt.readString("Date of release (dd MM yyyy): ");
+        String titleOfTheAlbum = Prompt.readString("Nome do album: ");
+        String producer = Prompt.readString("Produtor: ");
+        String genre = Prompt.readString("Género: ");
+        String d = Prompt.readString("Data de lançamento (dd MM aaaa): ");
         LocalDateTime date = Generics.stringToDate(d);;
 
         // verify that the inserted date is valid
@@ -209,7 +209,7 @@ public class AdminAction {
                 Backend.Users.Produtor prod = (Backend.Users.Produtor) aux;
                 user.addAlbum(titleOfTheAlbum, genre, date, prod);
             } else {
-                System.out.println("Invalid producer");
+                System.out.println("Produtor inválido");
                 Generics.sc.nextLine();
                 return;
             }
@@ -222,7 +222,7 @@ public class AdminAction {
         // adicionar musicas ao album
         String answer2 = "y";
         while (answer2.equals("y")) {
-            answer2 = Prompt.readString("Add a song to the album? (y/n)");
+            answer2 = Prompt.readString("Adicionar uma música album? (y/n)");
             addTrackToAlbum(answer2, titleOfTheAlbum);
         }
     }
@@ -231,11 +231,11 @@ public class AdminAction {
 
         Backend.Albums.Album a = user.getAlbumsRepo().getAlbum(titleOfTheAlbum);
         if (ans.equals("y")) {
-            String titleOfTheSong = Prompt.readString("Title of the song: ");
-            int duration = Prompt.checkInt("Duration: ");
+            String titleOfTheSong = Prompt.readString("Título da música: ");
+            int duration = Prompt.checkInt("Duração: ");
             Generics.sc.nextLine(); // flush
-            String genre = Prompt.readString("Genre: ");
-            String musician = Prompt.readString("Musician: ");
+            String genre = Prompt.readString("Género: ");
+            String musician = Prompt.readString("Músico: ");
             try {
                 Backend.Tracks.Track t = new Backend.Tracks.Track(a, titleOfTheSong,
                         genre, duration);
@@ -245,7 +245,7 @@ public class AdminAction {
                 // add musicians to the track
                 String answer3 = "y";
                 while (answer3.equals("y")) {
-                    answer3 = Prompt.readString("Add a new musician to the track? (y/n)");
+                    answer3 = Prompt.readString("Adicionar um novo músico à faixa? (y/n)");
                     addArtistToTrack(answer3, t);
                 }
 
@@ -259,7 +259,7 @@ public class AdminAction {
     private static void addArtistToTrack(String ans, Backend.Tracks.Track t) {
         if (ans.equals("y")) {
             System.out.println("");
-            String musician2 = Prompt.readString("Musician: ");
+            String musician2 = Prompt.readString("Músico: ");
             t.addArtist((Backend.Users.Musician) ReposHolder.getUsers().getUser(musician2));
         }
     }
@@ -269,7 +269,7 @@ public class AdminAction {
         Set<Backend.Instruments.Instrument> pendentInstruments = user.getPendentInstruments();
 
         if (user.getPendentInstruments() == null) {
-            System.out.println("No instruments requests");
+            System.out.println("Sem requisições de instrumentos");
             Generics.sc.nextLine();
             return;
         }
@@ -279,7 +279,7 @@ public class AdminAction {
         }
         
         UUID idSessao = null;
-        String name = Prompt.readString("Instrument's name: ");
+        String name = Prompt.readString("Nome do instrumento: ");
         for(Instrument i: pendentInstruments){
             if(i.getName().equals(name)){
                 idSessao = i.getId();
@@ -288,7 +288,7 @@ public class AdminAction {
 
         Session s = ReposHolder.getSessions().getSession(idSessao);
         
-        String answer = Prompt.readString("Accept or reject? (y/n)");
+        String answer = Prompt.readString("Aceitar ou rejeitar? (y/n)");
         if (answer.equals("y")) {
             try {
                 user.acceptInstrumentRequest(name, s);
@@ -302,7 +302,7 @@ public class AdminAction {
                 System.out.println(e.getMessage());
             }
         } else {
-            System.out.println("Invalid option");
+            System.out.println("Opção inválida");
         } 
 
     }

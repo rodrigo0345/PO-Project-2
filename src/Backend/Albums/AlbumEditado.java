@@ -9,7 +9,7 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.UUID;
 
-public class AlbumEditado extends Album {
+public class AlbumEditado extends Album {//Traduzido
     /*
      Quando se trata de referenciar sessões é muito mais seguro utilizar o ID do que a data, a opção de data é apenas para
         facilitar a visualização do utilizador
@@ -65,10 +65,10 @@ public class AlbumEditado extends Album {
     public Session addSession(LocalDateTime dateInicio, LocalDateTime dateFim) throws IllegalArgumentException {
         if(dateInicio.isAfter(dateFim)) throw new IllegalArgumentException("Data de inicio tem de ser antes da data de fim");
         if (this.isEdited) {
-            throw new IllegalArgumentException("The album is already finished");
+            throw new IllegalArgumentException("O álbum já está terminado");
         }
         if (dateInicio.isBefore(LocalDateTime.now())) {
-            throw new IllegalArgumentException("The given start date is a past date");
+            throw new IllegalArgumentException("A data de ínicio já foi extrapolada");
         }
 
         // the constructor of session is responsible for also adding the session into the specified album
@@ -80,16 +80,16 @@ public class AlbumEditado extends Album {
 
     public boolean addSession(Session s){
         if (this.isEdited) {
-            throw new IllegalArgumentException("The album is already finished");
+            throw new IllegalArgumentException("O álbum já está terminado");
         }
         if (s.getDataInicio().isBefore(LocalDateTime.now())) {
-            throw new IllegalArgumentException("The given date is a past date");
+            throw new IllegalArgumentException("A data de ínicio já foi extrapolada");
         }
         // check if any musician in this session has another session at the same time
         for (Backend.Users.Musician musician : s.getInvitedMusicians().values()) {
             for (Backend.Sessions.Session session : musician.getSessions()) {
                 if (session.getDataInicio().isBefore(s.getDataFim()) && session.getDataFim().isAfter(s.getDataInicio())) {
-                    throw new IllegalArgumentException("The musician " + musician.getUsername() + " is already in another session at the same time");
+                    throw new IllegalArgumentException("The musician " + musician.getUsername() + " já xiste em outra sessão ao mesmo tempo");
                 }
             }
         }
@@ -103,10 +103,10 @@ public class AlbumEditado extends Album {
 
     public boolean removeSession(LocalDateTime dateInicio) throws IllegalArgumentException {
         if (this.isEdited) {
-            throw new IllegalArgumentException("The album you are trying to edit is already finished.");
+            throw new IllegalArgumentException("O álbum que está a tentar editar já está terminado");
         }
         if (dateInicio.isBefore(LocalDateTime.now())) {
-            throw new IllegalArgumentException("You cannot delete a session that has already finished.");
+            throw new IllegalArgumentException("Não pode eliminar uma sessão que já foi concluída.");
         }
 
         Backend.Sessions.Session found = null;
@@ -121,7 +121,7 @@ public class AlbumEditado extends Album {
 
     public boolean removeSession(UUID id) throws IllegalArgumentException {
         if (this.isEdited) {
-            throw new IllegalArgumentException("The album you are trying to edit is already finished.");
+            throw new IllegalArgumentException("O álbum que está a tentar editar já está terminado.");
         }
         Backend.Sessions.Session found = null;
         for (Backend.Sessions.Session s: sessions){

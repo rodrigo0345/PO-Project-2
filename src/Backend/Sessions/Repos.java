@@ -10,7 +10,7 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.UUID;
 
-public class Repos implements Serializable {
+public class Repos implements Serializable {//Traduzido
 
     // for sessions waiting for the admin approval
     private final Set<Session> pendingSessions = new TreeSet<>();
@@ -44,7 +44,7 @@ public class Repos implements Serializable {
     }
 
     public Set<Session> getMusicianSessions(Musician musician) throws IllegalArgumentException {
-        if(musician == null) {throw new IllegalArgumentException("Musician cannot be null");}
+        if(musician == null) {throw new IllegalArgumentException("Músico não pode ser null");}
 
         Set<Session> aux = new TreeSet<Session>();
         for(Session s: sessions) {

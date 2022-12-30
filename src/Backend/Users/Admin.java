@@ -14,7 +14,7 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.UUID;
 
-public class Admin extends User {
+public class Admin extends User {//Traduzidos
 
     public Admin(String name, String email, String username, String password,
             Backend.Instruments.Repos instruments, Backend.Albums.Repos albums,
@@ -70,7 +70,7 @@ public class Admin extends User {
     public Backend.Users.Musician addMusician(String name, String email, String username, String password)
             throws IllegalArgumentException {
         if (!getUsersRepo().isUserValid(username)) {
-            throw new IllegalArgumentException("Username already exists");
+            throw new IllegalArgumentException("Username já existe");
         }
         try {
             StringChecker.validName(name);
@@ -86,7 +86,7 @@ public class Admin extends User {
     public Produtor addProdutor(String name, String email, String username, String password)
             throws IllegalArgumentException {
         if (!getUsersRepo().isUserValid(username)) {
-            throw new IllegalArgumentException("Username already exists");
+            throw new IllegalArgumentException("Username já existe");
         }
         try {
             StringChecker.validName(name);
@@ -113,8 +113,8 @@ public class Admin extends User {
             }
         } else if(user instanceof Produtor){
             for(Album a : super.getAlbumsRepo().getAlbums().values()){
-                if(a.getProdutor().getUsername().equals(username)) throw new Exception("The user you are trying to remove " +
-                        "has produced albums associated to him, in order to fix this issue.");
+                if(a.getProdutor().getUsername().equals(username)) throw new Exception("O username que está a tentar remover " +
+                        "possui álbuns associados a si.");
             }
         }
 
@@ -185,9 +185,9 @@ public class Admin extends User {
         double percentage = (double)countSessionsCompleted /
                                 (double)(super.getSessionsRepo().getSessions().size() + super.getSessionsRepo().getPendingSessions().size())
                             * 100;
-        return "Not finished albums: " + countNotFinishedAlbums + "\n" +
-                "Finished albums: " + countFinishedAlbums + "\n" +
-                "Percentage of sessions completed: " + percentage + "%";
+        return "Álbums não terminados: " + countNotFinishedAlbums + "\n" +
+                "Albums terminados: " + countFinishedAlbums + "\n" +
+                "Percentagem de sessões completas: " + percentage + "%";
     }
 
     public void acceptSessionRequest(UUID id) {

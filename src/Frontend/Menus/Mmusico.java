@@ -11,16 +11,16 @@ import Backend.Users.Musician;
 import Frontend.Utils.Generics;
 import Frontend.Utils.Prompt;
 
-public class Mmusico{
+public class Mmusico{ //Traduzido
     private static int option;
 
     public static void mostrarMenu() {
-        System.out.println("Menu de Musico - Logged as " + Frontend.Utils.UserHolder.getUser().getUsername());
-        System.out.println("1. Edit profile");
-        System.out.println("2. Associated albums");
-        System.out.println("3. Future recording sessions");
-        System.out.println("4. Request an instrument for a specific recording session");
-        System.out.println("5. See the state of all recording sessions");
+        System.out.println("Menu de Musico - Logado como " + Frontend.Utils.UserHolder.getUser().getUsername());
+        System.out.println("1. Editar perfil");
+        System.out.println("2. Álbuns associados");
+        System.out.println("3. Futuras gravações de sessão");
+        System.out.println("4. Requisitar instrumento para uma determinada sessão de gravação");
+        System.out.println("5. Verificar estado de todas as sessões de gravação");
         System.out.println("6. Consultar dados");
         System.out.println("7. Log out");
         System.out.println("8. Exit");

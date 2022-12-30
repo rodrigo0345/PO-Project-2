@@ -3,7 +3,7 @@ package Frontend.Utils;
 import java.util.Scanner;
 import Frontend.Utils.Generics.*;
 
-public class Prompt {
+public class Prompt {//Traduzido
 
     public static void pressEnterToContinue() {
         System.out.println("Pressione ENTER para continuar...");
@@ -87,7 +87,7 @@ public class Prompt {
             try{
                 number = Integer.parseInt(text);
             }catch(NumberFormatException e){
-                outputError(text + " is an invalid option.");
+                outputError(text + " não é uma opção válida.");
                 Generics.sc.nextLine();
             }
         }while(number == null);

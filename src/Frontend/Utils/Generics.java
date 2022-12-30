@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 import javax.sound.midi.Soundbank;
 
-public class Generics {
+public class Generics {//Traduzido
 
     // used accross the frontend
     public final static Scanner sc = new Scanner(System.in);
@@ -26,7 +26,7 @@ public class Generics {
 
         // verify that the inserted date is valid
         try {
-            DateTimeFormatter df = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm", Locale.ITALY);
+            DateTimeFormatter df = DateTimeFormatter.ofPattern("dd/MM/aaaa HH:mm", Locale.ITALY);
             date = LocalDateTime.parse(d, df);
         } catch (Exception e) {
             Frontend.Utils.Prompt.outputError("Data inválida");

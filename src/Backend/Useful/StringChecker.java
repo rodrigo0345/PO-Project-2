@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 
 import Frontend.Utils.Generics;
 
-public class StringChecker {
+public class StringChecker {//Traduzido
     public static boolean hasNumbers(String str) {
         Pattern p = Pattern.compile("[0-9]");
         Matcher m = p.matcher(str);
