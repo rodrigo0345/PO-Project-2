@@ -4,6 +4,8 @@ package Backend.Useful;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import Frontend.Utils.Generics;
+
 public class StringChecker {
     public static boolean hasNumbers(String str) {
         Pattern p = Pattern.compile("[0-9]");

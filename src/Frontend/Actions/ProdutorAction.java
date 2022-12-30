@@ -2,12 +2,15 @@ package Frontend.Actions;
 
 import Backend.Albums.Album;
 import Backend.Albums.AlbumEditado;
+import Backend.Albums.Repos;
+import Backend.Sessions.Session;
 import Backend.Tracks.Track;
 import Backend.Users.Musician;
 import Frontend.Utils.Generics;
 import Frontend.Utils.Prompt;
 import Frontend.Utils.ReposHolder;
 
+import java.rmi.StubNotFoundException;
 import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.UUID;
@@ -66,15 +69,16 @@ public class ProdutorAction {
         int option = Prompt.checkOption("Introduza a opção: ");
 
         if (option == 1) {
-
-            String albumName = Prompt.readString("Original Album's name: ");
-            String newAlbumName = Prompt.readString("New Album's name: ");
-
+            String albumName = Prompt.readString("Album's name: ");
+            String EditionAlbumName = Prompt.readString("Name for the Album's edition: ");
+            
             Backend.Albums.AlbumEditado album;
+
             try {
-                album = user.createAlbumEdit(albumName, newAlbumName);
+                album = user.createAlbumEdit(albumName, EditionAlbumName);
             } catch( ClassNotFoundException | IllegalArgumentException e) {
                 System.out.println(e.getMessage());
+                Generics.sc.nextLine();
                 return;
             }
 
@@ -121,15 +125,16 @@ public class ProdutorAction {
             }
 
         } else if (option == 2) {
-
             String albumName = Prompt.readString("Name of the album: ");
             Backend.Albums.Album album = ReposHolder.getAlbums().getAlbum(albumName);
 
             if (!(album instanceof Backend.Albums.AlbumEditado)){
                 System.out.println("The album you selected is not editable!");
+                Generics.sc.nextLine();
                 return;
-            } else if (user.equals(album.getProdutor())) {
+            } else if (!(user.equals(album.getProdutor()))) {
                 System.out.println("You cannot edit this album! Permission denied!");
+                Generics.sc.nextLine();
                 return;
             }
 
@@ -143,12 +148,20 @@ public class ProdutorAction {
 
             switch(choice) {
                 case 1:
+                    String dataInicio = Prompt.readString("Hora de inicio da sessão(dd/MM/yyyy HH:mm): ");
+                    LocalDateTime novaDataInicio = Generics.stringToDate(dataInicio);
+                    String dataFim = Prompt.readString("Hora de fim da sessão(dd/MM/yyyy HH:mm): ");
+                    LocalDateTime novaDataFim = Generics.stringToDate(dataFim);
+
+                    ((AlbumEditado) album).addSession(novaDataInicio, novaDataFim);
+
                     //System.out.println("Choose a date to the recording: ");
                     //LocalDate d = Frontend.Utils.Generics.readDate();
                     //((AlbumEditado) album).addSession(d);
+
                     break;
                 case 2:
-
+                    System.out.println();
                     String id = Prompt.readString("ID of the recording session: ");
                     boolean success = ReposHolder.getSessions().deleteSession(UUID.fromString(id));
                     if (!success) { System.out.println("The session you are trying to delete does not exist"); return;}
@@ -161,6 +174,7 @@ public class ProdutorAction {
                     if (!(artist instanceof Musician) || artist == null) {
                         System.out.println("Invalid username, the username you " +
                                 "selected is either not an artist or does not exist!");
+                        Generics.sc.nextLine();
                         return;
                     }
 
@@ -225,6 +239,7 @@ public class ProdutorAction {
 
         if (!(album instanceof AlbumEditado)){
             System.out.println(albumName + " was never edited here!");
+            Generics.sc.nextLine();
             return;
         }
         if (((Backend.Albums.AlbumEditado) album).isEdited()) {
@@ -232,6 +247,7 @@ public class ProdutorAction {
                     + album.getDate());
         } else {
             System.out.println(albumName + " is still being edited!");
+            Generics.sc.nextLine();
         }
     }
 

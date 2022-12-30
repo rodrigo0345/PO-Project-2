@@ -70,7 +70,7 @@ public class Produtor extends User {
         Backend.Albums.Album original = getAlbumsRepo().getAlbum(albumName);
         if (original == null) {
             throw new ClassNotFoundException(albumName + " not found.");
-        } else if (getAlbumsRepo().isTituloValid(newAlbumName)) {
+        } else if (getAlbumsRepo().isTituloValid(newAlbumName) == false) {
             throw new IllegalArgumentException(newAlbumName + " already exists.");
         }
         // create the new album edit

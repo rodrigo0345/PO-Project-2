@@ -33,15 +33,16 @@ public class Madmin {
         System.out.println("11. Add a new album");
         System.out.println("12. Show all albums");
         System.out.println("13. Consultar dados");
-        System.out.println("14. Log out");
-        System.out.println("15. Exit");
+        System.out.println("14. Validar Requisição de Instrumentos");
+        System.out.println("15. Log out");
+        System.out.println("16. Exit");
 
         option = Prompt.checkOption("Introduza a opção: ");
 
-        if(option == 14 || option == 15) {
+        if(option == 15|| option == 16) {
             Frontend.Utils.UserHolder.setUser(null);
 
-            if (option == 15) {
+            if (option == 16) {
                 Generics.setExit(true);
             }
 
@@ -94,6 +95,9 @@ public class Madmin {
                 break;
             case 13:
                 Frontend.Actions.AdminAction.checkData();
+                break;
+            case 14:
+                Frontend.Actions.AdminAction.showAllInstrumentsRequests();
                 break;
             default:
                 Prompt.outputError("Opção inválida");

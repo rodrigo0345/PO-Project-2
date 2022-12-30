@@ -2,6 +2,7 @@ package Frontend.Actions;
 
 import Backend.Instruments.Instrument;
 import Backend.Instruments.Repos;
+import Backend.Sessions.Session;
 import Backend.Users.User;
 import Frontend.Utils.Generics;
 import Frontend.Utils.Prompt;
@@ -10,6 +11,7 @@ import Frontend.Utils.ReposHolder;
 import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.Set;
 import java.util.UUID;
 
 public class AdminAction {
@@ -43,6 +45,7 @@ public class AdminAction {
             user.addProdutor(name, email, username, password);
         } catch (Exception e) {
             System.out.println(e.getMessage());
+            Generics.sc.nextLine();
         }
     }
 
@@ -64,6 +67,7 @@ public class AdminAction {
             user.addMusician(name, email, username, password);
         } catch (Exception e) {
             System.out.println(e.getMessage());
+            Generics.sc.nextLine();
         }
     }
 
@@ -258,5 +262,48 @@ public class AdminAction {
             String musician2 = Prompt.readString("Musician: ");
             t.addArtist((Backend.Users.Musician) ReposHolder.getUsers().getUser(musician2));
         }
+    }
+
+    //nao está a funcionar
+    public static void showAllInstrumentsRequests(){
+        Set<Backend.Instruments.Instrument> pendentInstruments = user.getPendentInstruments();
+
+        if (user.getPendentInstruments() == null) {
+            System.out.println("No instruments requests");
+            Generics.sc.nextLine();
+            return;
+        }
+
+        for(Instrument j: pendentInstruments){
+            System.out.println(j);
+        }
+        
+        UUID idSessao = null;
+        String name = Prompt.readString("Instrument's name: ");
+        for(Instrument i: pendentInstruments){
+            if(i.getName().equals(name)){
+                idSessao = i.getId();
+            }
+        }
+
+        Session s = ReposHolder.getSessions().getSession(idSessao);
+        
+        String answer = Prompt.readString("Accept or reject? (y/n)");
+        if (answer.equals("y")) {
+            try {
+                user.acceptInstrumentRequest(name, s);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        } else if (answer.equals("n")) {
+            try {
+                user.denyInstrumentRequest(name, s);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        } else {
+            System.out.println("Invalid option");
+        } 
+
     }
 }

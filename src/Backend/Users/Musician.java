@@ -2,6 +2,7 @@ package Backend.Users;
 
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.UUID;
 
 import Backend.Albums.AlbumEditado;
 import Backend.Instruments.Instrument;
@@ -31,13 +32,19 @@ public class Musician extends User {
         return albums;
     }
 
+    //não está a funcionar
     public void requestInstrument(Instrument instrument, Session s) throws IllegalArgumentException {
         if(!instruments.contains(instrument)) {
             throw new IllegalArgumentException("This musician does not play the given instrument!");
         }
         if(!s.getInvitedMusicians().containsKey(this.getUsername()))
             throw new IllegalArgumentException("This musician was not invited to the specified session!");
+        
+        //possibilidade de resolucao, não muito convincente
+        UUID idInstrumento = instrument.getId();
+        instrument.setId(s.getId());
         s.addPendingInstrument(instrument);
+        instrument.setId(idInstrumento);
     }
 
     public void addArtistInstrument(Instrument instrument) {

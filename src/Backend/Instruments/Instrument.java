@@ -6,7 +6,7 @@ import java.util.UUID;
 public class Instrument implements Serializable, Comparable<Instrument> {
     private static final long serialVersionUID = 6L;
     private final String name;
-    private final UUID id;
+    private UUID id;
     private int quantidade;
 
     public Instrument(String name, int quantidade) {
@@ -23,6 +23,10 @@ public class Instrument implements Serializable, Comparable<Instrument> {
         return id;
     }
 
+    public void setId(UUID id) {
+        this.id = id;
+    }
+    
     public int getQuantidade() {
             return quantidade;
         }
