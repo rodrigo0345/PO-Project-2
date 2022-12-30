@@ -10,6 +10,7 @@ import Frontend.Utils.ReposHolder;
 
 import java.time.LocalDateTime;
 import java.util.Set;
+import java.util.UUID;
 
 public class MusicianAction {
 
@@ -82,18 +83,24 @@ public class MusicianAction {
     // does not treat errors
     public static void requestInstrumentForSession() {
         // mudem isto que devem ir buscar a sessao por id e não por data pff
-        System.out.println("Access option 3 to see all the available sessions");
-        LocalDateTime date = Frontend.Utils.Generics.readDate("Date of the session: ");
-        Session selectedSession = ReposHolder.getSessions().getSession(date);
+        showFutureRecordingSessions();
+
+        UUID idSessao = UUID.fromString(Frontend.Utils.Generics.sc.next("Id da sessão: "));
+        Session selectedSession = ReposHolder.getSessions().getSession(idSessao);
 
         Set<Backend.Instruments.Instrument> availableInstruments = user.getInstruments();
+        
         for(Backend.Instruments.Instrument i: availableInstruments){
             System.out.println(i);
         }
+        
         String instrumentName = Prompt.readString("Instrument's name: ");
+        int quantidadeRequisitar = Prompt.checkInt("Quantidade a requisitar ");
         Instrument instrument = ReposHolder.getInstruments().getInstrument(instrumentName);
+        int quantidade = instrument.getQuantidade();
 
         // the admin will then be able to accept or deny the request
+        instrument.setQuantidade(quantidadeRequisitar);
         selectedSession.addPendingInstrument(instrument);
     }
 
