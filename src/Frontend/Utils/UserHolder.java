@@ -1,6 +1,6 @@
 package Frontend.Utils;
 
-public class UserHolder {
+public class UserHolder {//Traduzido
     private static Backend.Users.User user;
 
     public static void setUser(Backend.Users.User user) {
@@ -37,7 +37,7 @@ public class UserHolder {
             Frontend.Utils.Prompt.cleanPrompt();
         }
         else {
-            throw new IllegalArgumentException("User neither a Produtor, Musician or Admin");
+            throw new IllegalArgumentException("Utilizador não é Produtor nem Músico ou Admin");
         }
     }
 

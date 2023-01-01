@@ -5,7 +5,7 @@ import java.util.Scanner;
 import Backend.Users.Repos;
 import Backend.Users.User;
 
-public class Authentication {
+public class Authentication {//Traduzido
 
     public static User login() {
         User auth = null;
@@ -27,7 +27,7 @@ public class Authentication {
 
         User user = users.getUser(username, password);
         if (user == null) {
-            throw new Exception("Invalid username or password");
+            throw new Exception("Username ou password inválidos");
         }
         return user;
     }

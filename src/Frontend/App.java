@@ -12,7 +12,7 @@ import Frontend.Utils.Generics;
 import java.io.IOException;
 import java.util.Scanner;
 
-public class App {
+public class App {//Traduzido
     public static void main(String[] args) {
         Prep.init();
 

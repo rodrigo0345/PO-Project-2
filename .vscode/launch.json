@@ -9,6 +9,13 @@
             "name": "Launch App",
             "request": "launch",
             "mainClass": "Frontend.App",
+            "projectName": "PO-Project-2_bf199e2b"
+        },
+        {
+            "type": "java",
+            "name": "Launch App",
+            "request": "launch",
+            "mainClass": "Frontend.App",
             "projectName": "PO-Project-2_f2eaf4d7"
         },
         {

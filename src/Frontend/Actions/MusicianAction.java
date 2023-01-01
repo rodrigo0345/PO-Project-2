@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.UUID;
 
-public class MusicianAction {
+public class MusicianAction { //TRADUZIDO
 
         private static Backend.Users.Musician user;
 
@@ -20,43 +20,43 @@ public class MusicianAction {
             if (user instanceof Backend.Users.Musician) {
                 MusicianAction.user = (Backend.Users.Musician) user;
             } else {
-                throw new IllegalArgumentException("User is not a Produtor");
+                throw new IllegalArgumentException("O utilizador não é um músico");
             }
         }
 
     public static void editProfile() {
-        System.out.println("[1] - Edit name");
-        System.out.println("[2] - Edit username");
-        System.out.println("[3] - Edit email");
-        System.out.println("[4] - Edit password");
-        System.out.println("[5] - See the state of all recording sessions");
+        System.out.println("[1] - Editar nome");
+        System.out.println("[2] - Editar username");
+        System.out.println("[3] - Editar email");
+        System.out.println("[4] - Editar password");
+        System.out.println("[5] - Retroceder");
 
         try {
             int option = Prompt.checkOption("Introduza a opção: ");
 
             switch (option) {
                 case 1:
-                    String name = Prompt.readString("New name: ");
+                    String name = Prompt.readString("Novo nome: ");
                     user.setName(name);
                     break;
                 case 2:
-                    String surname = Prompt.readString("New username: ");
+                    String surname = Prompt.readString("Novo username: ");
                     user.setUsername(surname);
                     break;
                 case 3:
-                    String email = Prompt.readString("New email: ");
+                    String email = Prompt.readString("Novo email: ");
                     user.setEmail(email);
                     break;
                 case 4:
-                    String password = Prompt.readString("New password: ");
+                    String password = Prompt.readString("Nova password: ");
                     user.setPassword(password);
                     break;
                 default:
-                    System.out.println("Invalid option");
+                    System.out.println("Opção inválida");
                     break;
             }
         } catch (Exception e) {
-            System.out.println("Invalid option");
+            System.out.println("Opção inválida");
         }
     }
 
@@ -80,7 +80,7 @@ public class MusicianAction {
         Generics.sc.nextLine();
     }
 
-    // does not treat errors
+    //não está a funcionar
     public static void requestInstrumentForSession() {
         // mudem isto que devem ir buscar a sessao por id e não por data pff
         showFutureRecordingSessions();
@@ -88,41 +88,76 @@ public class MusicianAction {
         UUID idSessao = UUID.fromString(Frontend.Utils.Generics.sc.next("Id da sessão: "));
         Session selectedSession = ReposHolder.getSessions().getSession(idSessao);
 
-        Set<Backend.Instruments.Instrument> availableInstruments = user.getInstruments();
+        Boolean overLap = ReposHolder.getSessions().doesSessionOverlap(selectedSession);
         
-        for(Backend.Instruments.Instrument i: availableInstruments){
-            System.out.println(i);
+        Set<Backend.Instruments.Instrument> requestedInstruments = ReposHolder.getSessions().getApprovInstruments();
+        Set<Backend.Instruments.Instrument> availableInstruments = user.getInstruments();
+
+        if(overLap == false){
+            for(Backend.Instruments.Instrument i: availableInstruments){
+                System.out.println(i);
+            }
+        }
+        else{
+            for(Backend.Instruments.Instrument i: availableInstruments){
+               for(Backend.Instruments.Instrument j: requestedInstruments){
+                    if(j.getId() == idSessao){
+                        i.setQuantidade(i.getQuantidade()-j.getQuantidade());
+                        System.out.println(i);
+                    }
+                    System.out.println(i);
+               }     
+            }
+
         }
         
-        String instrumentName = Prompt.readString("Instrument's name: ");
-        int quantidadeRequisitar = Prompt.checkInt("Quantidade a requisitar ");
+        String instrumentName = Prompt.readString("Nome do instrumento: ");
         Instrument instrument = ReposHolder.getInstruments().getInstrument(instrumentName);
+        int quantidadeRequisitar = Prompt.checkInt("Quantidade a requisitar ");
+        
+        for(Backend.Instruments.Instrument g: requestedInstruments){
+            if(quantidadeRequisitar<0)
+                System.out.println("A quantidade deverá ser maior que 0");
+            else if(quantidadeRequisitar>g.getQuantidade())
+                System.out.println("Quantidade indisponivel");
+        }
+        
         int quantidade = instrument.getQuantidade();
+        instrument.setQuantidade(quantidadeRequisitar);
 
         // the admin will then be able to accept or deny the request
-        instrument.setQuantidade(quantidadeRequisitar);
-        selectedSession.addPendingInstrument(instrument);
+        user.requestInstrument(instrument, selectedSession);
+        instrument.setQuantidade(quantidade);
+
+        for(Backend.Instruments.Instrument i: availableInstruments){
+            for(Backend.Instruments.Instrument j: requestedInstruments){
+                if(j.getId() == idSessao){
+                    i.setQuantidade(i.getQuantidade()+j.getQuantidade());
+                }
+            }     
+        }
+        
     }
 
     public static void showStatOfAllRecordingSessions() {
-        System.out.println("See the state of all recording sessions");
+        System.out.println("Estado de todas as sessões de gravação");
         for(Session s: ReposHolder.getSessions().getPendingSessions()){
-            System.out.println("Pending: " + s);
+            System.out.println("Pendente: " + s);
         }
 
         for(Session s: ReposHolder.getSessions().getSessions()){
             if (s.isCompleted() == false){
-                System.out.println("Accepted: " + s);
+                System.out.println("Aceite: " + s);
             }
             else {
-                System.out.println("Done: " + s);
+                System.out.println("Concluído: " + s);
             }
         }
         Generics.sc.nextLine();
     }
 
     public static void checkData() {
-        System.out.println("Name: " + user.getName());
+        System.out.println("Nome: " + user.getName());
         System.out.println("Username: " + user.getUsername());
         System.out.println("Email: " + user.getEmail());
         System.out.println("Password: " + user.getPassword());

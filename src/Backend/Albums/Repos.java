@@ -28,6 +28,9 @@ public class Repos implements Serializable {
     }
 
     public boolean isTituloValid(String titulo) {
-        return albums.get(titulo) == null;
+        if(albums.get(titulo) == null)
+            return true;
+        else 
+            return false;
     }
 }

@@ -13,35 +13,36 @@ import Frontend.Utils.Generics;
 import Frontend.Utils.Prompt;
 
 // Menu of the administrators
-public class Madmin {
+public class Madmin { //TRADUZIDO
     private static int option;
 
     public static void mostrarMenu() {
        
-        System.out.println("Menu de Administrador - Logged as " +
+        System.out.println("Menu de Administrador - Logado como " +
                                         Frontend.Utils.UserHolder.getUser().getUsername());
-        System.out.println("1. Add a new producer");
-        System.out.println("2. Add a new musician");
-        System.out.println("3. Remove user");
-        System.out.println("4. Add music instrument");
-        System.out.println("5. Show all session requests");
-        System.out.println("6. Show all recording sessions");
-        System.out.println("7. Show all albums being edited");
-        System.out.println("8. Stats");
-        System.out.println("9. Show all users");
-        System.out.println("10. Show all instruments");
-        System.out.println("11. Add a new album");
-        System.out.println("12. Show all albums");
+        System.out.println("1. Adicionar um novo produtor");
+        System.out.println("2. Adicionar um novo músico");
+        System.out.println("3. Remover um utilizador");
+        System.out.println("4. Adicionar um instrumento musical");
+        System.out.println("5. Exibir todos os pedidos de sessão");
+        System.out.println("6. Exibir todos as sessões de gravação");
+        System.out.println("7. Exibir todos os álbuns em edição");
+        System.out.println("8. Estatisticas");
+        System.out.println("9. Exibir todos os users");
+        System.out.println("10. Exibir todos os instrumentos");
+        System.out.println("11. Adicionar um novo álbum");
+        System.out.println("12. Exibir todos os álbuns");
         System.out.println("13. Consultar dados");
-        System.out.println("14. Log out");
-        System.out.println("15. Exit");
+        System.out.println("14. Validar Requisição de Instrumentos");
+        System.out.println("15. Log out");
+        System.out.println("16. Exit");
 
         option = Prompt.checkOption("Introduza a opção: ");
 
-        if(option == 14 || option == 15) {
+        if(option == 15|| option == 16) {
             Frontend.Utils.UserHolder.setUser(null);
 
-            if (option == 15) {
+            if (option == 16) {
                 Generics.setExit(true);
             }
 
@@ -94,6 +95,9 @@ public class Madmin {
                 break;
             case 13:
                 Frontend.Actions.AdminAction.checkData();
+                break;
+            case 14:
+                Frontend.Actions.AdminAction.showAllInstrumentsRequests();
                 break;
             default:
                 Prompt.outputError("Opção inválida");

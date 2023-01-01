@@ -22,16 +22,16 @@ import Frontend.Utils.Prompt;
 public class Mprodutor {
     private static int option;
 
-    public static void mostrarMenu() {
+    public static void mostrarMenu() {//Traduzido
 
         // escrever aqui os menus
         System.out.println("Producer Menu - Logged as " + Frontend.Utils.UserHolder.getUser().getUsername());
-        System.out.println("1. Edit profile");
+        System.out.println("1. Editar perfil");
         System.out.println("2. Start/Edit the editing of an album");
-        System.out.println("3. End recording session");
-        System.out.println("4. See the state of an album");
-        System.out.println("5. Your Albums");
-        System.out.println("6. Recording Sessions of a day");
+        System.out.println("3. Terminar sessão de gravação");
+        System.out.println("4. Verificar o estado de um álbum");
+        System.out.println("5. Os seus álbums");
+        System.out.println("6. Sessões de gravação de um dia");
         System.out.println("7. Consultar dados");   //NÃO FUNCIONA
         System.out.println("8. Log out");
         System.out.println("9. Exit");

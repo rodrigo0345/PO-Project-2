@@ -13,7 +13,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
-public class Album implements Serializable, Comparable<Album> {
+public class Album implements Serializable, Comparable<Album> {//Traduzido
     @Serial
     private static final long serialVersionUID = 8L;
     private final Map<String, Backend.Tracks.Track> tracks = new HashMap<>();
@@ -40,7 +40,7 @@ public class Album implements Serializable, Comparable<Album> {
         this.sessionsRepo = sessions;
 
         this.setTitulo(titulo);
-        if(produtorOriginal == null) throw new IllegalArgumentException("Produtor is invalid");
+        if(produtorOriginal == null) throw new IllegalArgumentException("Produtor inválido");
         this.setProdutorOriginal(produtorOriginal);
         this.albumsRepo.addAlbum(this); // dependency
     }
@@ -105,7 +105,7 @@ public class Album implements Serializable, Comparable<Album> {
 
     public boolean setTitulo(String titulo) throws IllegalArgumentException {
         if (!this.albumsRepo.isTituloValid(titulo))
-            throw new IllegalArgumentException(titulo + " already exists");
+            throw new IllegalArgumentException(titulo + " já existe");
         this.titulo = titulo;
         return true;
     }

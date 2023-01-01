@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 
-public class Session implements Serializable, Comparable<Session> {
+public class Session implements Serializable, Comparable<Session> {//Traduzido
     private static final long serialVersionUID = 4L;
     private final Map<String, Musician> invitedArtists = new HashMap<>();
     private final Set<Instrument> pendentInstruments = new TreeSet<>();
@@ -113,12 +113,12 @@ public class Session implements Serializable, Comparable<Session> {
     }
 
     public void addInvitedMusician(Backend.Users.Musician m) throws IllegalArgumentException {
-        if(!this.isAccepted()) throw new IllegalArgumentException("The session you are trying to modify wasn't yet approved!");
-        if(this.isCompleted()) throw new IllegalArgumentException("The session you are trying to access is already completed!");
+        if(!this.isAccepted()) throw new IllegalArgumentException("A sessão que está a tentar modificar ainda não foi aprovada!");
+        if(this.isCompleted()) throw new IllegalArgumentException("A sessão a que está a tentar aceder já foi terminada!");
         // check if the musician does not have other session at the same time
         for(Session s : m.getSessions()) {
             if(s.getDataInicio().isBefore(this.getDataFim()) && s.getDataFim().isAfter(this.getDataInicio())) {
-                throw new IllegalArgumentException("The musician you are trying to add is already in another session at the same time!");
+                throw new IllegalArgumentException("O músico que está a tentar adicionar já se encontra em outra sessão ao mesmo tempo!");
             }
         }
         this.invitedArtists.put(m.getUsername(), m);
@@ -141,10 +141,10 @@ public class Session implements Serializable, Comparable<Session> {
     // waits for the permission of the administrator the session itself needs to be approved by the admin too
     // only accessed by the musician
     public Instrument addPendingInstrument(Instrument instrument) throws IllegalArgumentException {
-        if(!this.isAccepted()) throw new IllegalArgumentException("The session you are trying to modify wasn't yet approved!");
+        if(!this.isAccepted()) throw new IllegalArgumentException("A sessão que está a tentar modificar ainda não foi aprovada!");
 
         if(!instrumentRepos.getInstruments().containsKey(instrument.getName().toLowerCase())) {
-            throw new IllegalArgumentException("The instrument you requested does not exist in the studio yet.");
+            throw new IllegalArgumentException("O intrumento que pretende requisitar ainda não existe em estúdio.");
         }
         this.pendentInstruments.add(instrument);
         return instrument;
@@ -153,10 +153,10 @@ public class Session implements Serializable, Comparable<Session> {
     // waits for the permission of the administrator the session itself needs to be approved by the admin too
     // only accessed by the musician
     public Instrument addPendingInstrument(String name) throws IllegalArgumentException {
-        if(!this.isAccepted()) throw new IllegalArgumentException("The session you are trying to modify wasn't yet approved!");
+        if(!this.isAccepted()) throw new IllegalArgumentException("A sessão que está a tentar modificar ainda não foi aprovada!");
 
         if(!instrumentRepos.getInstruments().containsKey(name.toLowerCase())){
-            throw new IllegalArgumentException("The instrument you requested does not exist in the studio yet.");
+            throw new IllegalArgumentException("O intrumento que pretende requisitar ainda não existe em estúdio.");
         }
         Instrument i = instrumentRepos.getInstrument(name.toLowerCase());
         this.pendentInstruments.add(i);
