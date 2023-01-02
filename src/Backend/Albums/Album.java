@@ -80,6 +80,7 @@ public class Album implements Serializable, Comparable<Album> {//Traduzido
         Musician aux = getArtist(username);
         if (aux == null)
             return false;
+
         return artists.remove(aux);
     }
 

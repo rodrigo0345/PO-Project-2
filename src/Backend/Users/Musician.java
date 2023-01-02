@@ -75,4 +75,9 @@ public class Musician extends User {//Traduzidos
         }
         return false;
     }
+
+    public void removeSession(AlbumEditado album, Session session) {
+        this.removeAlbum(album);
+        this.sessions.remove(session);
+    }
 }

@@ -125,6 +125,19 @@ public class Session implements Serializable, Comparable<Session> {//Traduzido
         m.addSession(album, this);
     }
 
+    public void removeInvitedMusician(Backend.Users.Musician m) throws IllegalArgumentException {
+        if(!this.isAccepted()) throw new IllegalArgumentException("A sessão que está a tentar modificar ainda não foi aprovada!");
+        if(this.isCompleted()) throw new IllegalArgumentException("A sessão a que está a tentar aceder já foi terminada!");
+        this.invitedArtists.remove(m.getUsername());
+        m.removeSession(album, this);
+    }
+
+    public void removeAllInvitedMusicians() throws IllegalArgumentException {
+        this.invitedArtists.forEach((s, artist) -> {
+            removeInvitedMusician(artist);
+        });
+    }
+
 
     public Backend.Users.Musician getInvitedMusician(Musician musician){
         return this.invitedArtists.get(musician.getUsername());

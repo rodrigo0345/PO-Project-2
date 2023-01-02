@@ -11,6 +11,7 @@ import Frontend.Utils.Prompt;
 import Frontend.Utils.ReposHolder;
 
 import java.rmi.StubNotFoundException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.UUID;
@@ -63,161 +64,161 @@ public class ProdutorAction { //Traduzido
 
     // demasiado grande, tem de ser dividido em vários métodos
     public static void startOrCreateEditingAlbum() {
-        System.out.println("1. Start a new edit of an album");
-        System.out.println("2. Edit an existing edit of an album");
+
+        System.out.println("1. Começar a editar um álbum");
+        System.out.println("2. Editar as informações de um álbum");
 
         int option = Prompt.checkOption("Introduza a opção: ");
 
-        if (option == 1) {
-            String albumName = Prompt.readString("Nome do álbum: ");
+        if (option == 1) { // Criar album
+
+            String albumName = Prompt.readString("Nome do álbum original: ");
             String EditionAlbumName = Prompt.readString("Nome para a edição de álbum: ");
             
             Backend.Albums.AlbumEditado album;
 
             try {
-                album = user.createAlbumEdit(albumName, EditionAlbumName);
+                user.createAlbumEdit(albumName, EditionAlbumName);
             } catch( ClassNotFoundException | IllegalArgumentException e) {
-                System.out.println(e.getMessage());
-                Generics.sc.nextLine();
+                Prompt.pressEnterToContinue(e.getMessage());
                 return;
             }
+            Prompt.pressEnterToContinue("Album" + albumName + "criado com sucesso!");
 
-            String choice = Prompt.readString("Planeia uma nova sessão de gravação? (y/n)");
-            while(choice.equals("y")) {
-                String newDate = Prompt.readString("Data para início da sessão (dd/mm/aaaa HH:mm): ");
-                LocalDateTime newDateStart = Frontend.Utils.Generics.stringToDate(newDate);
-                newDate = Prompt.readString("Data para conclusão da sessão (dd/mm/aaaa HH:mm): ");
-                LocalDateTime newDateEnd = Frontend.Utils.Generics.stringToDate(newDate);
-                Backend.Sessions.Session newSession = null;
+        } else if (option == 2) { // Editar album
 
-                try {
-                    album.addSession(newDateStart, newDateEnd);
-                    newSession = album.getLastSessionAdded();
-                } catch (IllegalArgumentException e){
-                    System.out.println(e.getMessage());
-                }
-
-                String artist = Prompt.readString("Adicionar um novo artista? (y/n)");
-                while(artist.equals("y")) {
-
-                    artist = Prompt.readString("Username do artista: ");
-
-                    Backend.Users.User aux = ReposHolder.getUsers().getUser(artist);
-                    if (!(aux instanceof Backend.Users.Musician) || aux == null) {
-                        System.out.println("O músico introduzido não existe");
-                        return;
-                    }
-
-                    // add this session to the musician
-                    Backend.Users.Musician artistInstance = (Musician) aux;
-                    try {
-                        artistInstance.addSession(album, newSession);
-                    } catch (Exception e) {
-                        System.out.println(e.getMessage());
-                        Generics.sc.nextLine();
-                        // no need to return
-                    }
-
-                    artist = Prompt.readString("Adicionar novo artista? (y/n)");
-                }
-
-                choice = Prompt.readString("Planeia uma nova sessão de gravação? (y/n)");
-            }
-
-        } else if (option == 2) {
-            String albumName = Prompt.readString("Nome do álbum: ");
+            String albumName = Prompt.readString("Nome do álbum a editar: ");
             Backend.Albums.Album album = ReposHolder.getAlbums().getAlbum(albumName);
 
             if (!(album instanceof Backend.Albums.AlbumEditado)){
-                System.out.println("O álbum selecionado não é editável");
-                Generics.sc.nextLine();
+                Prompt.pressEnterToContinue("O álbum selecionado não é editável");
                 return;
             } else if (!(user.equals(album.getProdutor()))) {
-                System.out.println("Não tem premissão para editar este album! Permission recusada!");
-                Generics.sc.nextLine();
+                Prompt.pressEnterToContinue("Não tem premissão para editar este album! Permissão recusada!");
                 return;
             }
 
             System.out.println("1. Adicionar uma nova sessão de gravação");
             System.out.println("2. Remover uma sessão de gravação");
-            System.out.println("3. Adicionar um novo artista");
+            System.out.println("3. Adicionar artistas à sessão de gravação");
             System.out.println("4. Remover um artista");
             System.out.println("5. Adicionar uma nova faixa");
             System.out.println("6. Encerrar todas as sessões de gravação anteriores");
+
             int choice = Prompt.checkInt("Introduza a opção: ");
 
             switch(choice) {
-                case 1:
-                    String dataInicio = Prompt.readString("Hora de inicio da sessão(dd/MM/aaaa HH:mm): ");
-                    LocalDateTime novaDataInicio = Generics.stringToDate(dataInicio);
-                    String dataFim = Prompt.readString("Hora de fim da sessão(dd/MM/aaaa HH:mm): ");
-                    LocalDateTime novaDataFim = Generics.stringToDate(dataFim);
+                case 1: // adicionar nova sessão
 
-                    Session s = new Session(novaDataInicio, novaDataFim, (AlbumEditado) album, ReposHolder.getSessions(), ReposHolder.getUsers(), ReposHolder.getInstruments(), ReposHolder.getAlbums());                   
+                    LocalDateTime dataInicio = Generics.readDate("Hora de inicio da sessão(dd/MM/aaaa HH:mm): ");
+                    LocalDateTime dataFim = Generics.readDate("Hora de fim da sessão(dd/MM/aaaa HH:mm): ");
 
-                    //System.out.println("Choose a date to the recording: ");
-                    //LocalDate d = Frontend.Utils.Generics.readDate();
-                    //((AlbumEditado) album).addSession(d);
-
-                    break;
-                case 2:
-                    Set<Backend.Sessions.Session> pendingSessions = ReposHolder.getSessions().getPendingSessions();
-                    for(Session session : pendingSessions){
-                        System.out.println(session);
-                    }
-
-                    String id = Prompt.readString("ID da sessão de gravação: ");
-                    boolean success = ReposHolder.getSessions().deleteSession(UUID.fromString(id));
-                    if (!success) { System.out.println("A sessão que está a tentar eliminar, não existe."); return;}
-                    System.out.println("Sessão eliminada com sucesso.");
-                    break;
-                case 3:
-
-                    String username = Prompt.readString("Username do artista: ");
-                    Backend.Users.User artist = ReposHolder.getUsers().getUser(username);
-                    if (!(artist instanceof Musician) || artist == null) {
-                        System.out.println("Username inválido, o username " +
-                                "introduzido ou não é artista ou não existe!");
-                        Generics.sc.nextLine();
+                    try {
+                        ((AlbumEditado) album).addSession(dataInicio, dataFim);
+                    } catch (IllegalArgumentException e) {
+                        Prompt.pressEnterToContinue(e.getMessage());
                         return;
                     }
 
-                    // always need to add the album to the
-                    // artist and then the artist to the album
-                    ((Musician) artist).addAlbum(album);
-                    album.addArtist((Musician) artist);
+                    Prompt.pressEnterToContinue("Sessão criada com sucesso!");
                     break;
-                case 4:
-                    String username2 = Prompt.readString("Username do artista: ");
-                    boolean success2 = album.removeArtist(username2);
-                    if (!success2) {
-                        System.out.println("O sistema não foi capaz de eliminar o username" +
-                                " introduzido!");
-                        Generics.sc.nextLine();
-                    }
-                    break;
-                case 5:
+                case 2: // remover uma sessão de gravação
 
-                    String trackName = Prompt.readString("Nome da faixa: ");
-                    String genre = Prompt.readString("Género da faixa: ");
-                    int duration = Prompt.checkInt("Duração: ");
-                    String nameAlbum = Prompt.readString("Nome dos álbuns associados: ");
-                    Album a = user.getProjeto(nameAlbum) == null? user.getProjeto(nameAlbum): user.getOldAlbum(nameAlbum);
+                    // imprime todas as sessões para que o utilizador depois escolha a que quer remover
+                    ((AlbumEditado) album).getAllSessions().forEach((session) -> System.out.println(session));
 
-                    Backend.Tracks.Track newTrack = new Track(a, trackName, genre ,duration);
-                    boolean success3 = album.addTrack(newTrack);
-                    if (!success3) {
-                        System.out.println("O nome da faixa deve ser única dentro do álbum!");
-                        Generics.sc.nextLine();
+                    UUID sessionID = UUID.fromString(Prompt.readString("ID da sessão a remover: "));
+
+                    try {
+                        ((AlbumEditado) album).removeSession(sessionID);
+                    } catch (IllegalArgumentException e) {
+                        Prompt.pressEnterToContinue(e.getMessage());
+                        return;
+                    }
+
+                    Prompt.pressEnterToContinue("Sessão removida com sucesso!");
+                    break;
+                case 3: // Adicionar um novo artista
+
+                    // imprime todas as sessões para que o utilizador depois escolha a que quer
+                    ((AlbumEditado) album).getAllSessions().forEach((session) -> System.out.println(session));
+
+                    // escolher a sessao
+                    UUID idSession = UUID.fromString(Prompt.readString("ID da sessão à qual adicionará um artista: "));
+                    Session session = ((AlbumEditado) album).getSession(idSession);
+
+                    if(session == null) {
+                        Prompt.pressEnterToContinue("Sessão não encontrada");
+                        return;
+                    }
+
+                    String addMore;
+                    System.out.println("Adicionar um artista à sessão " + session + "? (s/n)");
+                    addMore = Prompt.readString("Introduza a opção: ");
+
+                    while(addMore.equals("s")) {
+                        String artistName = Prompt.readString("Nome do artista: ");
+                        Backend.Users.User musician = ReposHolder.getUsers().getUser(artistName);
+
+                        if(musician == null) {
+                            Prompt.pressEnterToContinue("Artista não encontrado");
+                            return;
+                        }
+                        if (!(musician instanceof Backend.Users.Musician)) {
+                            Prompt.pressEnterToContinue("O utilizador não é um músico");
+                            return;
+                        }
+
+                        try {
+                            session.addInvitedMusician((Backend.Users.Musician) musician);
+                        } catch (IllegalArgumentException e) {
+                            Prompt.pressEnterToContinue(e.getMessage());
+                            return;
+                        }
+
+                        System.out.println("Adicionar mais um artista à sessão " + session + "? (s/n)");
+                        addMore = Prompt.readString("Introduza a opção: ");
                     }
                     break;
-                case 6:
-                    System.out.println("Terminar sessões de gravação...");
-                    boolean res = ReposHolder.getSessions().endRecordingSessions();
-                    if (!res) {
-                        System.out.println("Nenhuma sessão de gravação foi terminada");
-                        Generics.sc.nextLine();
+                case 4: // Remover um artista
+                    String username = Prompt.readString("Username do artista que pretende remover do album: ");
+                    boolean success = ((AlbumEditado)album).removeArtist(username);
+                    if (!success) {
+                        System.out.println();
+                        Prompt.pressEnterToContinue("O sistema não foi capaz de eliminar o username" + username + " introduzido!");
                     }
+                    break;
+                case 5: // Adicionar uma nova faixa
+
+                    String addMore01 = "s";
+
+
+                    while(addMore01.equals("s")) {
+                        String trackName = Prompt.readString("Nome da faixa: ");
+                        String genre = Prompt.readString("Género da faixa: ");
+
+                        // ainda sem verificação
+                        int duration = Prompt.checkInt("Duração (minutos:segundos): ");
+
+                        Backend.Tracks.Track newTrack = new Track(album, trackName, genre ,duration);
+                        boolean success03 = album.addTrack(newTrack);
+                        if (!success03) {
+                            Prompt.pressEnterToContinue("O nome da faixa deve ser única dentro do álbum!");
+                        }
+
+                        System.out.println("Adicionar outra faixa ao album? (s/n)");
+                        addMore01 = Prompt.readString("Introduza a opção: ");
+                    }
+
+                    break;
+                case 6: // Encerrar sessão de gravação
+
+                    // imprime todas as sessões para que o utilizador depois escolha a que quer
+                    ((AlbumEditado) album).getAllSessions().forEach((session01) -> System.out.println(session01));
+
+                    // escolher a sessao
+                    UUID idSession01 = UUID.fromString(Prompt.readString("ID da sessão à qual adicionará um artista: "));
+                    ((AlbumEditado)album).removeSession(idSession01);
                     break;
                 default:
                     System.out.println("Seleção inválida");

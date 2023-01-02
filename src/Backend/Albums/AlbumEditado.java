@@ -1,6 +1,7 @@
 package Backend.Albums;
 
 import Backend.Sessions.Session;
+import Backend.Users.Musician;
 
 import java.sql.Date;
 import java.time.LocalDate;
@@ -124,9 +125,10 @@ public class AlbumEditado extends Album {//Traduzido
             throw new IllegalArgumentException("O álbum que está a tentar editar já está terminado.");
         }
         Backend.Sessions.Session found = null;
-        for (Backend.Sessions.Session s: sessions){
-            if(s.getId().equals(id)) {
+        for (Backend.Sessions.Session s: sessions) {
+            if (s.getId().equals(id)) {
                 found = s;
+                s.removeAllInvitedMusicians();
             }
         }
         if (found == null) return false;
@@ -142,6 +144,29 @@ public class AlbumEditado extends Album {//Traduzido
                 s.setCompleted(true);
             }
         }
+    }
+
+    public Session getSession(UUID id) {
+        for(Backend.Sessions.Session s: sessions){
+            if(s.getId().equals(id)){
+                return s;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public boolean removeArtist(String username) {
+        Musician aux = getArtist(username);
+        if (aux == null)
+            return false;
+
+        // remove the artist from all the sessions
+        for (Backend.Sessions.Session s : sessions) {
+            s.removeInvitedMusician(aux);
+        }
+
+        return super.removeArtist(username);
     }
 
     public Set<Backend.Sessions.Session> getAllSessions() {
