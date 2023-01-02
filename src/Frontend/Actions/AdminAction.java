@@ -197,9 +197,10 @@ public class AdminAction { // TRADUZIDO
         String titleOfTheAlbum = Prompt.readString("Nome do album: ");
         String producer = Prompt.readString("Produtor: ");
         String genre = Prompt.readString("Género: ");
-        String d = Prompt.readString("Data de lançamento (dd MM aaaa): ");
-        LocalDateTime date = Generics.stringToDate(d);;
-
+        //String d = Prompt.readString("Data de lançamento (dd MM aaaa): ");
+        //LocalDateTime date = Generics.stringToDate(d);
+        LocalDateTime date = Generics.readDate("Data de lançamento (dd MM aaaa): ");
+        
         // verify that the inserted date is valid
 
         // verify that the inserted producer is valid
@@ -264,7 +265,7 @@ public class AdminAction { // TRADUZIDO
         }
     }
 
-    //nao está a funcionar
+    
     public static void showAllInstrumentsRequests(){
 
         // basta percorrer todas as sessões e mostrar todos os instrumentos pendentes

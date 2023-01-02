@@ -204,4 +204,9 @@ public class Session implements Serializable, Comparable<Session> {//Traduzido
 
         return false;
     }
+
+    @Override
+    public String toString(){
+        return "id da sessão = " + id + "data inicio = " + dateInicio + "data fim = " + dateFim + "edicao de album = " + album;
+    }
 }

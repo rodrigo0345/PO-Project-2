@@ -153,7 +153,7 @@ public class ProdutorAction { //Traduzido
                     String dataFim = Prompt.readString("Hora de fim da sessão(dd/MM/aaaa HH:mm): ");
                     LocalDateTime novaDataFim = Generics.stringToDate(dataFim);
 
-                    ((AlbumEditado) album).addSession(novaDataInicio, novaDataFim);
+                    Session s = new Session(novaDataInicio, novaDataFim, (AlbumEditado) album, ReposHolder.getSessions(), ReposHolder.getUsers(), ReposHolder.getInstruments(), ReposHolder.getAlbums());                   
 
                     //System.out.println("Choose a date to the recording: ");
                     //LocalDate d = Frontend.Utils.Generics.readDate();
@@ -161,7 +161,11 @@ public class ProdutorAction { //Traduzido
 
                     break;
                 case 2:
-                    System.out.println();
+                    Set<Backend.Sessions.Session> pendingSessions = ReposHolder.getSessions().getPendingSessions();
+                    for(Session session : pendingSessions){
+                        System.out.println(session);
+                    }
+
                     String id = Prompt.readString("ID da sessão de gravação: ");
                     boolean success = ReposHolder.getSessions().deleteSession(UUID.fromString(id));
                     if (!success) { System.out.println("A sessão que está a tentar eliminar, não existe."); return;}

@@ -40,11 +40,7 @@ public class Musician extends User {//Traduzidos
         if(!s.getInvitedMusicians().containsKey(this.getUsername()))
             throw new IllegalArgumentException("O músico não foi convidado para a sessão em específico!");
         
-        //possibilidade de resolucao, não muito convincente
-        UUID idInstrumento = instrument.getId();
-        instrument.setId(s.getId());
         s.addPendingInstrument(instrument);
-        instrument.setId(idInstrumento);
     }
 
     public void addArtistInstrument(Instrument instrument) {
