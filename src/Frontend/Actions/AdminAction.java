@@ -266,25 +266,31 @@ public class AdminAction { // TRADUZIDO
 
     //nao está a funcionar
     public static void showAllInstrumentsRequests(){
-        Set<Backend.Instruments.Instrument> pendentInstruments = user.getPendentInstruments();
 
-        if (user.getPendentInstruments() == null) {
-            System.out.println("Sem requisições de instrumentos");
-            Generics.sc.nextLine();
-            return;
-        }
+        // basta percorrer todas as sessões e mostrar todos os instrumentos pendentes
+        // em conjunto com a sessao que os requisitou
+        Set<Session> sessions = user.getSessionsRepo().getSessions();
 
-        for(Instrument j: pendentInstruments){
-            System.out.println(j);
-        }
-        
-        UUID idSessao = null;
-        String name = Prompt.readString("Nome do instrumento: ");
-        for(Instrument i: pendentInstruments){
-            if(i.getName().equals(name)){
-                idSessao = i.getId();
+        for(Session s : sessions){
+            for (Instrument i : s.getPendentInstruments()){
+                System.out.println(s.getId() + ": " + i.toString());
             }
         }
+
+        //
+        // apenas auxiliar
+        Set<Backend.Instruments.Instrument> pendentInstruments = user.getPendentInstruments();
+
+        if (pendentInstruments.size() == 0) {
+            Prompt.outputError("Sem requisições de instrumentos");
+            Prompt.pressEnterToContinue();
+            return;
+        }
+        // para mostrar uma mensagem caso não haja instrumentos pendentes
+        //
+
+        UUID idSessao = UUID.fromString(Prompt.readString("ID da sessão: "));
+        String name = Prompt.readString("Nome do instrumento: ");
 
         Session s = ReposHolder.getSessions().getSession(idSessao);
         
@@ -293,17 +299,16 @@ public class AdminAction { // TRADUZIDO
             try {
                 user.acceptInstrumentRequest(name, s);
             } catch (Exception e) {
-                System.out.println(e.getMessage());
+                Prompt.outputError(e.getMessage());
             }
         } else if (answer.equals("n")) {
             try {
                 user.denyInstrumentRequest(name, s);
             } catch (Exception e) {
-                System.out.println(e.getMessage());
+                Prompt.outputError(e.getMessage());
             }
         } else {
-            System.out.println("Opção inválida");
-        } 
-
+            Prompt.outputError("Opção inválida");
+        }
     }
 }

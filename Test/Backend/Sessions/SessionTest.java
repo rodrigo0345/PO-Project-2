@@ -43,7 +43,7 @@ public class SessionTest {
     public void addPendendingInstrument() {
         admin.acceptSessionRequest(session.getId());
 
-        Instrument i = new Instrument("guitarra");
+        Instrument i = new Instrument("guitarra", 4);
 
         try {
             session.addPendingInstrument(i);
@@ -53,8 +53,8 @@ public class SessionTest {
 
         Admin su = new Admin("Teste", "Teste@gmail.com", "admin", "admin", album.getInstrumentsRepo(),
                                                     album.getAlbumsRepo(), album.getUsersRepo(), album.getSessionsRepo() );
-        su.addInstrument("Guitarra");
-        su.addInstrument("Violino");
+        su.addInstrument("Guitarra", 10);
+        su.addInstrument("Violino", 4);
         session.addPendingInstrument(i);
     }
 
@@ -63,7 +63,7 @@ public class SessionTest {
         admin.acceptSessionRequest(session.getId());
 
         addPendendingInstrument();
-        session.addPendingInstrument(new Instrument("violino"));
+        session.addPendingInstrument(new Instrument("violino", 4));
         assertEquals(2, session.getPendentInstruments().size());
     }
 

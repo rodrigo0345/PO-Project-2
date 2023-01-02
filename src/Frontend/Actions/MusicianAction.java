@@ -74,10 +74,16 @@ public class MusicianAction { //TRADUZIDO
     public static void showFutureRecordingSessions() {
         // get all the sessions with the musician in it
         Set<Session> relatedSessions = ReposHolder.getSessions().getMusicianSessions(user);
+
+        if (relatedSessions.isEmpty()) {
+            Prompt.pressEnterToContinue("Não tem sessões futuras");
+            return;
+        }
         for (Session s: relatedSessions){
             System.out.println(s);
         }
-        Generics.sc.nextLine();
+
+        Prompt.pressEnterToContinue();
     }
 
     //não está a funcionar
@@ -85,7 +91,14 @@ public class MusicianAction { //TRADUZIDO
         // mudem isto que devem ir buscar a sessao por id e não por data pff
         showFutureRecordingSessions();
 
-        UUID idSessao = UUID.fromString(Frontend.Utils.Generics.sc.next("Id da sessão: "));
+        UUID idSessao = null;
+        try {
+            idSessao = UUID.fromString(Frontend.Utils.Prompt.readString("Id da sessão: "));
+        } catch (Exception e) {
+            Prompt.pressEnterToContinue("Id inválido");
+            return;
+        }
+
         Session selectedSession = ReposHolder.getSessions().getSession(idSessao);
 
         Boolean overLap = ReposHolder.getSessions().doesSessionOverlap(selectedSession);
@@ -93,7 +106,7 @@ public class MusicianAction { //TRADUZIDO
         Set<Backend.Instruments.Instrument> requestedInstruments = ReposHolder.getSessions().getApprovInstruments();
         Set<Backend.Instruments.Instrument> availableInstruments = user.getInstruments();
 
-        if(overLap == false){
+        if(!overLap){
             for(Backend.Instruments.Instrument i: availableInstruments){
                 System.out.println(i);
             }

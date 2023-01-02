@@ -25,7 +25,7 @@ public class AdminTest {
                 admin.getInstrumentsRepo(), admin.getAlbumsRepo(), produtor.getUsersRepo(), admin.getSessionsRepo(), produtor);
     @Test
     public void addInstrument() {
-        admin.addInstrument("flute");
+        admin.addInstrument("flute", 5);
         assertNotNull(admin.getInstrumentsRepo().getInstrument("flute"));
         assertEquals(1, admin.getInstrumentsRepo().getInstruments().size());
     }
@@ -38,7 +38,7 @@ public class AdminTest {
 
         admin.acceptSessionRequest(s.getId()); // needs to be approved first
 
-        s.addPendingInstrument(new Instrument("flute"));
+        s.addPendingInstrument(new Instrument("flute", 6));
         admin.removeInstrument("flute");
         assertFalse(s.getApprovedInstruments().contains(s));
         assertEquals(0, s.getApprovedInstruments().size());
@@ -183,7 +183,7 @@ public class AdminTest {
                 album.getUsersRepo(), album.getInstrumentsRepo(), album.getAlbumsRepo());
 
         admin.acceptSessionRequest(s.getId());
-        admin.addInstrument("guitarra");
+        admin.addInstrument("guitarra", 10);
 
         s.addInvitedMusician(m);
 
@@ -208,7 +208,7 @@ public class AdminTest {
                 album.getUsersRepo(), album.getInstrumentsRepo(), album.getAlbumsRepo());
 
         admin.acceptSessionRequest(s.getId());
-        admin.addInstrument("guitarra");
+        admin.addInstrument("guitarra", 10);
 
         s.addInvitedMusician(m);
 

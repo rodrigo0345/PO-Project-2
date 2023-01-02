@@ -48,7 +48,7 @@ public class MusicianTest {
         Backend.Sessions.Session s = a.addSession(Frontend.Utils.Generics.stringToDate("21/12/2040 10:00"), Frontend.Utils.Generics.stringToDate("21/12/2040 12:30"));
         admin.acceptSessionRequest(s.getId());
         s.addInvitedMusician(m);
-        admin.addInstrument("flute");
+        admin.addInstrument("flute", 8);
         m.addArtistInstrument(admin.getInstrumentsRepo().getInstrument("flute"));
         m.requestInstrument(admin.getInstrumentsRepo().getInstrument("flute"), s);
         assertTrue(m.getInstruments().contains(admin.getInstrumentsRepo().getInstrument("flute")));
@@ -76,7 +76,7 @@ public class MusicianTest {
         // already uses addSession
         s.addInvitedMusician(m);
 
-        admin.addInstrument("flute");
+        admin.addInstrument("flute", 9);
         m.addArtistInstrument(admin.getInstrumentsRepo().getInstrument("flute"));
         m.requestInstrument(admin.getInstrumentsRepo().getInstrument("flute"), s);
 

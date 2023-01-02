@@ -185,6 +185,8 @@ public class Admin extends User {//Traduzidos
         double percentage = (double)countSessionsCompleted /
                                 (double)(super.getSessionsRepo().getSessions().size() + super.getSessionsRepo().getPendingSessions().size())
                             * 100;
+        if(Double.isNaN(percentage)) percentage = 0;
+
         return "Álbums não terminados: " + countNotFinishedAlbums + "\n" +
                 "Albums terminados: " + countFinishedAlbums + "\n" +
                 "Percentagem de sessões completas: " + percentage + "%";
