@@ -73,8 +73,8 @@ public class Repos implements Serializable {//Traduzido
         return null;
     }
 
-    //not sure 
-    public Set<Instrument> getApprovInstruments(){
+    //já aprovadas
+    public Set<Instrument> getInstrumentsRequests(){
         for(Session s: sessions){
             return s.getApprovedInstruments(); }
         return null;

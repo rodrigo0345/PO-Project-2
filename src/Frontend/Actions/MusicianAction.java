@@ -9,6 +9,7 @@ import Frontend.Utils.Prompt;
 import Frontend.Utils.ReposHolder;
 
 import java.time.LocalDateTime;
+import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
@@ -88,47 +89,55 @@ public class MusicianAction { //TRADUZIDO
 
     //não está a funcionar
     public static void requestInstrumentForSession() {
-        // mudem isto que devem ir buscar a sessao por id e não por data pff
-        showFutureRecordingSessions();
+        Set<Session> relatedSessions = ReposHolder.getSessions().getMusicianSessions(user);
 
-        UUID idSessao = null;
-        try {
-            idSessao = UUID.fromString(Frontend.Utils.Prompt.readString("Id da sessão: "));
-        } catch (Exception e) {
-            Prompt.pressEnterToContinue("Id inválido");
+        if (relatedSessions.isEmpty()) {
+            Prompt.pressEnterToContinue("Não tem sessões futuras");
             return;
         }
+        for (Session s: relatedSessions){
+            System.out.println(s);
+        }
 
-        Session selectedSession = ReposHolder.getSessions().getSession(idSessao);
+        UUID idSessao = null;
+        Session selectedSession;
+        try {
+            idSessao = UUID.fromString(Frontend.Utils.Prompt.readString("Id da sessão: "));
+            selectedSession = ReposHolder.getSessions().getSession(idSessao);
+        } catch (Exception e) {
+            Prompt.pressEnterToContinue("Id inválido");
+            return; 
+        }
 
         Boolean overLap = ReposHolder.getSessions().doesSessionOverlap(selectedSession);
-        
-        Set<Backend.Instruments.Instrument> requestedInstruments = ReposHolder.getSessions().getApprovInstruments();
-        Set<Backend.Instruments.Instrument> availableInstruments = user.getInstruments();
 
-        if(!overLap){
-            for(Backend.Instruments.Instrument i: availableInstruments){
+      
+        Set<Backend.Instruments.Instrument> requestedInstrumentsBySession = ReposHolder.getSessions().getSession(idSessao).getApprovedInstruments();
+
+        Map<String, Instrument> availableInstruments = ReposHolder.getInstruments().getInstruments();
+
+        if(overLap == false && requestedInstrumentsBySession == null ){
+            for(Backend.Instruments.Instrument i: availableInstruments.values()){
                 System.out.println(i);
             }
         }
         else{
-            for(Backend.Instruments.Instrument i: availableInstruments){
-               for(Backend.Instruments.Instrument j: requestedInstruments){
-                    if(j.getId() == idSessao){
-                        i.setQuantidade(i.getQuantidade()-j.getQuantidade());
-                        System.out.println(i);
+            for(Instrument j : availableInstruments.values()){
+                for(Instrument i : requestedInstrumentsBySession){
+                    if(j.getId() == i.getId()){
+                        j.setQuantidade(j.getQuantidade() - i.getQuantidade());
+                        System.out.println(j);
                     }
-                    System.out.println(i);
-               }     
+                    else System.out.println(j);
+                }
             }
-
         }
         
         String instrumentName = Prompt.readString("Nome do instrumento: ");
         Instrument instrument = ReposHolder.getInstruments().getInstrument(instrumentName);
         int quantidadeRequisitar = Prompt.checkInt("Quantidade a requisitar ");
         
-        for(Backend.Instruments.Instrument g: requestedInstruments){
+        for(Backend.Instruments.Instrument g: availableInstruments.values()){
             if(quantidadeRequisitar<0)
                 System.out.println("A quantidade deverá ser maior que 0");
             else if(quantidadeRequisitar>g.getQuantidade())
@@ -142,14 +151,13 @@ public class MusicianAction { //TRADUZIDO
         user.requestInstrument(instrument, selectedSession);
         instrument.setQuantidade(quantidade);
 
-        for(Backend.Instruments.Instrument i: availableInstruments){
-            for(Backend.Instruments.Instrument j: requestedInstruments){
-                if(j.getId() == idSessao){
-                    i.setQuantidade(i.getQuantidade()+j.getQuantidade());
+        for(Instrument j : availableInstruments.values()){
+            for(Instrument i : requestedInstrumentsBySession){
+                if(j.getId() == i.getId()){
+                    j.setQuantidade(j.getQuantidade() + i.getQuantidade());
                 }
-            }     
-        }
-        
+            }
+        }        
     }
 
     public static void showStatOfAllRecordingSessions() {
