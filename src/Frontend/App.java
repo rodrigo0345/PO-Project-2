@@ -9,7 +9,10 @@ import Frontend.Menus.Mmusico;
 import Frontend.Menus.Mprodutor;
 import Frontend.Utils.Generics;
 
+import java.awt.*;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Scanner;
 
 public class App {//Traduzido
