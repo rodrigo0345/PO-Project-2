@@ -80,15 +80,6 @@ public class Repos implements Serializable {//Traduzido
         return null;
     }
 
-    public boolean doesSessionOverlap(Session s){
-        for(Session session: sessions){
-        if (session.getDataInicio().isAfter(s.getDataFim()) || session.getDataFim().isBefore(s.getDataInicio())) {
-            return false;
-        }
-        }
-        return true;
-    }    
-
     public boolean approveSession(Session s){
         return pendingSessions.remove(s) && sessions.add(s);
     }
