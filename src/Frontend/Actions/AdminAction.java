@@ -126,6 +126,12 @@ public class AdminAction { // TRADUZIDO
             System.out.println("Não existem pedidos de sessão");
             return;
         }
+        else{
+            for(Session s: user.getAllSessionRequests()){
+                System.out.println(s);
+            }
+        } 
+            
         System.out.print("Selecione um pedido de sessão: ");
         UUID id = UUID.fromString(Generics.sc.nextLine()); //FALTA ALTERAR
         String answer = Prompt.readString("Aceitar ou rejeitar? (y/n)");

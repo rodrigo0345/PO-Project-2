@@ -34,9 +34,9 @@ public class Musician extends User {//Traduzidos
 
     //não está a funcionar
     public void requestInstrument(Instrument instrument, Session s) throws IllegalArgumentException {
-        if(!instruments.contains(instrument)) {
-            throw new IllegalArgumentException("O músico não toca o instrumento requerido!");
-        }
+        //if(!instruments.contains(instrument)) {
+        //    throw new IllegalArgumentException("O músico não toca o instrumento requerido!");
+        //}
         if(!s.getInvitedMusicians().containsKey(this.getUsername()))
             throw new IllegalArgumentException("O músico não foi convidado para a sessão em específico!");
         
