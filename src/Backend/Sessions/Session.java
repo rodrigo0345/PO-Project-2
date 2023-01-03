@@ -195,7 +195,7 @@ public class Session implements Serializable, Comparable<Session> {//Traduzido
     }
 
     public boolean doesSessionOverlap(Session other){
-        if (this.getDataInicio().isAfter(other.getDataFim()) || this.getDataFim().isBefore(other.getDataInicio())) {
+        if (this.getDataInicio().isAfter(other.getDataFim()) || this.getDataFim().isBefore(other.getDataInicio()) || (this.getDataInicio().isEqual(other.dateInicio) && this.getDataFim().isEqual(other.dateFim))) {
             return false;
         }
         return true;

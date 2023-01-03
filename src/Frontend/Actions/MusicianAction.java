@@ -108,42 +108,47 @@ public class MusicianAction { //TRADUZIDO
             Prompt.pressEnterToContinue("Id inválido");
             return; 
         }
+        
+        
+        Map<String, Backend.Instruments.Instrument> instruments = ReposHolder.getInstruments().getInstruments();
+        Set<Session> sessions = user.getSessionsRepo().getSessions();
 
-        Boolean overLap = ReposHolder.getSessions().doesSessionOverlap(selectedSession);
-
-      
-        Set<Backend.Instruments.Instrument> requestedInstrumentsBySession = ReposHolder.getSessions().getSession(idSessao).getApprovedInstruments();
-
-        Map<String, Instrument> availableInstruments = ReposHolder.getInstruments().getInstruments();
-
-        if(overLap == false && requestedInstrumentsBySession == null ){
-            for(Backend.Instruments.Instrument i: availableInstruments.values()){
-                System.out.println(i);
+        for(Session s: sessions){
+            if(s.doesSessionOverlap(selectedSession) == true){
+                for(Instrument i: s.getApprovedInstruments()){
+                    String nomeInstrumento = i.getName().toLowerCase();
+                    Instrument j = instruments.get(nomeInstrumento);
+                    i.setQuantidade(j.getQuantidade()-i.getQuantidade());
+                    System.out.println(i);
+                }
+                break;
+            }
+            else{
+                for (Map.Entry<String, Backend.Instruments.Instrument> entry : instruments.entrySet()) {
+                    System.out.println(entry.getValue().toString());
+                }
+                break;
             }
         }
-        else{
-            for(Instrument j : availableInstruments.values()){
-                for(Instrument i : requestedInstrumentsBySession){
-                    if(j.getId() == i.getId()){
-                        j.setQuantidade(j.getQuantidade() - i.getQuantidade());
-                        System.out.println(j);
+
+        
+        String instrumentName = Prompt.readString("Nome do instrumento: ");
+        Instrument instrument = ReposHolder.getInstruments().getInstrument(instrumentName.toLowerCase());
+        int quantidadeRequisitar = Prompt.checkInt("Quantidade a requisitar ");
+        
+        for(Session s: sessions){
+            for(Instrument i : s.getApprovedInstruments()){
+                if(i.getName().toLowerCase().equals(instrumentName.toLowerCase())){
+                    if(i.getQuantidade() > quantidadeRequisitar){
+                        System.out.println("Quantidade indisponivel");
                     }
-                    else System.out.println(j);
+                    else if(quantidadeRequisitar<0){
+                        System.out.println("A quantidade deverá ser maior que 0");
+                    }
                 }
             }
         }
-        
-        String instrumentName = Prompt.readString("Nome do instrumento: ");
-        Instrument instrument = ReposHolder.getInstruments().getInstrument(instrumentName);
-        int quantidadeRequisitar = Prompt.checkInt("Quantidade a requisitar ");
-        
-        for(Backend.Instruments.Instrument g: availableInstruments.values()){
-            if(quantidadeRequisitar<0)
-                System.out.println("A quantidade deverá ser maior que 0");
-            else if(quantidadeRequisitar>g.getQuantidade())
-                System.out.println("Quantidade indisponivel");
-        }
-        
+
         int quantidade = instrument.getQuantidade();
         instrument.setQuantidade(quantidadeRequisitar);
 
@@ -151,13 +156,16 @@ public class MusicianAction { //TRADUZIDO
         user.requestInstrument(instrument, selectedSession);
         instrument.setQuantidade(quantidade);
 
-        for(Instrument j : availableInstruments.values()){
-            for(Instrument i : requestedInstrumentsBySession){
-                if(j.getId() == i.getId()){
-                    j.setQuantidade(j.getQuantidade() + i.getQuantidade());
+        for(Session s: sessions){
+            if(s.doesSessionOverlap(selectedSession) == true){
+                for(Instrument i: s.getApprovedInstruments()){
+                    String nomeInstrumento = i.getName().toLowerCase();
+                    Instrument j = instruments.get(nomeInstrumento);
+                    i.setQuantidade(j.getQuantidade()+i.getQuantidade());
                 }
             }
-        }        
+        }
+
     }
 
     public static void showStatOfAllRecordingSessions() {
