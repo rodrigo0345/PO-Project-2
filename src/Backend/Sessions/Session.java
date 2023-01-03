@@ -21,11 +21,11 @@ public class Session implements Serializable, Comparable<Session> {//Traduzido
     private UUID id = UUID.randomUUID();
     private boolean completed = false;
     private boolean accepted = false;
-    private AlbumEditado album;
-    private Backend.Sessions.Repos sessionRepos;
-    private Backend.Users.Repos userRepos;
-    private Backend.Instruments.Repos instrumentRepos;
-    private Backend.Albums.Repos albumRepos;
+    private final AlbumEditado album;
+    private final Backend.Sessions.Repos sessionRepos;
+    private final Backend.Users.Repos userRepos;
+    private final Backend.Instruments.Repos instrumentRepos;
+    private final Backend.Albums.Repos albumRepos;
 
     public Session(LocalDateTime datainicio, LocalDateTime datafim, AlbumEditado album, Backend.Sessions.Repos sessions, Backend.Users.Repos users,
                    Backend.Instruments.Repos instruments, Backend.Albums.Repos albums) throws IllegalArgumentException {
@@ -104,7 +104,7 @@ public class Session implements Serializable, Comparable<Session> {//Traduzido
     public void setAccepted(boolean accepted) {
         this.accepted = accepted;
 
-        if(accepted == true) {
+        if(accepted) {
             this.sessionRepos.getSessions().add(this);
         } else {
             this.album.getAllSessions().remove(this);
@@ -152,14 +152,36 @@ public class Session implements Serializable, Comparable<Session> {//Traduzido
     }
 
     // waits for the permission of the administrator the session itself needs to be approved by the admin too
-    // only accessed by the musician
-    public Instrument addPendingInstrument(Instrument instrument) throws IllegalArgumentException {
+    // only accessed by the musician.
+    // Creates a copy of an Instrument and adds it to the session
+    public Instrument addPendingInstrument(Instrument instrument, int quantity) throws IllegalArgumentException {
         if(!this.isAccepted()) throw new IllegalArgumentException("A sessão que está a tentar modificar ainda não foi aprovada!");
 
         if(!instrumentRepos.getInstruments().containsKey(instrument.getName().toLowerCase())) {
             throw new IllegalArgumentException("O intrumento que pretende requisitar ainda não existe em estúdio.");
         }
-        this.pendentInstruments.add(instrument);
+
+        if(quantity < 0) {
+            throw new IllegalArgumentException("Não existem instrumentos suficientes para " +
+                    "satisfazer a sua requisição nesta hora.");
+        }
+        else if(quantity > instrument.getQuantidade()) {
+            throw new IllegalArgumentException("Não existem instrumentos suficientes no estúdio " +
+                    "para satisfazer a sua requisição.");
+        }
+
+        // precisamos de fazer uma copia do instrumento de forma a conseguir retirar a quantidade que vamos usar
+        // isto porque temos um mecanismo em que o instrumento é partilhado entre as sessões em diferentes horarios
+        Instrument copy;
+        try {
+            copy = (Instrument) instrument.clone();
+            copy.setId(instrument.getId()); // this is needed
+            copy.setQuantidade(quantity);
+        } catch (CloneNotSupportedException e) {
+            throw new IllegalArgumentException(e.getMessage());
+        }
+
+        this.pendentInstruments.add(copy);
         return instrument;
     }
 
@@ -195,10 +217,7 @@ public class Session implements Serializable, Comparable<Session> {//Traduzido
     }
 
     public boolean doesSessionOverlap(Session other){
-        if (this.getDataInicio().isAfter(other.getDataFim()) || this.getDataFim().isBefore(other.getDataInicio()) || (this.getDataInicio().isEqual(other.dateInicio) && this.getDataFim().isEqual(other.dateFim))) {
-            return false;
-        }
-        return true;
+        return !this.getDataInicio().isAfter(other.getDataFim()) && !this.getDataFim().isBefore(other.getDataInicio()) && (!this.getDataInicio().isEqual(other.dateInicio) || !this.getDataFim().isEqual(other.dateFim));
     }
 
     @Override
@@ -213,9 +232,7 @@ public class Session implements Serializable, Comparable<Session> {//Traduzido
 
     public boolean equals(Session o){
         if(o.getDataInicio().equals(this.getDataInicio()) && o.getDataFim().equals(this.getDataFim())) { return true; }
-        else if(o.id.equals(o.getId())) { return true; }
-
-        return false;
+        else return o.id.equals(o.getId());
     }
 
     @Override

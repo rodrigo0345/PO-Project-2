@@ -2,7 +2,6 @@ package Backend.Users;
 
 import java.util.Set;
 import java.util.TreeSet;
-import java.util.UUID;
 
 import Backend.Albums.AlbumEditado;
 import Backend.Instruments.Instrument;
@@ -33,14 +32,14 @@ public class Musician extends User {//Traduzidos
     }
 
     //não está a funcionar
-    public void requestInstrument(Instrument instrument, Session s) throws IllegalArgumentException {
+    public void requestInstrument(Instrument instrument, Session s, int quantity) throws IllegalArgumentException {
         //if(!instruments.contains(instrument)) {
         //    throw new IllegalArgumentException("O músico não toca o instrumento requerido!");
         //}
         if(!s.getInvitedMusicians().containsKey(this.getUsername()))
             throw new IllegalArgumentException("O músico não foi convidado para a sessão em específico!");
         
-        s.addPendingInstrument(instrument);
+        s.addPendingInstrument(instrument, quantity);
     }
 
     public void addArtistInstrument(Instrument instrument) {
@@ -59,7 +58,7 @@ public class Musician extends User {//Traduzidos
         throws IllegalArgumentException{
         this.addAlbum(album);
         boolean add = this.sessions.add(newSession);
-        if (add == false){
+        if (!add){
             throw new IllegalArgumentException("O músico já estava na sessão");
         }
     }

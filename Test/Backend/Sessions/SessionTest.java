@@ -1,6 +1,5 @@
 package Backend.Sessions;
 
-import Backend.Albums.Album;
 import Backend.Albums.AlbumEditado;
 import Backend.Instruments.Instrument;
 import Backend.Users.Admin;
@@ -14,7 +13,7 @@ public class SessionTest {
     Session session = new Session(Frontend.Utils.Generics.stringToDate("11/03/2050 10:00"), Frontend.Utils.Generics.stringToDate("11/03/2050 12:30"), album, album.getSessionsRepo(),
                                             album.getUsersRepo(), album.getInstrumentsRepo(), album.getAlbumsRepo());
 
-    private Admin admin = new Admin("Teste", "Teste@gmail.com", "admin", "admin",
+    private final Admin admin = new Admin("Teste", "Teste@gmail.com", "admin", "admin",
             album.getInstrumentsRepo(), album.getAlbumsRepo(), album.getUsersRepo(), album.getSessionsRepo());
 
     @Test
@@ -46,7 +45,7 @@ public class SessionTest {
         Instrument i = new Instrument("guitarra", 4);
 
         try {
-            session.addPendingInstrument(i);
+            session.addPendingInstrument(i, 1);
         } catch (IllegalArgumentException e){
             assertEquals( "O intrumento que pretende requisitar ainda não existe em estúdio.",e.getMessage());
         }
@@ -55,7 +54,7 @@ public class SessionTest {
                                                     album.getAlbumsRepo(), album.getUsersRepo(), album.getSessionsRepo() );
         su.addInstrument("Guitarra", 10);
         su.addInstrument("Violino", 4);
-        session.addPendingInstrument(i);
+        session.addPendingInstrument(i, 1);
     }
 
     @Test
@@ -63,7 +62,7 @@ public class SessionTest {
         admin.acceptSessionRequest(session.getId());
 
         addPendendingInstrument();
-        session.addPendingInstrument(new Instrument("violino", 4));
+        session.addPendingInstrument(new Instrument("violino", 4), 1);
         assertEquals(2, session.getPendentInstruments().size());
     }
 

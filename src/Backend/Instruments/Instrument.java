@@ -1,12 +1,9 @@
 package Backend.Instruments;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.TreeMap;
 import java.util.UUID;
 
-public class Instrument implements Serializable, Comparable<Instrument> {
+public class Instrument implements Serializable, Comparable<Instrument>, Cloneable {
     private static final long serialVersionUID = 6L;
     private final String name;
     private UUID id;
@@ -46,5 +43,11 @@ public class Instrument implements Serializable, Comparable<Instrument> {
     @Override
     public int compareTo(Instrument o) {
         return o.getName().toLowerCase().compareTo(this.name.toLowerCase());
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException
+    {
+        return super.clone();
     }
 }

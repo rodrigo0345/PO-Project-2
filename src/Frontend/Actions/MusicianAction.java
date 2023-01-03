@@ -87,7 +87,6 @@ public class MusicianAction { //TRADUZIDO
         Prompt.pressEnterToContinue();
     }
 
-    //não está a funcionar
     public static void requestInstrumentForSession() {
         Set<Session> relatedSessions = ReposHolder.getSessions().getMusicianSessions(user);
 
@@ -109,6 +108,11 @@ public class MusicianAction { //TRADUZIDO
             return; 
         }
 
+        if (!relatedSessions.contains(selectedSession)) {
+            Prompt.pressEnterToContinue("Id inválido");
+            return;
+        }
+
         // show available instruments
         for(Instrument i: ReposHolder.getInstruments().getInstruments().values()){
             System.out.println(i);
@@ -126,7 +130,7 @@ public class MusicianAction { //TRADUZIDO
         
         for(Session s: ReposHolder.getSessions().getSessions()){
             for(Instrument i : s.getApprovedInstruments()){
-                if(i.getName().toLowerCase().equals(instrumentName.toLowerCase())){
+                if(i.getName().equalsIgnoreCase(instrumentName)){
                     if(i.getQuantidade() > quantidadeRequisitar){
                         System.out.println("Quantidade indisponivel");
                     }
@@ -137,21 +141,37 @@ public class MusicianAction { //TRADUZIDO
             }
         }
 
-        int quantidade = instrument.getQuantidade();
-        instrument.setQuantidade(quantidadeRequisitar);
 
-        // the admin will then be able to accept or deny the request
-        user.requestInstrument(instrument, selectedSession);
-        instrument.setQuantidade(quantidade);
-
+        // verifica se ainda existem instrumentos disponiveis numa dada altura
+        int sumQuantidadeRequisitar = 0;
         for(Session s: ReposHolder.getSessions().getSessions()){
-            if(s.doesSessionOverlap(selectedSession) == true){
-                for(Instrument i: s.getApprovedInstruments()){
-                    String nomeInstrumento = i.getName().toLowerCase();
-                    Instrument j = ReposHolder.getInstruments().getInstruments().get(nomeInstrumento);
-                    i.setQuantidade(j.getQuantidade()+i.getQuantidade());
+            if(s.doesSessionOverlap(selectedSession)){
+
+                // find the same instrument in this session
+                for(Instrument i : s.getApprovedInstruments()){
+                    if(i.getName().equalsIgnoreCase(instrumentName)){
+                        sumQuantidadeRequisitar += i.getQuantidade();
+                    }
+                }
+                for(Instrument i : s.getPendentInstruments()){
+                    if(i.getName().equalsIgnoreCase(instrumentName)){
+                        sumQuantidadeRequisitar += i.getQuantidade();
+                    }
                 }
             }
+        }
+
+        if (sumQuantidadeRequisitar + quantidadeRequisitar > instrument.getQuantidade()) {
+            Prompt.pressEnterToContinue("Quantidade indisponivel, apenas estão disponiveis " + (instrument.getQuantidade() - sumQuantidadeRequisitar));
+            return;
+        }
+
+        // the admin will then be able to accept or deny the request
+
+        try{
+            user.requestInstrument(instrument, selectedSession, quantidadeRequisitar);
+        } catch (Exception e) {
+            Prompt.pressEnterToContinue(e.getMessage());
         }
 
     }
@@ -163,7 +183,7 @@ public class MusicianAction { //TRADUZIDO
         }
 
         for(Session s: ReposHolder.getSessions().getSessions()){
-            if (s.isCompleted() == false){
+            if (!s.isCompleted()){
                 System.out.println("Aceite: " + s);
             }
             else {
