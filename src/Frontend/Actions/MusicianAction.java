@@ -108,35 +108,23 @@ public class MusicianAction { //TRADUZIDO
             Prompt.pressEnterToContinue("Id inválido");
             return; 
         }
-        
-        
-        Map<String, Backend.Instruments.Instrument> instruments = ReposHolder.getInstruments().getInstruments();
-        Set<Session> sessions = user.getSessionsRepo().getSessions();
 
-        for(Session s: sessions){
-            if(s.doesSessionOverlap(selectedSession) == true){
-                for(Instrument i: s.getApprovedInstruments()){
-                    String nomeInstrumento = i.getName().toLowerCase();
-                    Instrument j = instruments.get(nomeInstrumento);
-                    i.setQuantidade(j.getQuantidade()-i.getQuantidade());
-                    System.out.println(i);
-                }
-                break;
-            }
-            else{
-                for (Map.Entry<String, Backend.Instruments.Instrument> entry : instruments.entrySet()) {
-                    System.out.println(entry.getValue().toString());
-                }
-                break;
-            }
+        // show available instruments
+        for(Instrument i: ReposHolder.getInstruments().getInstruments().values()){
+            System.out.println(i);
         }
-
         
         String instrumentName = Prompt.readString("Nome do instrumento: ");
         Instrument instrument = ReposHolder.getInstruments().getInstrument(instrumentName.toLowerCase());
+
+        if (instrument == null) {
+            Prompt.pressEnterToContinue("Instrumento não existe");
+            return;
+        }
+
         int quantidadeRequisitar = Prompt.checkInt("Quantidade a requisitar ");
         
-        for(Session s: sessions){
+        for(Session s: ReposHolder.getSessions().getSessions()){
             for(Instrument i : s.getApprovedInstruments()){
                 if(i.getName().toLowerCase().equals(instrumentName.toLowerCase())){
                     if(i.getQuantidade() > quantidadeRequisitar){
@@ -156,11 +144,11 @@ public class MusicianAction { //TRADUZIDO
         user.requestInstrument(instrument, selectedSession);
         instrument.setQuantidade(quantidade);
 
-        for(Session s: sessions){
+        for(Session s: ReposHolder.getSessions().getSessions()){
             if(s.doesSessionOverlap(selectedSession) == true){
                 for(Instrument i: s.getApprovedInstruments()){
                     String nomeInstrumento = i.getName().toLowerCase();
-                    Instrument j = instruments.get(nomeInstrumento);
+                    Instrument j = ReposHolder.getInstruments().getInstruments().get(nomeInstrumento);
                     i.setQuantidade(j.getQuantidade()+i.getQuantidade());
                 }
             }
