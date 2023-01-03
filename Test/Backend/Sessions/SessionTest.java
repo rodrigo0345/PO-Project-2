@@ -48,7 +48,7 @@ public class SessionTest {
         try {
             session.addPendingInstrument(i);
         } catch (IllegalArgumentException e){
-            assertEquals( "The instrument you requested does not exist in the studio yet.",e.getMessage());
+            assertEquals( "O intrumento que pretende requisitar ainda não existe em estúdio.",e.getMessage());
         }
 
         Admin su = new Admin("Teste", "Teste@gmail.com", "admin", "admin", album.getInstrumentsRepo(),

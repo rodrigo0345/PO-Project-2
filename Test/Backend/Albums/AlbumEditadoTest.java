@@ -41,7 +41,7 @@ public class AlbumEditadoTest {
         try{
             album.addSession(Frontend.Utils.Generics.stringToDate("10/01/2020 15:30"), Frontend.Utils.Generics.stringToDate("15/01/2023 16:30"));
         } catch(IllegalArgumentException e){
-            assertEquals(e.getMessage(), "The given start date is a past date");
+            assertEquals(e.getMessage(), "A data de ínicio já foi extrapolada");
         }
 
         // testes para quando o album já tenha sido editado
@@ -50,7 +50,7 @@ public class AlbumEditadoTest {
         try{
             album.addSession(Frontend.Utils.Generics.stringToDate("10/01/2023 15:30"),  Frontend.Utils.Generics.stringToDate("10/01/2023 16:30"));
         } catch(IllegalArgumentException e){
-            assertEquals(e.getMessage(), "The album is already finished");
+            assertEquals(e.getMessage(), "O álbum já está terminado");
         }
 
         assertEquals(1, album.getAllSessions().size());

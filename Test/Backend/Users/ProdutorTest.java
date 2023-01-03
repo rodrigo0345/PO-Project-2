@@ -90,7 +90,7 @@ public class ProdutorTest {
         try{
             produtor.createAlbumEdit("R", "rock");
         } catch (Exception e) {
-            assertEquals("rock already exists.", e.getMessage());
+            assertEquals("O produtor já é o produtor do dado projeto!", e.getMessage());
         }
         assertEquals(1, produtor.getProjetos().size());
     }

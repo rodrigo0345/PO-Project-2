@@ -201,7 +201,7 @@ public class ProdutorAction { //Traduzido
                         int duration = Prompt.checkInt("Duração (minutos:segundos): ");
 
                         Backend.Tracks.Track newTrack = new Track(album, trackName, genre ,duration);
-                        boolean success03 = album.addTrack(newTrack);
+                        boolean success03 = ((AlbumEditado)album).addTrack(newTrack);
                         if (!success03) {
                             Prompt.pressEnterToContinue("O nome da faixa deve ser única dentro do álbum!");
                         }

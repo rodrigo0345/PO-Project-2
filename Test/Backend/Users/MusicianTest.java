@@ -83,7 +83,7 @@ public class MusicianTest {
         try{
             m.addSession(a,s);
         } catch (Exception e) {
-            assertEquals("Musician was already in this session", e.getMessage());
+            assertEquals("O músico já estava na sessão", e.getMessage());
         }
 
         int count = 0;

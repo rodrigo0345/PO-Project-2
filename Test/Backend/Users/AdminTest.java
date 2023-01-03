@@ -53,7 +53,7 @@ public class AdminTest {
         } catch(IllegalArgumentException e){
             error = e.getMessage();
         }
-        assertEquals("Username already exists", error);
+        assertEquals("Username já existe", error);
 
         admin.addMusician("Teste", "teste@gmail.com", "teste3", "teste");
         assertNotNull(admin.getUsersRepo().getUser("teste3"));
@@ -68,7 +68,7 @@ public class AdminTest {
         } catch(IllegalArgumentException e){
             error = e.getMessage();
         }
-        assertEquals("Username already exists", error);
+        assertEquals("Username já existe", error);
 
         admin.addProdutor("Teste", "teste@gmail.com", "teste3", "teste");
         assertNotNull(admin.getUsersRepo().getUser("teste3"));
@@ -136,9 +136,9 @@ public class AdminTest {
         this.album.setAlbumAsComplete();
         admin.acceptSessionRequest(this.album.getLastSessionAdded().getId());
         this.album.getLastSessionAdded().setCompleted(true);
-        assertEquals( "Not finished albums: 1\n" +
-                "Finished albums: 1\n" +
-                "Percentage of sessions completed: 50.0%",admin.getStats());
+        assertEquals( "Álbums não terminados: 1\n" +
+                "Albums terminados: 1\n" +
+                "Percentagem de sessões completas: 50.0%",admin.getStats());
     }
 
     @Test

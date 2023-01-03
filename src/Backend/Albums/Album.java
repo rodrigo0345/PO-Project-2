@@ -84,12 +84,13 @@ public class Album implements Serializable, Comparable<Album> {//Traduzido
         return artists.remove(aux);
     }
 
-    public boolean deleteArtist(Musician user) {
+    public boolean removeArtist(Musician user) {
+        // remove the album from the musician's list of albums
+        for (Musician m : artists) {
+            if (m.equals(user))
+                return artists.remove(m);
+        }
         return artists.remove(user);
-    }
-
-    public void removeArtist(Musician artist) {
-        artists.remove(artist);
     }
 
     public LocalDateTime getDate() {
