@@ -63,7 +63,15 @@ public class AlbumEditado extends Album {//Traduzido
         return isEdited;
     }
 
+    // use this one in normal conditions
     public Session addSession(LocalDateTime dateInicio, LocalDateTime dateFim) throws IllegalArgumentException {
+
+        for(Session s: sessions){
+            if(s.doesSessionOverlap(dateInicio, dateFim)){
+                throw new IllegalArgumentException("Já existe uma sessão com essas datas");
+            }
+        }
+
         if(dateInicio.isAfter(dateFim)) throw new IllegalArgumentException("Data de inicio tem de ser antes da data de fim");
         if (this.isEdited) {
             throw new IllegalArgumentException("O álbum já está terminado");

@@ -93,7 +93,7 @@ public class Repos implements Serializable {//Traduzido
 
         // pending sessions do not count here
         for (Session s:sessions) {
-            if(s.getDataFim().isBefore(LocalDateTime.now()) && s.isCompleted() == false){
+            if(s.getDataFim().isBefore(LocalDateTime.now()) && !s.isCompleted()){
                 s.setCompleted(true);
                 count++;
             }

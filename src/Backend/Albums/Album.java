@@ -23,10 +23,10 @@ public class Album implements Serializable, Comparable<Album> {//Traduzido
     private LocalDateTime date;
     private Produtor produtorOriginal;
 
-    private Backend.Instruments.Repos instrumentsRepo;
-    private Backend.Albums.Repos albumsRepo;
-    private Backend.Users.Repos usersRepo;
-    private Backend.Sessions.Repos sessionsRepo;
+    private final Backend.Instruments.Repos instrumentsRepo;
+    private final Backend.Albums.Repos albumsRepo;
+    private final Backend.Users.Repos usersRepo;
+    private final Backend.Sessions.Repos sessionsRepo;
 
     public Album(String titulo, String genero, LocalDateTime date, Produtor produtorOriginal, Backend.Instruments.Repos instruments,
             Backend.Albums.Repos albums,

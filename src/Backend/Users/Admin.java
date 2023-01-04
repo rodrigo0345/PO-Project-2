@@ -128,7 +128,7 @@ public class Admin extends User {//Traduzidos
             return null;
         } else {
             for (Backend.Sessions.Session session : getSessionsRepo().getPendingSessions()) {
-                if (session.isAccepted() == false) {
+                if (!session.isAccepted()) {
                     s.add(session);
                 }
             }
@@ -148,7 +148,7 @@ public class Admin extends User {//Traduzidos
         String s = "";
         for (Backend.Albums.Album album : getAlbumsRepo().getAlbums().values()) {
             if (album instanceof Backend.Albums.AlbumEditado && !((Backend.Albums.AlbumEditado) album).isEdited()) {
-                s += " " + album.toString();
+                s += " " + album;
             }
         }
         return s;
@@ -158,7 +158,7 @@ public class Admin extends User {//Traduzidos
         String s = "";
         for (Backend.Albums.Album album : getAlbumsRepo().getAlbums().values()) {
             if (album instanceof Backend.Albums.AlbumEditado && ((Backend.Albums.AlbumEditado) album).isEdited()) {
-                s += " " + album.toString();
+                s += " " + album;
             }
         }
         return s;
@@ -194,7 +194,7 @@ public class Admin extends User {//Traduzidos
 
     public void acceptSessionRequest(UUID id) {
         for(Session s:getSessionsRepo().getPendingSessions()){
-            if (s.getId().equals(id)) {s.setAccepted(true); return; };
+            if (s.getId().equals(id)) {s.setAccepted(true); return; }
         }
     }
 

@@ -10,7 +10,7 @@ import java.time.LocalDate;
 import static org.junit.Assert.*;
 
 public class AlbumTest {
-    private Album album = new Album("Random");
+    private final Album album = new Album("Random");
 
     @Test
     public void addArtist() {
@@ -23,7 +23,7 @@ public class AlbumTest {
 
         // expect to see the new album in the artist and in the album the artist
         assertTrue("The artist is associated with the album", m.getAlbums().contains(album));
-        assertTrue("The album contains the artist", album.getArtist(m.getUsername()).equals(m));
+        assertEquals("The album contains the artist", album.getArtist(m.getUsername()), m);
     }
 
     @Test
@@ -31,7 +31,7 @@ public class AlbumTest {
         addArtist(); // dependency
         assertEquals("Find the artist with username 'test'",
                         album.getArtist("test").getUsername(), "test");
-        assertEquals("Expect null", album.getArtist("r"), null);
+        assertNull("Expect null", album.getArtist("r"));
     }
 
     @Test

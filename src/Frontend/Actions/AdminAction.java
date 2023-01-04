@@ -212,8 +212,7 @@ public class AdminAction { // TRADUZIDO
         // verify that the inserted producer is valid
         try {
             Backend.Users.User aux = ReposHolder.getUsers().getUser(producer);
-            if (aux instanceof Backend.Users.Produtor) {
-                Backend.Users.Produtor prod = (Backend.Users.Produtor) aux;
+            if (aux instanceof Backend.Users.Produtor prod) {
                 user.addAlbum(titleOfTheAlbum, genre, date, prod);
             } else {
                 System.out.println("Produtor inválido");
@@ -265,7 +264,7 @@ public class AdminAction { // TRADUZIDO
 
     private static void addArtistToTrack(String ans, Backend.Tracks.Track t) {
         if (ans.equals("y")) {
-            System.out.println("");
+            System.out.println();
             String musician2 = Prompt.readString("Músico: ");
             t.addArtist((Backend.Users.Musician) ReposHolder.getUsers().getUser(musician2));
         }

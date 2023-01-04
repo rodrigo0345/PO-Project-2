@@ -220,6 +220,10 @@ public class Session implements Serializable, Comparable<Session> {//Traduzido
         return !this.getDataInicio().isAfter(other.getDataFim()) && !this.getDataFim().isBefore(other.getDataInicio()) && (!this.getDataInicio().isEqual(other.dateInicio) || !this.getDataFim().isEqual(other.dateFim));
     }
 
+    public boolean doesSessionOverlap(LocalDateTime start, LocalDateTime end){
+return !this.getDataInicio().isAfter(end) && !this.getDataFim().isBefore(start) && (!this.getDataInicio().isEqual(start) || !this.getDataFim().isEqual(end));
+    }
+
     @Override
     public int compareTo(Session o) {
         if(o.getDataInicio().isBefore(this.getDataInicio())){

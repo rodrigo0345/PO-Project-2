@@ -23,7 +23,7 @@ public class App {//Traduzido
             program();
         }
 
-        // Generics.sc.close();
+        Generics.sc.close();
     }
 
     private static void program() {

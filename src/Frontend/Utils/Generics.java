@@ -26,9 +26,9 @@ public class Generics {//Traduzido
 
         // verify that the inserted date is valid
         try {
-            String dateSplitedByDateAndTime[] = d.split(" ");
-            String dateSplited[] = dateSplitedByDateAndTime[0].split("/");
-            String timeSplited[] = dateSplitedByDateAndTime[1].split(":");
+            String[] dateSplitedByDateAndTime = d.split(" ");
+            String[] dateSplited = dateSplitedByDateAndTime[0].split("/");
+            String[] timeSplited = dateSplitedByDateAndTime[1].split(":");
 
             date = LocalDateTime.of(
                 Integer.parseInt(dateSplited[2]),

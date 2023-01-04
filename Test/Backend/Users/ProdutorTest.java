@@ -8,16 +8,16 @@ import static org.junit.Assert.*;
 
 public class ProdutorTest {
 
-    private Admin admin = new Admin("Teste", "Teste@gmail.com", "admin", "admin",
+    private final Admin admin = new Admin("Teste", "Teste@gmail.com", "admin", "admin",
             new Backend.Instruments.Repos(), new Backend.Albums.Repos(), new Backend.Users.Repos(), new Backend.Sessions.Repos());
 
-    private Produtor produtor = new Produtor("Name", "email@email.com", "name", "name",
+    private final Produtor produtor = new Produtor("Name", "email@email.com", "name", "name",
             admin.getUsersRepo(), admin.getInstrumentsRepo(), admin.getAlbumsRepo(), admin.getSessionsRepo());
 
-    private Album original = new Album("original", "rock", Frontend.Utils.Generics.stringToDate("10/11/2000 15:30"), produtor,
+    private final Album original = new Album("original", "rock", Frontend.Utils.Generics.stringToDate("10/11/2000 15:30"), produtor,
             admin.getInstrumentsRepo(), admin.getAlbumsRepo(), admin.getUsersRepo(), admin.getSessionsRepo());
 
-    private Musician m = admin.addMusician("Teste", "teste@gmail.com", "teste3", "teste");
+    private final Musician m = admin.addMusician("Teste", "teste@gmail.com", "teste3", "teste");
 
     AlbumEditado a = new AlbumEditado("R", "rock", original,
             admin.getInstrumentsRepo(), admin.getAlbumsRepo(), admin.getUsersRepo(), admin.getSessionsRepo(), produtor);

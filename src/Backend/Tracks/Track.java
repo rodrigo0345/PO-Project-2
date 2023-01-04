@@ -14,7 +14,7 @@ public class Track implements Serializable {
     private String genero;
     private int duration;
 
-    private Album album;
+    private final Album album;
 
     public Track(Album album, String titulo, String genero, int duration) {
         this.titulo = titulo;

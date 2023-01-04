@@ -182,7 +182,7 @@ public class ProdutorAction { //Traduzido
                     break;
                 case 4: // Remover um artista
                     String username = Prompt.readString("Username do artista que pretende remover do album: ");
-                    boolean success = ((AlbumEditado)album).removeArtist(username);
+                    boolean success = album.removeArtist(username);
                     if (!success) {
                         System.out.println();
                         Prompt.pressEnterToContinue("O sistema não foi capaz de eliminar o username" + username + " introduzido!");
@@ -201,7 +201,7 @@ public class ProdutorAction { //Traduzido
                         int duration = Prompt.checkInt("Duração (minutos:segundos): ");
 
                         Backend.Tracks.Track newTrack = new Track(album, trackName, genre ,duration);
-                        boolean success03 = ((AlbumEditado)album).addTrack(newTrack);
+                        boolean success03 = album.addTrack(newTrack);
                         if (!success03) {
                             Prompt.pressEnterToContinue("O nome da faixa deve ser única dentro do álbum!");
                         }

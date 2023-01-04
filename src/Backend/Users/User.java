@@ -9,10 +9,10 @@ public abstract class User implements Comparable<User>, Serializable {
     private String username;
     private String password;
 
-    private Backend.Instruments.Repos instrumentsRepo;
-    private Backend.Albums.Repos albumsRepo;
-    private Backend.Users.Repos usersRepo;
-    private Backend.Sessions.Repos sessionsRepo;
+    private final Backend.Instruments.Repos instrumentsRepo;
+    private final Backend.Albums.Repos albumsRepo;
+    private final Backend.Users.Repos usersRepo;
+    private final Backend.Sessions.Repos sessionsRepo;
 
     public User(String name, String email, String username, String password, Backend.Users.Repos users,
             Backend.Instruments.Repos instruments, Backend.Albums.Repos albums, Backend.Sessions.Repos sessions) {
