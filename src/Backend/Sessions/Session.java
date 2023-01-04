@@ -16,6 +16,8 @@ public class Session implements Serializable, Comparable<Session> {//Traduzido
     private final Set<Instrument> pendentInstruments = new TreeSet<>();
     private final Set<Instrument> instruments = new TreeSet<>();
 
+    private final Set<Instrument> refusedInstruments = new TreeSet<>();
+
     private LocalDateTime dateInicio;
     private LocalDateTime dateFim;
     private UUID id = UUID.randomUUID();
@@ -209,6 +211,7 @@ public class Session implements Serializable, Comparable<Session> {//Traduzido
 
     // only Administrators can have access to this method
     public boolean denyInstrument(Instrument instrument){
+        refusedInstruments.add(instrument);
         return this.pendentInstruments.remove(instrument);
     }
 
