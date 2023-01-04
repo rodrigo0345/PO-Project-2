@@ -11,7 +11,7 @@ import static org.junit.Assert.*;
 public class SessionTest {
     AlbumEditado album = new AlbumEditado("Random");
     Session session = new Session(Frontend.Utils.Generics.stringToDate("11/03/2050 10:00"), Frontend.Utils.Generics.stringToDate("11/03/2050 12:30"), album, album.getSessionsRepo(),
-                                            album.getUsersRepo(), album.getInstrumentsRepo(), album.getAlbumsRepo());
+            album.getUsersRepo(), album.getInstrumentsRepo(), album.getAlbumsRepo());
 
     private final Admin admin = new Admin("Teste", "Teste@gmail.com", "admin", "admin",
             album.getInstrumentsRepo(), album.getAlbumsRepo(), album.getUsersRepo(), album.getSessionsRepo());
@@ -51,7 +51,7 @@ public class SessionTest {
         }
 
         Admin su = new Admin("Teste", "Teste@gmail.com", "admin", "admin", album.getInstrumentsRepo(),
-                                                    album.getAlbumsRepo(), album.getUsersRepo(), album.getSessionsRepo() );
+                album.getAlbumsRepo(), album.getUsersRepo(), album.getSessionsRepo() );
         su.addInstrument("Guitarra", 10);
         su.addInstrument("Violino", 4);
         session.addPendingInstrument(i, 1);

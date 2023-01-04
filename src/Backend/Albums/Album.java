@@ -5,7 +5,6 @@ import Backend.Users.Produtor;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
@@ -29,8 +28,8 @@ public class Album implements Serializable, Comparable<Album> {//Traduzido
     private final Backend.Sessions.Repos sessionsRepo;
 
     public Album(String titulo, String genero, LocalDateTime date, Produtor produtorOriginal, Backend.Instruments.Repos instruments,
-            Backend.Albums.Repos albums,
-            Backend.Users.Repos users, Backend.Sessions.Repos sessions)
+                 Backend.Albums.Repos albums,
+                 Backend.Users.Repos users, Backend.Sessions.Repos sessions)
             throws IllegalArgumentException {
         this.genero = genero;
         this.date = date;
@@ -40,7 +39,7 @@ public class Album implements Serializable, Comparable<Album> {//Traduzido
         this.sessionsRepo = sessions;
 
         this.setTitulo(titulo);
-        if(produtorOriginal == null) throw new IllegalArgumentException("Produtor inválido");
+        if(null == produtorOriginal) throw new IllegalArgumentException("Produtor inválido");
         this.setProdutorOriginal(produtorOriginal);
         this.albumsRepo.addAlbum(this); // dependency
     }
@@ -78,7 +77,7 @@ public class Album implements Serializable, Comparable<Album> {//Traduzido
 
     public boolean removeArtist(String username) {
         Musician aux = getArtist(username);
-        if (aux == null)
+        if (null == aux)
             return false;
 
         return artists.remove(aux);
@@ -133,7 +132,7 @@ public class Album implements Serializable, Comparable<Album> {//Traduzido
 
     // only use for albums that are not editable
     public void setProdutorOriginal(Produtor produtor) {
-        if (produtor == null) {
+        if (null == produtor) {
             return; // just to avoid exceptions as there are cases where this needs to continue
         }
         this.produtorOriginal = produtor;
@@ -147,7 +146,7 @@ public class Album implements Serializable, Comparable<Album> {//Traduzido
     @Override
     public String toString() {
         String aux = "";
-        if (this.produtorOriginal != null) {
+        if (null != produtorOriginal) {
             aux = "produtor=" + this.produtorOriginal.getUsername();
         }
 
@@ -163,9 +162,9 @@ public class Album implements Serializable, Comparable<Album> {//Traduzido
 
     @Override
     public int compareTo(Album o) {
-        if (o == null)
+        if (null == o)
             return -1;
-        return this.getTitulo().compareTo(o.getTitulo());
+        return this.titulo.compareTo(o.titulo);
     }
 
     public Backend.Instruments.Repos getInstrumentsRepo() {
@@ -201,6 +200,6 @@ public class Album implements Serializable, Comparable<Album> {//Traduzido
     }
 
     public boolean doesTrackExist(String trackname) {
-        return this.getTracks().containsKey(trackname);
+        return this.tracks.containsKey(trackname);
     }
 }

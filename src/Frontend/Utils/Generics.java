@@ -1,20 +1,16 @@
 package Frontend.Utils;
 
-import java.time.LocalDate;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Locale;
 import java.util.Scanner;
 
-import javax.sound.midi.Soundbank;
-
-public class Generics {//Traduzido
+public class Generics {
 
     // used accross the frontend
-    public final static Scanner sc = new Scanner(System.in);
+    public static final Scanner sc = new Scanner(System.in, StandardCharsets.UTF_8);
 
     // exit the program
-    private static boolean exit = false;
+    private static boolean exit;
 
     public static LocalDateTime readDate(String msg){
         String d = Frontend.Utils.Prompt.readString(msg);

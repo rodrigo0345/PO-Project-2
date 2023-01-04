@@ -1,19 +1,9 @@
 package Frontend.Menus;
-
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.*;
-
-import Backend.Instruments.Repos;
-import Backend.Users.Admin;
 import Frontend.Utils.Generics;
 import Frontend.Utils.Prompt;
 
 // Menu of the administrators
-public class Madmin { //TRADUZIDO
+public class Madmin {
     private static int option;
 
     public static void mostrarMenu() {
@@ -40,10 +30,10 @@ public class Madmin { //TRADUZIDO
 
         option = Prompt.checkOption("Introduza a opção: ");
 
-        if(option == 16|| option == 17) {
+        if(16 == Madmin.option || 17 == Madmin.option) {
             Frontend.Utils.UserHolder.setUser(null);
 
-            if (option == 17) {
+            if (17 == Madmin.option) {
                 Generics.setExit(true);
             }
 

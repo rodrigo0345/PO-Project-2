@@ -17,8 +17,8 @@ public class AlbumEditadoTest {
     public void setProducer() {
         Produtor p1 = new Produtor("Rodrigo", "rodrigo@gmail.com",
                             "rodrigo", "rodrigo", album.getUsersRepo(),
-                                album.getInstrumentsRepo(), album.getAlbumsRepo(),
-                                    album.getSessionsRepo());
+                album.getInstrumentsRepo(), album.getAlbumsRepo(),
+                album.getSessionsRepo());
         album.setProdutor(p1);
         assertEquals(album.getProdutor().toString(), p1.toString());
         album.setProdutor(null);

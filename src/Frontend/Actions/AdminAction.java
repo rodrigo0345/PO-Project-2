@@ -1,20 +1,17 @@
 package Frontend.Actions;
 
 import Backend.Instruments.Instrument;
-import Backend.Instruments.Repos;
 import Backend.Sessions.Session;
 import Backend.Users.User;
 import Frontend.Utils.Generics;
 import Frontend.Utils.Prompt;
 import Frontend.Utils.ReposHolder;
-
 import java.time.LocalDateTime;
 import java.util.Map;
-import java.util.Scanner;
 import java.util.Set;
 import java.util.UUID;
 
-public class AdminAction { // TRADUZIDO
+public class AdminAction {
 
     private static Backend.Users.Admin user;
 
@@ -28,7 +25,10 @@ public class AdminAction { // TRADUZIDO
 
     public static void addProducer() {
 
-        String name, username, email, password;
+        String name;
+        final String username;
+        final String email;
+        String password;
 
         try {
             name = Prompt.readString("Nome: ");
@@ -51,7 +51,10 @@ public class AdminAction { // TRADUZIDO
 
     public static void addMusician() {
 
-        String name, username, email, password;
+        String name;
+        final String username;
+        final String email;
+        String password;
 
         try {
             name = Prompt.readString("Nome: ");
@@ -106,7 +109,7 @@ public class AdminAction { // TRADUZIDO
 
         try{
             Instrument i = ReposHolder.getInstruments().getInstrument(nameLowerCase);
-            if(i == null){
+            if(null == i){
                 ReposHolder.getInstruments();
                 user.getInstrumentsRepo();
                 int quantidade = Prompt.checkInt("Introduza a quantidade: ");
@@ -122,7 +125,7 @@ public class AdminAction { // TRADUZIDO
     }
 
     public static void showAllSessionRequests() {
-        if (user.getAllSessionRequests() == null) {
+        if (null == AdminAction.user.getAllSessionRequests()) {
             System.out.println("Não existem pedidos de sessão");
             return;
         }
@@ -135,13 +138,13 @@ public class AdminAction { // TRADUZIDO
         System.out.print("Selecione um pedido de sessão: ");
         UUID id = UUID.fromString(Generics.sc.nextLine()); //FALTA ALTERAR
         String answer = Prompt.readString("Aceitar ou rejeitar? (y/n)");
-        if (answer.equals("y")) {
+        if ("y".equals(answer)) {
             try {
                 user.acceptSessionRequest(id);
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
-        } else if (answer.equals("n")) {
+        } else if ("n".equals(answer)) {
             try {
                 user.rejectSessionRequest(id);
             } catch (Exception e) {
@@ -227,7 +230,7 @@ public class AdminAction { // TRADUZIDO
 
         // adicionar musicas ao album
         String answer2 = "y";
-        while (answer2.equals("y")) {
+        while ("y".equals(answer2)) {
             answer2 = Prompt.readString("Adicionar uma música album? (y/n)");
             addTrackToAlbum(answer2, titleOfTheAlbum);
         }
@@ -236,7 +239,7 @@ public class AdminAction { // TRADUZIDO
     private static void addTrackToAlbum(String ans, String titleOfTheAlbum) {
 
         Backend.Albums.Album a = user.getAlbumsRepo().getAlbum(titleOfTheAlbum);
-        if (ans.equals("y")) {
+        if ("y".equals(ans)) {
             String titleOfTheSong = Prompt.readString("Título da música: ");
             int duration = Prompt.checkInt("Duração: ");
             Generics.sc.nextLine(); // flush
@@ -250,7 +253,7 @@ public class AdminAction { // TRADUZIDO
 
                 // add musicians to the track
                 String answer3 = "y";
-                while (answer3.equals("y")) {
+                while ("y".equals(answer3)) {
                     answer3 = Prompt.readString("Adicionar um novo músico à faixa? (y/n)");
                     addArtistToTrack(answer3, t);
                 }
@@ -263,7 +266,7 @@ public class AdminAction { // TRADUZIDO
     }
 
     private static void addArtistToTrack(String ans, Backend.Tracks.Track t) {
-        if (ans.equals("y")) {
+        if ("y".equals(ans)) {
             System.out.println();
             String musician2 = Prompt.readString("Músico: ");
             t.addArtist((Backend.Users.Musician) ReposHolder.getUsers().getUser(musician2));
@@ -287,7 +290,7 @@ public class AdminAction { // TRADUZIDO
         // apenas auxiliar
         Set<Backend.Instruments.Instrument> pendentInstruments = user.getPendentInstruments();
 
-        if (pendentInstruments.size() == 0) {
+        if (0 == pendentInstruments.size()) {
             Prompt.outputError("Sem requisições de instrumentos");
             Prompt.pressEnterToContinue();
             return;
@@ -301,13 +304,13 @@ public class AdminAction { // TRADUZIDO
         Session s = ReposHolder.getSessions().getSession(idSessao);
         
         String answer = Prompt.readString("Aceitar ou rejeitar? (y/n)");
-        if (answer.equals("y")) {
+        if ("y".equals(answer)) {
             try {
                 user.acceptInstrumentRequest(name, s);
             } catch (Exception e) {
                 Prompt.outputError(e.getMessage());
             }
-        } else if (answer.equals("n")) {
+        } else if ("n".equals(answer)) {
             try {
                 user.denyInstrumentRequest(name, s);
             } catch (Exception e) {

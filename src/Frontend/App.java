@@ -15,7 +15,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Scanner;
 
-public class App {//Traduzido
+public class App {
     public static void main(String[] args) {
         Prep.init();
 
@@ -34,7 +34,7 @@ public class App {//Traduzido
         Frontend.Utils.UserHolder.setUser(user);
 
         // initiate Mprodutor, Mmusico or Madmin
-        while (Frontend.Utils.UserHolder.getUser() != null) {
+        while (null != Frontend.Utils.UserHolder.getUser()) {
             Frontend.Utils.Prompt.cleanPrompt();
             Frontend.Utils.UserHolder.initMenu();
             // save changes

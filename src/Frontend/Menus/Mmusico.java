@@ -1,17 +1,8 @@
 package Frontend.Menus;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Scanner;
-import java.util.Set;
-
-import Backend.Instruments.Instrument;
-import Backend.Sessions.Session;
-import Backend.Users.Musician;
 import Frontend.Utils.Generics;
 import Frontend.Utils.Prompt;
 
-public class Mmusico{ //Traduzido
+public class Mmusico{
     private static int option;
 
     public static void mostrarMenu() {
@@ -27,10 +18,10 @@ public class Mmusico{ //Traduzido
 
         option = Prompt.checkOption("Introduza a opção: ");
 
-        if(option == 7 || option == 8) {
+        if(7 == Mmusico.option || 8 == Mmusico.option) {
             Frontend.Utils.UserHolder.setUser(null);
 
-            if(option == 8) {
+            if(8 == Mmusico.option) {
                 Generics.setExit(true);
             }
 

@@ -22,7 +22,7 @@ public class AdminTest {
     private final Album original = new Album("original", "rock", Frontend.Utils.Generics.stringToDate("10/11/2000 15:30"), produtor,
             admin.getInstrumentsRepo(), admin.getAlbumsRepo(), admin.getUsersRepo(), admin.getSessionsRepo());
     private final AlbumEditado album = new AlbumEditado("R", "rock", original,
-                admin.getInstrumentsRepo(), admin.getAlbumsRepo(), produtor.getUsersRepo(), admin.getSessionsRepo(), produtor);
+            admin.getInstrumentsRepo(), admin.getAlbumsRepo(), produtor.getUsersRepo(), admin.getSessionsRepo(), produtor);
     @Test
     public void addInstrument() {
         admin.addInstrument("flute", 5);
@@ -83,10 +83,10 @@ public class AdminTest {
                             "Rock",
                             Frontend.Utils.Generics.stringToDate("11/12/2000 15:30"),
                             (Produtor) admin.getUsersRepo().getUser("teste3"),
-                            admin.getInstrumentsRepo(),
-                            admin.getAlbumsRepo(),
-                            admin.getUsersRepo(),
-                            admin.getSessionsRepo()
+                admin.getInstrumentsRepo(),
+                admin.getAlbumsRepo(),
+                admin.getUsersRepo(),
+                admin.getSessionsRepo()
                 );
         assertNotNull(album.getProdutor());
         String error = null;
@@ -97,7 +97,7 @@ public class AdminTest {
         }
         assertNotNull(error);
         admin.addProdutor("R", "teste@gmail.com", "rodrigo", "0");
-        album.setProdutorOriginal((Produtor)admin.getUsersRepo().getUser("rodrigo", "0"));
+        album.setProdutorOriginal((Produtor) admin.getUsersRepo().getUser("rodrigo", "0"));
         try {
             admin.removeUser("teste3");
         } catch (Exception e) {
@@ -138,7 +138,7 @@ public class AdminTest {
         this.album.getLastSessionAdded().setCompleted(true);
         assertEquals( "Álbums não terminados: 1\n" +
                 "Albums terminados: 1\n" +
-                "Percentagem de sessões completas: 50.0%",admin.getStats());
+                "Percentagem de sessões completas: 50.0%", admin.getStats());
     }
 
     @Test
@@ -175,7 +175,7 @@ public class AdminTest {
     @Test
     public void acceptInstrumentRequest() {
         Musician m = new Musician("Teste", "test@gmail.com", "tes", "tes", admin.getUsersRepo(),
-                    admin.getInstrumentsRepo(), admin.getAlbumsRepo(), admin.getSessionsRepo());
+                admin.getInstrumentsRepo(), admin.getAlbumsRepo(), admin.getSessionsRepo());
 
 
         // new session

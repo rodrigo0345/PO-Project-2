@@ -5,11 +5,11 @@ import java.util.Scanner;
 import Backend.Users.Repos;
 import Backend.Users.User;
 
-public class Authentication {//Traduzido
+public class Authentication {
 
     public static User login() {
         User auth = null;
-        while (auth == null) {
+        while (null == auth) {
             try {
                 auth = Authentication.loginPrompt(Frontend.Utils.ReposHolder.getUsers());
                 Frontend.Utils.Prompt.cleanPrompt();
@@ -26,7 +26,7 @@ public class Authentication {//Traduzido
         String password = Frontend.Utils.Prompt.readString("Password: ");
 
         User user = users.getUser(username, password);
-        if (user == null) {
+        if (null == user) {
             throw new Exception("Username ou password inválidos");
         }
         return user;

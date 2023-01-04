@@ -13,9 +13,9 @@ public class Musician extends User {//Traduzidos
     private final Set<Backend.Sessions.Session> sessions = new TreeSet<>();
 
     public Musician(String name, String email, String username, String password, Backend.Users.Repos users,
-            Backend.Instruments.Repos instruments, Backend.Albums.Repos albums, Backend.Sessions.Repos sessions) {
+                    Backend.Instruments.Repos instruments, Backend.Albums.Repos albums, Backend.Sessions.Repos sessions) {
         super(name, email, username, password, users, instruments, albums, sessions);
-        super.getUsersRepo().addUser(this);
+        this.getUsersRepo().addUser(this);
     }
 
     public boolean addAlbum(Backend.Albums.Album album) {

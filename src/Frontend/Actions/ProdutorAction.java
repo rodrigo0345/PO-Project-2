@@ -2,21 +2,16 @@ package Frontend.Actions;
 
 import Backend.Albums.Album;
 import Backend.Albums.AlbumEditado;
-import Backend.Albums.Repos;
 import Backend.Sessions.Session;
 import Backend.Tracks.Track;
-import Backend.Users.Musician;
 import Frontend.Utils.Generics;
 import Frontend.Utils.Prompt;
 import Frontend.Utils.ReposHolder;
-
-import java.rmi.StubNotFoundException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.UUID;
 
-public class ProdutorAction { //Traduzido
+public class ProdutorAction {
     private static Backend.Users.Produtor user;
 
     public static void setUser(Backend.Users.User user) {
@@ -70,7 +65,7 @@ public class ProdutorAction { //Traduzido
 
         int option = Prompt.checkOption("Introduza a opção: ");
 
-        if (option == 1) { // Criar album
+        if (1 == option) { // Criar album
 
             String albumName = Prompt.readString("Nome do álbum original: ");
             String EditionAlbumName = Prompt.readString("Nome para a edição de álbum: ");
@@ -85,7 +80,7 @@ public class ProdutorAction { //Traduzido
             }
             Prompt.pressEnterToContinue("Album" + albumName + "criado com sucesso!");
 
-        } else if (option == 2) { // Editar album
+        } else if (2 == option) { // Editar album
 
             String albumName = Prompt.readString("Nome do álbum a editar: ");
             Backend.Albums.Album album = ReposHolder.getAlbums().getAlbum(albumName);
@@ -147,7 +142,7 @@ public class ProdutorAction { //Traduzido
                     UUID idSession = UUID.fromString(Prompt.readString("ID da sessão à qual adicionará um artista: "));
                     Session session = ((AlbumEditado) album).getSession(idSession);
 
-                    if(session == null) {
+                    if(null == session) {
                         Prompt.pressEnterToContinue("Sessão não encontrada");
                         return;
                     }
@@ -156,11 +151,11 @@ public class ProdutorAction { //Traduzido
                     System.out.println("Adicionar um artista à sessão " + session + "? (s/n)");
                     addMore = Prompt.readString("Introduza a opção: ");
 
-                    while(addMore.equals("s")) {
+                    while("s".equals(addMore)) {
                         String artistName = Prompt.readString("Nome do artista: ");
                         Backend.Users.User musician = ReposHolder.getUsers().getUser(artistName);
 
-                        if(musician == null) {
+                        if(null == musician) {
                             Prompt.pressEnterToContinue("Artista não encontrado");
                             return;
                         }
@@ -193,7 +188,7 @@ public class ProdutorAction { //Traduzido
                     String addMore01 = "s";
 
 
-                    while(addMore01.equals("s")) {
+                    while("s".equals(addMore01)) {
                         String trackName = Prompt.readString("Nome da faixa: ");
                         String genre = Prompt.readString("Género da faixa: ");
 

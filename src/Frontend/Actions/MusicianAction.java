@@ -1,19 +1,14 @@
 package Frontend.Actions;
-
 import Backend.Albums.Album;
 import Backend.Instruments.Instrument;
-import Backend.Instruments.Repos;
 import Backend.Sessions.Session;
 import Frontend.Utils.Generics;
 import Frontend.Utils.Prompt;
 import Frontend.Utils.ReposHolder;
-
-import java.time.LocalDateTime;
-import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
-public class MusicianAction { //TRADUZIDO
+public class MusicianAction {
 
         private static Backend.Users.Musician user;
 
@@ -121,7 +116,7 @@ public class MusicianAction { //TRADUZIDO
         String instrumentName = Prompt.readString("Nome do instrumento: ");
         Instrument instrument = ReposHolder.getInstruments().getInstrument(instrumentName.toLowerCase());
 
-        if (instrument == null) {
+        if (null == instrument) {
             Prompt.pressEnterToContinue("Instrumento não existe");
             return;
         }
@@ -134,7 +129,7 @@ public class MusicianAction { //TRADUZIDO
                     if(i.getQuantidade() > quantidadeRequisitar){
                         System.out.println("Quantidade indisponivel");
                     }
-                    else if(quantidadeRequisitar<0){
+                    else if(0 > quantidadeRequisitar){
                         System.out.println("A quantidade deverá ser maior que 0");
                     }
                 }

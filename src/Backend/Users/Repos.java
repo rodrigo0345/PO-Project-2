@@ -10,7 +10,7 @@ public class Repos implements Serializable {
 
     private boolean checkUser(String username, String password) {
         User user = users.get(username);
-        if (user != null) {
+        if (null != user) {
             return user.getPassword().equals(password);
         }
         return false;
@@ -35,10 +35,10 @@ public class Repos implements Serializable {
     }
 
     public void devUsers(Backend.Instruments.Repos instruments, Backend.Albums.Repos albums,
-            Backend.Users.Repos users, Backend.Sessions.Repos sessions) {
+                         Backend.Users.Repos users, Backend.Sessions.Repos sessions) {
 
         // check if admin was already created
-        if (users.getUser("admin") == null) {
+        if (null == users.getUser("admin")) {
             addUser(new Admin(
                     "Admin",
                     "admin",

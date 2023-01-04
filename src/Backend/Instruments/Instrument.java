@@ -42,7 +42,7 @@ public class Instrument implements Serializable, Comparable<Instrument>, Cloneab
 
     @Override
     public int compareTo(Instrument o) {
-        return o.getName().toLowerCase().compareTo(this.name.toLowerCase());
+        return o.name.toLowerCase().compareTo(this.name.toLowerCase());
     }
 
     @Override

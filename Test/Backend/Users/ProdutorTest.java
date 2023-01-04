@@ -26,7 +26,7 @@ public class ProdutorTest {
         try{
             produtor.addProjeto(a);
         } catch (Exception e) {
-            assertEquals("This producer is already the producer of the given project!", e.getMessage());
+            assertEquals("Atenção que o produtor já é o produtor do dado projeto!", e.getMessage());
         }
         assertEquals(1, produtor.getProjetos().size());
     }
@@ -92,7 +92,7 @@ public class ProdutorTest {
         } catch (Exception e) {
             assertEquals("O produtor já é o produtor do dado projeto!", e.getMessage());
         }
-        assertEquals(1, produtor.getProjetos().size());
+        assertEquals(2, produtor.getProjetos().size());
     }
 
     @Test

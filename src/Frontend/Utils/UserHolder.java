@@ -1,6 +1,6 @@
 package Frontend.Utils;
 
-public class UserHolder {//Traduzido
+public class UserHolder {
     private static Backend.Users.User user;
 
     public static void setUser(Backend.Users.User user) {
@@ -25,7 +25,7 @@ public class UserHolder {//Traduzido
 
     // initiate Mprodutor, Mmusico or Madmin
     public static void initMenu() {
-        if(user == null) return;
+        if(null == UserHolder.user) return;
         if (isProdutor()) {
             Frontend.Menus.Mprodutor.mostrarMenu();
             Frontend.Utils.Prompt.cleanPrompt();

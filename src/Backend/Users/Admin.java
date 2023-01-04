@@ -6,9 +6,6 @@ import Backend.Instruments.Instrument;
 import Backend.Sessions.Session;
 import Backend.Tracks.Track;
 import Backend.Useful.StringChecker;
-import Frontend.Utils.Generics;
-
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.TreeSet;
@@ -17,50 +14,50 @@ import java.util.UUID;
 public class Admin extends User {//Traduzidos
 
     public Admin(String name, String email, String username, String password,
-            Backend.Instruments.Repos instruments, Backend.Albums.Repos albums,
-            Backend.Users.Repos users, Backend.Sessions.Repos sessions) {
+                 Backend.Instruments.Repos instruments, Backend.Albums.Repos albums,
+                 Backend.Users.Repos users, Backend.Sessions.Repos sessions) {
         super(name, email, username, password, users, instruments, albums, sessions);
-        super.getUsersRepo().addUser(this);
+        this.getUsersRepo().addUser(this);
     }
 
     public void addInstrument(String name, int quantidade) throws IllegalArgumentException {
-        if (quantidade < 0) { throw new IllegalArgumentException("Quantidade inválida"); }
+        if (0 > quantidade) { throw new IllegalArgumentException("Quantidade inválida"); }
         Instrument instrument = new Instrument(name, quantidade);
         getInstrumentsRepo().addInstrument(instrument);
     }
 
     public void addQuantityToInstrument(String name, int quantidade) throws IllegalArgumentException {
-        if (quantidade < 0) { throw new IllegalArgumentException("Quantidade inválida"); }
+        if (0 > quantidade) { throw new IllegalArgumentException("Quantidade inválida"); }
         String nameLowerCase = name.toLowerCase();
-        int quant = super.getInstrumentsRepo().getInstrument(nameLowerCase).getQuantidade();
+        int quant = this.getInstrumentsRepo().getInstrument(nameLowerCase).getQuantidade();
         quant += quantidade;
         getInstrumentsRepo().getInstrument(nameLowerCase).setQuantidade(quant);
     }
 
     public void acceptInstrumentRequest(String name, Session session){
-        if (super.getInstrumentsRepo().getInstrument(name) == null) return; // does not exist
-        session.approveInstrument(super.getInstrumentsRepo().getInstrument(name));
+        if (null == getInstrumentsRepo().getInstrument(name)) return; // does not exist
+        session.approveInstrument(this.getInstrumentsRepo().getInstrument(name));
     }
 
     public void acceptInstrumentRequest(Instrument instrument, Session session){
-        if (instrument == null) return; // does not exist
+        if (null == instrument) return; // does not exist
         session.approveInstrument(instrument);
     }
 
     public void denyInstrumentRequest(String name, Session session){
-        if (super.getInstrumentsRepo().getInstrument(name) == null) return; // does not exist
-        session.denyInstrument(super.getInstrumentsRepo().getInstrument(name));
+        if (null == getInstrumentsRepo().getInstrument(name)) return; // does not exist
+        session.denyInstrument(this.getInstrumentsRepo().getInstrument(name));
     }
 
     public void removeInstrument(String name) {
         Instrument ref = getInstrumentsRepo().getInstrument(name);
 
         // preciso eliminar todas as referencias do objeto que vai ser eliminado
-        for(Backend.Sessions.Session s: super.getSessionsRepo().getSessions()){
+        for(Backend.Sessions.Session s: this.getSessionsRepo().getSessions()){
             s.getPendentInstruments().remove(ref);
             s.getApprovedInstruments().remove(ref);
         }
-        for(Backend.Sessions.Session s: super.getSessionsRepo().getPendingSessions()){
+        for(Backend.Sessions.Session s: this.getSessionsRepo().getPendingSessions()){
             s.getApprovedInstruments().remove(ref);
             s.getPendentInstruments().remove(ref);
         }
@@ -104,7 +101,7 @@ public class Admin extends User {//Traduzidos
         User user = getUsersRepo().getUser(username);
 
         if(user instanceof Musician) {
-            for(Album a: super.getAlbumsRepo().getAlbums().values()){
+            for(Album a: this.getAlbumsRepo().getAlbums().values()){
                 a.removeArtist(username);
 
                 for(Track t: a.getTracks().values()){
@@ -112,7 +109,7 @@ public class Admin extends User {//Traduzidos
                 }
             }
         } else if(user instanceof Produtor){
-            for(Album a : super.getAlbumsRepo().getAlbums().values()){
+            for(Album a : this.getAlbumsRepo().getAlbums().values()){
                 if(a.getProdutor().getUsername().equals(username)) throw new Exception("O username que está a tentar remover " +
                         "possui álbuns associados a si.");
             }
@@ -124,7 +121,7 @@ public class Admin extends User {//Traduzidos
     // returns -1 if the Sessions repo is empty
     public Set<Session> getAllSessionRequests() {
         Set<Session> s = new TreeSet<Session>();
-        if (getSessionsRepo().getPendingSessions().size() == 0) {
+        if (0 == this.getSessionsRepo().getPendingSessions().size()) {
             return null;
         } else {
             for (Backend.Sessions.Session session : getSessionsRepo().getPendingSessions()) {
@@ -167,7 +164,7 @@ public class Admin extends User {//Traduzidos
     public String getStats() {
         // total de albums em edição
         int countNotFinishedAlbums = 0, countFinishedAlbums = 0;
-        for(Album a: super.getAlbumsRepo().getAlbums().values()){
+        for(Album a: this.getAlbumsRepo().getAlbums().values()){
               if(a instanceof AlbumEditado && !((AlbumEditado)a).isEdited()){
                   countNotFinishedAlbums++;
               }
@@ -177,13 +174,13 @@ public class Admin extends User {//Traduzidos
         }
 
         int countSessionsCompleted = 0;
-        for(Session s: super.getSessionsRepo().getSessions()){
+        for(Session s: this.getSessionsRepo().getSessions()){
             if(s.isCompleted()){
                 countSessionsCompleted++;
             }
         }
         double percentage = (double)countSessionsCompleted /
-                                (double)(super.getSessionsRepo().getSessions().size() + super.getSessionsRepo().getPendingSessions().size())
+                (this.getSessionsRepo().getSessions().size() + this.getSessionsRepo().getPendingSessions().size())
                             * 100;
         if(Double.isNaN(percentage)) percentage = 0;
 
@@ -193,7 +190,7 @@ public class Admin extends User {//Traduzidos
     }
 
     public void acceptSessionRequest(UUID id) {
-        for(Session s:getSessionsRepo().getPendingSessions()){
+        for(Session s: getSessionsRepo().getPendingSessions()){
             if (s.getId().equals(id)) {s.setAccepted(true); return; }
         }
     }
@@ -203,8 +200,8 @@ public class Admin extends User {//Traduzidos
     }
 
     public void addAlbum(String name, String genre, LocalDateTime date, Backend.Users.Produtor produtor) {
-        Backend.Albums.Album album = new Backend.Albums.Album(name, genre, date, produtor, super.getInstrumentsRepo(),
-                super.getAlbumsRepo(), super.getUsersRepo(), super.getSessionsRepo());
+        Backend.Albums.Album album = new Backend.Albums.Album(name, genre, date, produtor, this.getInstrumentsRepo(),
+                this.getAlbumsRepo(), this.getUsersRepo(), this.getSessionsRepo());
         getAlbumsRepo().addAlbum(album);
         produtor.addOldAlbum(album);
     }

@@ -14,8 +14,8 @@ public abstract class User implements Comparable<User>, Serializable {
     private final Backend.Users.Repos usersRepo;
     private final Backend.Sessions.Repos sessionsRepo;
 
-    public User(String name, String email, String username, String password, Backend.Users.Repos users,
-            Backend.Instruments.Repos instruments, Backend.Albums.Repos albums, Backend.Sessions.Repos sessions) {
+    protected User(String name, String email, String username, String password, Backend.Users.Repos users,
+                   Backend.Instruments.Repos instruments, Backend.Albums.Repos albums, Backend.Sessions.Repos sessions) {
         this.name = name;
         this.email = email;
         this.password = password;
@@ -93,6 +93,6 @@ public abstract class User implements Comparable<User>, Serializable {
 
     @Override
     public int compareTo(User o) {
-        return this.getUsername().compareTo(o.getUsername());
+        return this.username.compareTo(o.username);
     }
 }

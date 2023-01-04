@@ -4,7 +4,6 @@ import Backend.Instruments.Instrument;
 import Backend.Users.Musician;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.TreeSet;
@@ -22,7 +21,7 @@ public class Repos implements Serializable {//Traduzido
     }
 
     public Session getSession(UUID id) {
-        for(Session s:sessions){
+        for(Session s: sessions){
             if(s.getId().equals(id)){
                 return s;
             }
@@ -44,12 +43,12 @@ public class Repos implements Serializable {//Traduzido
     }
 
     public Set<Session> getMusicianSessions(Musician musician) throws IllegalArgumentException {
-        if(musician == null) {throw new IllegalArgumentException("Músico não pode ser null");}
+        if(null == musician) {throw new IllegalArgumentException("Músico não pode ser null");}
 
         Set<Session> aux = new TreeSet<Session>();
         for(Session s: sessions) {
             if (s.isCompleted()){ /*do nothing because sessions from the past dont matter in this context*/}
-            else if (s.getInvitedMusicians().get(musician.getUsername()) != null) {
+            else if (null != s.getInvitedMusicians().get(musician.getUsername())) {
                 aux.add(s);
             }
         }
@@ -92,12 +91,12 @@ public class Repos implements Serializable {//Traduzido
         int count = 0;
 
         // pending sessions do not count here
-        for (Session s:sessions) {
+        for (Session s: sessions) {
             if(s.getDataFim().isBefore(LocalDateTime.now()) && !s.isCompleted()){
                 s.setCompleted(true);
                 count++;
             }
         }
-        return count != 0;
+        return 0 != count;
     }
 }

@@ -4,8 +4,6 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
 
 public class Repos implements Serializable {
     @Serial
@@ -21,13 +19,13 @@ public class Repos implements Serializable {
     }
 
     public boolean addAlbum(Album album) throws NullPointerException {
-        if (album.getTitulo() == null) return false;
+        if (null == album.getTitulo()) return false;
         if (!isTituloValid(album.getTitulo())) return false;
         albums.put(album.getTitulo(), album);
         return true;
     }
 
     public boolean isTituloValid(String titulo) {
-        return albums.get(titulo) == null;
+        return null == this.albums.get(titulo);
     }
 }

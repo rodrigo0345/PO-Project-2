@@ -1,6 +1,6 @@
 package Frontend.Utils;
 
-public class ReposHolder {//Traduzido
+public class ReposHolder {
     private static Backend.Instruments.Repos instruments;
     private static Backend.Albums.Repos albums;
     private static Backend.Users.Repos users;

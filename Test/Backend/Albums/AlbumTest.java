@@ -16,7 +16,7 @@ public class AlbumTest {
     public void addArtist() {
         Musician m = new Musician("Test", "Test@gmail.com", "test",
                                     "test", album.getUsersRepo(), album.getInstrumentsRepo(),
-                                        album.getAlbumsRepo(), album.getSessionsRepo());
+                album.getAlbumsRepo(), album.getSessionsRepo());
         boolean success = album.addArtist(m);
 
         assertTrue("Add artist with success", success);
@@ -30,7 +30,7 @@ public class AlbumTest {
     public void getArtist() {
         addArtist(); // dependency
         assertEquals("Find the artist with username 'test'",
-                        album.getArtist("test").getUsername(), "test");
+                album.getArtist("test").getUsername(), "test");
         assertNull("Expect null", album.getArtist("r"));
     }
 
@@ -113,8 +113,8 @@ public class AlbumTest {
     @Test
     public void setProdutor() {
         Produtor p = new Produtor("Nome", "Nome@gmail.com", "nome", "nome",
-                                    album.getUsersRepo(), album.getInstrumentsRepo(), album.getAlbumsRepo(),
-                                        album.getSessionsRepo());
+                album.getUsersRepo(), album.getInstrumentsRepo(), album.getAlbumsRepo(),
+                album.getSessionsRepo());
 
         album.setProdutorOriginal(p);
         assertEquals(album.getProdutor().getUsername(), "nome");

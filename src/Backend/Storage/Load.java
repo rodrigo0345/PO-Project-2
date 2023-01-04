@@ -1,19 +1,15 @@
 package Backend.Storage;
-
 import java.io.BufferedInputStream;
-import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.util.Map;
-import java.util.prefs.BackingStoreException;
 
 public class Load {
 
-    private String pathUsers = null;
-    private String pathInstruments = null;
-    private String pathSessions = null;
-    private String pathAlbums = null;
+    private final String pathUsers;
+    private final String pathInstruments;
+    private final String pathSessions;
+    private final String pathAlbums;
 
     public Load(String pathUsers, String pathInstruments, String pathAlbums, String pathSessions) {
         this.pathUsers = pathUsers;

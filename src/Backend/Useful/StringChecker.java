@@ -1,12 +1,8 @@
 package Backend.Useful;
-
-// regex para filtrar strings
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import Frontend.Utils.Generics;
-
-public class StringChecker {//Traduzido
+public class StringChecker {
     public static boolean hasNumbers(String str) {
         Pattern p = Pattern.compile("[0-9]");
         Matcher m = p.matcher(str);
@@ -26,7 +22,7 @@ public class StringChecker {//Traduzido
         boolean hasNumber = StringChecker.hasNumbers(str);
         boolean startsWithCaps = StringChecker.startsWithCaps(str);
         //boolean hasSpaces = StringChecker.hasSpaces(str);
-        if (str == null){
+        if (null == str){
             throw new IllegalArgumentException("Nome a null");
         }
         if (hasNumber) {
@@ -35,9 +31,6 @@ public class StringChecker {//Traduzido
         if (!startsWithCaps) {
             throw new IllegalArgumentException("Nome deve começar com letra maiúscula");
         }
-        //if (hasSpaces) {
-        //    throw new IllegalArgumentException("Nome não pode conter espaços");
-        //}
         return true;
     }
     public static boolean validAddress(String str) throws IllegalArgumentException {

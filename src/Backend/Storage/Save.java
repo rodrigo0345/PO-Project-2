@@ -7,8 +7,8 @@ import java.io.ObjectOutputStream;
 
 public class Save extends Thread { //Traduzido
 
-    private Object itemToStore = null;
-    private String pathToStore = null;
+    private final Object itemToStore;
+    private final String pathToStore;
 
     public Save(Object item, String path) {
         this.itemToStore = item;

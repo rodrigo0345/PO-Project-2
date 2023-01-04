@@ -1,9 +1,6 @@
 package Frontend.Utils;
 
-import java.util.Scanner;
-import Frontend.Utils.Generics.*;
-
-public class Prompt {//Traduzido
+public class Prompt {
 
     public static void pressEnterToContinue() {
         System.out.println("Pressione ENTER para continuar...");
@@ -50,7 +47,7 @@ public class Prompt {//Traduzido
             }catch(NumberFormatException e){
                 outputError(text + " não é um número decimal válido.");
             }
-        }while(number == null);
+        }while(null == number);
 
         return number;
     }
@@ -70,7 +67,7 @@ public class Prompt {//Traduzido
             catch(NumberFormatException e){
                 outputError(text + " não é um número inteiro válido");
             }
-        }while(number == null);
+        }while(null == number);
 
         return number;
     }
@@ -90,7 +87,7 @@ public class Prompt {//Traduzido
                 outputError(text + " não é uma opção válida.");
                 Generics.sc.nextLine();
             }
-        }while(number == null);
+        }while(null == number);
 
         return number;
     }

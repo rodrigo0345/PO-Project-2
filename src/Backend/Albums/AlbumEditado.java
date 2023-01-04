@@ -3,8 +3,6 @@ package Backend.Albums;
 import Backend.Sessions.Session;
 import Backend.Users.Musician;
 
-import java.sql.Date;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.TreeSet;
@@ -24,10 +22,10 @@ public class AlbumEditado extends Album {//Traduzido
     private Backend.Users.Produtor produtor;
 
     public AlbumEditado(String titulo, String genero,
-            Album original,
-            Backend.Instruments.Repos instruments,
-            Backend.Albums.Repos albums,
-            Backend.Users.Repos users, Backend.Sessions.Repos sessions, Backend.Users.Produtor producer) {
+                        Album original,
+                        Backend.Instruments.Repos instruments,
+                        Backend.Albums.Repos albums,
+                        Backend.Users.Repos users, Backend.Sessions.Repos sessions, Backend.Users.Produtor producer) {
 
         super(titulo, genero, null, // still being edited
                 original.getProdutor(), instruments, albums, users, sessions);
@@ -44,7 +42,7 @@ public class AlbumEditado extends Album {//Traduzido
     }
 
     public void setProdutor(Backend.Users.Produtor produtor) {
-        if (produtor == null) return;
+        if (null == produtor) return;
         produtor.addProjeto(this);
         this.produtor = produtor;
     }
@@ -82,7 +80,7 @@ public class AlbumEditado extends Album {//Traduzido
 
         // the constructor of session is responsible for also adding the session into the specified album
         Backend.Sessions.Session session = new Backend.Sessions.Session(dateInicio, dateFim, this, getSessionsRepo(),
-                                                            getUsersRepo(), getInstrumentsRepo(), getAlbumsRepo());
+                getUsersRepo(), getInstrumentsRepo(), getAlbumsRepo());
         this.lastSessionAdded = session;
         return session;
     }
@@ -124,7 +122,7 @@ public class AlbumEditado extends Album {//Traduzido
                 found = s;
             }
         }
-        if (found == null) return false;
+        if (null == found) return false;
         return sessions.remove(found);
     }
 
@@ -139,7 +137,7 @@ public class AlbumEditado extends Album {//Traduzido
                 s.removeAllInvitedMusicians();
             }
         }
-        if (found == null) return false;
+        if (null == found) return false;
         return sessions.remove(found);
     }
 
@@ -166,7 +164,7 @@ public class AlbumEditado extends Album {//Traduzido
     @Override
     public boolean removeArtist(String username) {
         Musician aux = getArtist(username);
-        if (aux == null)
+        if (null == aux)
             return false;
 
         // remove the artist from all the sessions

@@ -1,21 +1,4 @@
 package Frontend.Menus;
-
-import java.awt.*;
-import java.rmi.StubNotFoundException;
-import java.text.DateFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Locale;
-import java.util.Scanner;
-import java.util.Set;
-import java.util.UUID;
-
-import Backend.Albums.Album;
-import Backend.Albums.AlbumEditado;
-import Backend.Tracks.Track;
-import Backend.Users.Musician;
-import Backend.Users.Produtor;
 import Frontend.Utils.Generics;
 import Frontend.Utils.Prompt;
 
@@ -38,10 +21,10 @@ public class Mprodutor {
 
         option = Prompt.checkOption("Introduza a opção: ");
 
-        if(option == 8 || option == 9) {
+        if(8 == Mprodutor.option || 9 == Mprodutor.option) {
             Frontend.Utils.UserHolder.setUser(null);
 
-            if(option == 9) {
+            if(9 == Mprodutor.option) {
                 Generics.setExit(true);
             }
 
