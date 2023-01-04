@@ -22,7 +22,7 @@ public class Produtor extends User {
 
     public void addProjeto(Backend.Albums.AlbumEditado projeto) throws IllegalArgumentException {
         if(projeto.getProdutor() != null && projeto.getProdutor().equals(this)){
-            throw new IllegalArgumentException("O produtor já é o produtor do dado projeto!");
+            throw new IllegalArgumentException("Atenção que o produtor já é o produtor do dado projeto!");
         }
         //if (projeto.getProdutor() != null) {
         //    throw new IllegalArgumentException("The given album is already associated with another producer");
@@ -77,7 +77,6 @@ public class Produtor extends User {
         Backend.Albums.AlbumEditado albumEdit = new Backend.Albums.AlbumEditado(
             newAlbumName, original.getGenero(), original, getInstrumentsRepo(),
             getAlbumsRepo(), getUsersRepo(), getSessionsRepo(), this);
-        this.addProjeto(albumEdit);
         return albumEdit;
     }
 
