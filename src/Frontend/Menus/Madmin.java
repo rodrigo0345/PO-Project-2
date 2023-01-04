@@ -34,15 +34,16 @@ public class Madmin { //TRADUZIDO
         System.out.println("12. Exibir todos os álbuns");
         System.out.println("13. Consultar dados");
         System.out.println("14. Validar Requisição de Instrumentos");
-        System.out.println("15. Log out");
-        System.out.println("16. Exit");
+        System.out.println("15. Remover um album");
+        System.out.println("16. Log out");
+        System.out.println("17. Exit");
 
         option = Prompt.checkOption("Introduza a opção: ");
 
-        if(option == 15|| option == 16) {
+        if(option == 16|| option == 17) {
             Frontend.Utils.UserHolder.setUser(null);
 
-            if (option == 16) {
+            if (option == 17) {
                 Generics.setExit(true);
             }
 
@@ -98,6 +99,9 @@ public class Madmin { //TRADUZIDO
                 break;
             case 14:
                 Frontend.Actions.AdminAction.showAllInstrumentsRequests();
+                break;
+            case 15:
+                Frontend.Actions.AdminAction.removeAlbum();
                 break;
             default:
                 Prompt.outputError("Opção inválida");

@@ -318,4 +318,8 @@ public class AdminAction { // TRADUZIDO
             Prompt.outputError("Opção inválida");
         }
     }
+
+    public static void removeAlbum(){
+        System.out.println("Em construção...");
+    }
 }

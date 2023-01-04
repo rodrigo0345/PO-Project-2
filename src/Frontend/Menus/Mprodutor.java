@@ -32,7 +32,7 @@ public class Mprodutor {
         System.out.println("4. Verificar o estado de um álbum");
         System.out.println("5. Os seus álbums");
         System.out.println("6. Sessões de gravação de um dia");
-        System.out.println("7. Consultar dados");   //NÃO FUNCIONA
+        System.out.println("7. Consultar dados");   
         System.out.println("8. Log out");
         System.out.println("9. Exit");
 
