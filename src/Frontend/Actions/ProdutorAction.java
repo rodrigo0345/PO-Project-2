@@ -271,7 +271,12 @@ public class ProdutorAction {
 
     public static void endRecordingSession() {
         System.out.println("Terminar sessões de gravação...");
-        boolean res = ReposHolder.getSessions().endRecordingSessions();
+        boolean res = false;
+        try {
+            res = ReposHolder.getSessions().endRecordingSessions();
+        } catch (Exception e) {
+            Prompt.pressEnterToContinue(e.getMessage());
+        }
         if (!res) {
             System.out.println("Nenhuma sessão de gravação foi terminada");
             Generics.sc.nextLine();

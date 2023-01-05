@@ -75,7 +75,11 @@ public class AlbumEditadoTest {
     @Test
     public void markSessionAsCompleted() {
         album.addSession(Frontend.Utils.Generics.stringToDate("10/01/2023 15:30"), Frontend.Utils.Generics.stringToDate("10/01/2023 16:30"));
-        album.markSessionAsCompleted(album.getLastSessionAdded().getId());
+        try {
+            album.markSessionAsCompleted(album.getLastSessionAdded().getId());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         Backend.Sessions.Session s = album.getLastSessionAdded();
         assertTrue(s.isCompleted());
     }

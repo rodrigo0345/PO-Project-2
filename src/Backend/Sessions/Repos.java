@@ -87,7 +87,7 @@ public class Repos implements Serializable {//Traduzido
         return pendingSessions.remove(s);
     }
 
-    public boolean endRecordingSessions() {
+    public boolean endRecordingSessions() throws Exception {
         int count = 0;
 
         // pending sessions do not count here

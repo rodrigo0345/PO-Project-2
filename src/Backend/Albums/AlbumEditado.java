@@ -142,7 +142,7 @@ public class AlbumEditado extends Album {//Traduzido
         return sessions.remove(found);
     }
 
-    public void markSessionAsCompleted(UUID id) {
+    public void markSessionAsCompleted(UUID id) throws Exception {
         if (this.isEdited) {
             return;
         }
