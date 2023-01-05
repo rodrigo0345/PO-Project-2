@@ -98,7 +98,8 @@ public class ProdutorAction {
             System.out.println("3. Adicionar artistas à sessão de gravação");
             System.out.println("4. Remover um artista");
             System.out.println("5. Adicionar uma nova faixa");
-            System.out.println("6. Encerrar todas as sessões de gravação anteriores");
+            System.out.println("6. Encerrar a edição do álbum");
+            System.out.println("7. Concluir sessão de gravação");
 
             int choice = Prompt.checkInt("Introduza a opção: ");
 
@@ -108,6 +109,10 @@ public class ProdutorAction {
                     LocalDateTime dataInicio = Generics.readDate("Hora de inicio da sessão(dd/MM/aaaa HH:mm): ");
                     LocalDateTime dataFim = Generics.readDate("Hora de fim da sessão(dd/MM/aaaa HH:mm): ");
 
+                    if(dataInicio == null || dataFim == null) {
+                        Prompt.pressEnterToContinue("Data inválida");
+                        return;
+                    }
                     try {
                         ((AlbumEditado) album).addSession(dataInicio, dataFim);
                     } catch (IllegalArgumentException e) {
@@ -123,6 +128,10 @@ public class ProdutorAction {
                     ((AlbumEditado) album).getAllSessions().forEach((session) -> System.out.println(session));
 
                     UUID sessionID = UUID.fromString(Prompt.readString("ID da sessão a remover: "));
+                    if (sessionID == null) {
+                        Prompt.pressEnterToContinue("ID inválido");
+                        return;
+                    }
 
                     try {
                         ((AlbumEditado) album).removeSession(sessionID);
@@ -140,6 +149,10 @@ public class ProdutorAction {
 
                     // escolher a sessao
                     UUID idSession = UUID.fromString(Prompt.readString("ID da sessão à qual adicionará um artista: "));
+                    if (idSession == null) {
+                        Prompt.pressEnterToContinue("ID inválido");
+                        return;
+                    }
                     Session session = ((AlbumEditado) album).getSession(idSession);
 
                     if(null == session) {
@@ -209,11 +222,43 @@ public class ProdutorAction {
                 case 6: // Encerrar sessão de gravação
 
                     // imprime todas as sessões para que o utilizador depois escolha a que quer
-                    ((AlbumEditado) album).getAllSessions().forEach((session01) -> System.out.println(session01));
+                    ((AlbumEditado) album).setAlbumAsComplete();
+
+                    Prompt.pressEnterToContinue("Álbum encerrado com sucesso!");
+                    break;
+
+                case 7: // Concluir sessão de gravação
+
+                    // mostrar sessoes de gravacao
+                    ((AlbumEditado) album).getAllSessions().forEach(session01 -> {
+                        if(!session01.isCompleted()) {
+                            System.out.println(session01);
+                        }
+                    });
 
                     // escolher a sessao
-                    UUID idSession01 = UUID.fromString(Prompt.readString("ID da sessão à qual adicionará um artista: "));
-                    ((AlbumEditado)album).removeSession(idSession01);
+                    UUID idSession01 = UUID.fromString(Prompt.readString("ID da sessão que pretende concluir: "));
+                    if (idSession01 == null) {
+                        Prompt.pressEnterToContinue("ID inválido");
+                        return;
+                    }
+
+                    Session session01 = ((AlbumEditado) album).getSession(idSession01);
+
+                    if(session01 == null) {
+                        Prompt.pressEnterToContinue("Sessão não encontrada");
+                        return;
+                    }
+
+                    try {
+                        session01.setCompleted(true);
+                    } catch (Exception e) {
+                        Prompt.pressEnterToContinue(e.getMessage());
+                        return;
+                    }
+
+                    Prompt.pressEnterToContinue("Sessão concluída com sucesso!");
+
                     break;
                 default:
                     System.out.println("Seleção inválida");
@@ -228,7 +273,7 @@ public class ProdutorAction {
         System.out.println("Terminar sessões de gravação...");
         boolean res = ReposHolder.getSessions().endRecordingSessions();
         if (!res) {
-            System.out.println("Nenhuma sessão de gravação foi terminadaNenhuma sessão de gravação foi terminada");
+            System.out.println("Nenhuma sessão de gravação foi terminada");
             Generics.sc.nextLine();
         }
     }

@@ -22,6 +22,8 @@ public class Session implements Serializable, Comparable<Session> {//Traduzido
     private UUID id = UUID.randomUUID();
     private boolean completed;
     private boolean accepted;
+
+    private boolean rejected;
     private final AlbumEditado album;
     private final Backend.Sessions.Repos sessionRepos;
     private final Backend.Users.Repos userRepos;
@@ -65,7 +67,10 @@ public class Session implements Serializable, Comparable<Session> {//Traduzido
         return completed;
     }
 
-    public void setCompleted(boolean completed) {
+    public void setCompleted(boolean completed) throws Exception {
+        if (sessionRepos.getPendingSessions().contains(this)) {
+            throw new Exception("Sessão ainda não foi aceite pelo administrador");
+        }
         this.completed = completed;
     }
 
@@ -244,5 +249,13 @@ return !this.dateInicio.isAfter(end) && !this.dateFim.isBefore(start) && (!this.
     @Override
     public String toString(){
         return "id da sessão = " + id + "data inicio = " + dateInicio + "data fim = " + dateFim + "edicao de album = " + album;
+    }
+
+    public void setRejected(boolean b) {
+        this.rejected = b;
+    }
+
+    public boolean wasRejected() {
+        return this.rejected;
     }
 }

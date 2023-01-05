@@ -100,6 +100,7 @@ public class Admin extends User {//Traduzidos
         // implement a way of removing all the associated albums and musics
         User user = getUsersRepo().getUser(username);
 
+        if(user == null) throw new IllegalArgumentException("Username não existe");
         if(user instanceof Musician) {
             for(Album a: this.getAlbumsRepo().getAlbums().values()){
                 a.removeArtist(username);
@@ -118,14 +119,13 @@ public class Admin extends User {//Traduzidos
         getUsersRepo().removeUser(username);
     }
 
-    // returns -1 if the Sessions repo is empty
     public Set<Session> getAllSessionRequests() {
         Set<Session> s = new TreeSet<Session>();
         if (0 == this.getSessionsRepo().getPendingSessions().size()) {
             return null;
         } else {
             for (Backend.Sessions.Session session : getSessionsRepo().getPendingSessions()) {
-                if (!session.isAccepted()) {
+                if (!session.isAccepted() && !session.wasRejected()) {
                     s.add(session);
                 }
             }
@@ -189,6 +189,35 @@ public class Admin extends User {//Traduzidos
                 "Percentagem de sessões completas: " + percentage + "%";
     }
 
+    public String getStats(LocalDateTime inicio, LocalDateTime fim) {
+
+        // total de albums em edição
+        int countNotFinishedAlbums = 0, countFinishedAlbums = 0;
+        for(Album a: this.getAlbumsRepo().getAlbums().values()){
+            if(a instanceof AlbumEditado && !((AlbumEditado)a).isEdited()){
+                countNotFinishedAlbums++;
+            }
+            if(a instanceof AlbumEditado && ((AlbumEditado)a).isEdited()){
+                countFinishedAlbums++;
+            }
+        }
+
+        int countSessionsCompleted = 0;
+        for(Session s: this.getSessionsRepo().getSessions()){
+            if(s.isCompleted() && s.doesSessionOverlap(inicio, fim)){
+                countSessionsCompleted++;
+            }
+        }
+        double percentage = (double)countSessionsCompleted /
+                (this.getSessionsRepo().getSessions().size() + this.getSessionsRepo().getPendingSessions().size())
+                * 100;
+        if(Double.isNaN(percentage)) percentage = 0;
+
+        return "Álbums não terminados: " + countNotFinishedAlbums + "\n" +
+                "Albums terminados: " + countFinishedAlbums + "\n" +
+                "Percentagem de sessões completas: " + percentage + "%";
+    }
+
     public void acceptSessionRequest(UUID id) {
         for(Session s: getSessionsRepo().getPendingSessions()){
             if (s.getId().equals(id)) {s.setAccepted(true); return; }
@@ -197,6 +226,7 @@ public class Admin extends User {//Traduzidos
 
     public void rejectSessionRequest(UUID id) {
         (getSessionsRepo().getSession(id)).setAccepted(false);
+        (getSessionsRepo().getSession(id)).setRejected(true);
     }
 
     public void addAlbum(String name, String genre, LocalDateTime date, Backend.Users.Produtor produtor) {

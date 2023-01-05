@@ -51,26 +51,15 @@ public class AdminAction {
 
     public static void addMusician() {
 
-        String name;
-        final String username;
-        final String email;
-        String password;
-
-        try {
-            name = Prompt.readString("Nome: ");
-            username = Prompt.readString("Username: ");
-            password = Prompt.readString("Password: ");
-            email = Prompt.readString("Email: ");
-        } catch(Exception e) {
-            Prompt.outputError("Input inválido");
-            return; // exit
-        }
+        String name = Prompt.readString("Nome: ");
+        final String username = Prompt.readString("Username: ");
+        String password = Prompt.readString("Password: ");
+        final String email = Prompt.readString("Email: ");
 
         try {
             user.addMusician(name, email, username, password);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
-            Generics.sc.nextLine();
+            Prompt.pressEnterToContinue(e.getMessage());
         }
     }
 
@@ -78,12 +67,7 @@ public class AdminAction {
 
         String username;
 
-        try {
-            username = Prompt.readString("Username: ");
-        } catch(Exception e) {
-            System.out.println("Input inválido");
-            return;
-        }
+        username = Prompt.readString("Username: ");
 
         try {
             user.removeUser(username);
@@ -95,13 +79,10 @@ public class AdminAction {
     
     public static void addInstrument() {
 
-        String name;
+        String name = Prompt.readString("Nome do instrumento: ");
 
-        try {
-            name = Prompt.readString("Nome do instrumento: ");
-        }
-        catch(Exception e) {
-            Prompt.outputError("Nome inválido");
+        if(name == null || name.isEmpty()) {
+            System.out.println("Nome inválido");
             return;
         }
 
@@ -136,7 +117,7 @@ public class AdminAction {
         } 
             
         System.out.print("Selecione um pedido de sessão: ");
-        UUID id = UUID.fromString(Generics.sc.nextLine()); //FALTA ALTERAR
+        UUID id = UUID.fromString(Generics.sc.nextLine());
         String answer = Prompt.readString("Aceitar ou rejeitar? (y/n)");
         if ("y".equals(answer)) {
             try {
@@ -167,7 +148,23 @@ public class AdminAction {
     }
 
     public static void stats() {
-        System.out.println(user.getStats());
+        System.out.println("1. Estatisticas globais");
+        System.out.println("2. Estatisticas de um certo periodo de tempo");
+
+        int option = Prompt.checkInt("Opção: ");
+        if (option == 1){
+            System.out.println(user.getStats());
+            Prompt.pressEnterToContinue();
+        }
+        else if(option == 2) {
+            LocalDateTime start = Generics.readDate("Data de inicio (dd/MM/yyyy HH:mm): ");
+            LocalDateTime end = Generics.readDate("Data de fim (dd/MM/yyyy HH:mm): ");
+            System.out.println(user.getStats(start, end));
+            Prompt.pressEnterToContinue();
+        }
+        else {
+            Prompt.pressEnterToContinue("Opção inválida");
+        }
     }
 
     public static void showAllUsers() {
@@ -206,11 +203,7 @@ public class AdminAction {
         String titleOfTheAlbum = Prompt.readString("Nome do album: ");
         String producer = Prompt.readString("Produtor: ");
         String genre = Prompt.readString("Género: ");
-        //String d = Prompt.readString("Data de lançamento (dd MM aaaa): ");
-        //LocalDateTime date = Generics.stringToDate(d);
         LocalDateTime date = Generics.readDate("Data de lançamento (dd MM aaaa): ");
-        
-        // verify that the inserted date is valid
 
         // verify that the inserted producer is valid
         try {
@@ -321,7 +314,7 @@ public class AdminAction {
         }
     }
 
-    public static void removeAlbum(){
+    public static void removeAlbum() {
         System.out.println("Em construção...");
     }
 }

@@ -61,7 +61,7 @@ public class AlbumEditado extends Album {//Traduzido
         return isEdited;
     }
 
-    // use this one in normal conditions
+    // user na maioria das circunstâncias
     public Session addSession(LocalDateTime dateInicio, LocalDateTime dateFim) throws IllegalArgumentException {
 
         for(Session s: sessions){
@@ -85,6 +85,7 @@ public class AlbumEditado extends Album {//Traduzido
         return session;
     }
 
+    // usado apenas no construtor de sessão
     public boolean addSession(Session s){
         if (this.isEdited) {
             throw new IllegalArgumentException("O álbum já está terminado");
