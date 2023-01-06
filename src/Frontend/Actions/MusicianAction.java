@@ -10,16 +10,19 @@ import java.util.UUID;
 
 public class MusicianAction {
 
-        private static Backend.Users.Musician user;
+    private static Backend.Users.Musician user;
 
-        public static void setUser(Backend.Users.User user) {
-            if (user instanceof Backend.Users.Musician) {
-                MusicianAction.user = (Backend.Users.Musician) user;
-            } else {
-                throw new IllegalArgumentException("O utilizador não é um músico");
-            }
+    // setUser só é usado para inicializar o user em Mmusico
+    public static void setUser(Backend.Users.User user) {
+        if (user instanceof Backend.Users.Musician) {
+            MusicianAction.user = (Backend.Users.Musician) user;
+        } else {
+            throw new IllegalArgumentException("O utilizador não é um músico");
         }
+    }
 
+
+    // permite ao utilizador mudar variaveis como nome, email, password, etc
     public static void editProfile() {
         System.out.println("[1] - Editar nome");
         System.out.println("[2] - Editar username");
@@ -33,29 +36,39 @@ public class MusicianAction {
             switch (option) {
                 case 1:
                     String name = Prompt.readString("Novo nome: ");
+                    if(Prompt.goBack(name)) return;
+
                     user.setName(name);
                     break;
                 case 2:
                     String surname = Prompt.readString("Novo username: ");
+                    if(Prompt.goBack(surname)) return;
+
                     user.setUsername(surname);
                     break;
                 case 3:
                     String email = Prompt.readString("Novo email: ");
+                    if(Prompt.goBack(email)) return;
+
                     user.setEmail(email);
                     break;
                 case 4:
                     String password = Prompt.readString("Nova password: ");
+                    if(Prompt.goBack(password)) return;
+
                     user.setPassword(password);
                     break;
                 default:
-                    System.out.println("Opção inválida");
+                    Prompt.pressEnterToContinue("Opção inválida");
                     break;
             }
         } catch (Exception e) {
-            System.out.println("Opção inválida");
+            Prompt.pressEnterToContinue(e.getMessage());
         }
     }
 
+
+    // Usado para mostrar ao utilizador os albums em que já participou
     public static void showAssociatedAlbums() {
         Set<Album> aux = user.getAlbums();
 
@@ -64,7 +77,8 @@ public class MusicianAction {
                 System.out.println(album);
             }
         }
-        Generics.sc.nextLine();
+
+        Prompt.pressEnterToContinue();
     }
 
     public static void showFutureRecordingSessions() {
@@ -103,6 +117,11 @@ public class MusicianAction {
             return; 
         }
 
+        if (selectedSession == null) {
+            Prompt.pressEnterToContinue("Sessão não encontrada");
+            return;
+        }
+
         if (!relatedSessions.contains(selectedSession)) {
             Prompt.pressEnterToContinue("Id inválido");
             return;
@@ -114,6 +133,13 @@ public class MusicianAction {
         }
         
         String instrumentName = Prompt.readString("Nome do instrumento: ");
+        if(Prompt.goBack(instrumentName)) return;
+
+        if(instrumentName == null || instrumentName.isEmpty()){
+            Prompt.pressEnterToContinue("Nome inválido");
+            return;
+        }
+
         Instrument instrument = ReposHolder.getInstruments().getInstrument(instrumentName.toLowerCase());
 
         if (null == instrument) {
@@ -164,7 +190,7 @@ public class MusicianAction {
         // the admin will then be able to accept or deny the request
 
         try{
-            user.requestInstrument(instrument, selectedSession, quantidadeRequisitar);
+            user.requestInstrumentForSession(instrument, selectedSession, quantidadeRequisitar);
         } catch (Exception e) {
             Prompt.pressEnterToContinue(e.getMessage());
         }
@@ -193,7 +219,8 @@ public class MusicianAction {
         System.out.println("Username: " + user.getUsername());
         System.out.println("Email: " + user.getEmail());
         System.out.println("Password: " + user.getPassword());
+
         //falta a lista de instrumentos que cada músico toca
-        Generics.sc.nextLine();
+        Prompt.pressEnterToContinue();
     }
 }

@@ -65,7 +65,7 @@ public abstract class User implements Comparable<User>, Serializable {
     }
 
     public void setUsername(String username) throws IllegalArgumentException {
-        if (!usersRepo.isUsernameValid(username))
+        if (usersRepo.isUsernameAvailable(username))
             return;
         usersRepo.removeUser(this.username);
         this.username = username;
@@ -73,7 +73,7 @@ public abstract class User implements Comparable<User>, Serializable {
     }
 
     private void setFirstUsername(String username) {
-        if (!usersRepo.isUsernameValid(username))
+        if (!usersRepo.isUsernameAvailable(username))
             return;
         this.username = username;
     }

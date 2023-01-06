@@ -34,7 +34,7 @@ public class Repos implements Serializable {
         users.remove(username);
     }
 
-    public void devUsers(Backend.Instruments.Repos instruments, Backend.Albums.Repos albums,
+    public void initAdminUsers(Backend.Instruments.Repos instruments, Backend.Albums.Repos albums,
                          Backend.Users.Repos users, Backend.Sessions.Repos sessions) {
 
         // check if admin was already created
@@ -58,15 +58,7 @@ public class Repos implements Serializable {
         return users;
     }
 
-    public boolean isUserValid(User u) {
-        return !users.containsKey(u.getUsername());
-    }
-
-    public boolean isUserValid(String u) {
-        return !users.containsKey(u);
-    }
-
-    public boolean isUsernameValid(String u) {
+    public boolean isUsernameAvailable(String u) {
         return !users.containsKey(u);
     }
 }

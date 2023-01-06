@@ -91,4 +91,9 @@ public class Prompt {
 
         return number;
     }
+
+    // em caso de o utilizador querer voltar atras no programa
+    public static boolean goBack(String input) {
+        return input.equals("\\");
+    }
 }

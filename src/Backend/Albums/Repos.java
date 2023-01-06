@@ -11,17 +11,17 @@ public class Repos implements Serializable {
     private final Map<String, Album> albums = new HashMap<>();
 
     public Album getAlbum(String name) {
-        return albums.get(name);
+        return this.albums.get(name);
     }
 
     public Map<String, Album> getAlbums() {
-        return albums;
+        return this.albums;
     }
 
     public boolean addAlbum(Album album) throws NullPointerException {
         if (null == album.getTitulo()) return false;
-        if (!isTituloValid(album.getTitulo())) return false;
-        albums.put(album.getTitulo(), album);
+        if (!this.isTituloValid(album.getTitulo())) return false;
+        this.albums.put(album.getTitulo(), album);
         return true;
     }
 

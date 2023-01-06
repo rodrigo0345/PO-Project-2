@@ -1,9 +1,11 @@
 package Backend.Instruments;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.UUID;
 
 public class Instrument implements Serializable, Comparable<Instrument>, Cloneable {
+    @Serial
     private static final long serialVersionUID = 6L;
     private final String name;
     private UUID id;
@@ -16,11 +18,11 @@ public class Instrument implements Serializable, Comparable<Instrument>, Cloneab
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public UUID getId() {
-        return id;
+        return this.id;
     }
 
     public void setId(UUID id) {
@@ -28,7 +30,7 @@ public class Instrument implements Serializable, Comparable<Instrument>, Cloneab
     }
     
     public int getQuantidade() {
-            return quantidade;
+            return this.quantidade;
         }
 
     public void setQuantidade(int quantidade) {
@@ -37,7 +39,7 @@ public class Instrument implements Serializable, Comparable<Instrument>, Cloneab
 
     @Override
     public String toString() {
-        return "Instrument=" + name + ", id=" + id + ", quantidade=" + quantidade;
+        return "Instrument=" + this.name + ", id=" + this.id + ", quantidade=" + this.quantidade;
     }
 
     @Override

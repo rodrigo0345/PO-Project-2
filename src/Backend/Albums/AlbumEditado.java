@@ -31,7 +31,7 @@ public class AlbumEditado extends Album {//Traduzido
                 original.getProdutor(), instruments, albums, users, sessions);
 
         this.isEdited = false;
-        producer.addProjeto(this);
+        producer.addNewAlbumEdit(this);
         this.setProdutor(producer);
     }
 
@@ -43,7 +43,7 @@ public class AlbumEditado extends Album {//Traduzido
 
     public void setProdutor(Backend.Users.Produtor produtor) {
         if (null == produtor) return;
-        produtor.addProjeto(this);
+        produtor.addNewAlbumEdit(this);
         this.produtor = produtor;
     }
 

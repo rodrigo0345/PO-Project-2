@@ -39,7 +39,7 @@ public class Prep {
         Frontend.Utils.ReposHolder.init(instruments, albums, users, sessions);
 
         // create test users
-        ReposHolder.getUsers().devUsers(ReposHolder.getInstruments(), ReposHolder.getAlbums(),
+        ReposHolder.getUsers().initAdminUsers(ReposHolder.getInstruments(), ReposHolder.getAlbums(),
                                 ReposHolder.getUsers(), ReposHolder.getSessions());
     }
 

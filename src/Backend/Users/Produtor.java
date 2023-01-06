@@ -8,7 +8,11 @@ import java.util.Set;
 import java.util.TreeSet;
 
 public class Produtor extends User {
-    private final Set<Backend.Albums.AlbumEditado> projetos = new TreeSet<>();
+
+    // new albums edits referencia todos os albums editados "aqui" em estúdio
+    private final Set<Backend.Albums.AlbumEditado> newAlbumsEdits = new TreeSet<>();
+
+    // old albums apenas referencia os albums que não foram editados "aqui"
     private final Set<Backend.Albums.Album> oldAlbums = new TreeSet<>();
 
     public Produtor(String name, String email, String username, String password, Backend.Users.Repos users,
@@ -17,23 +21,45 @@ public class Produtor extends User {
         this.getUsersRepo().addUser(this);
     }
 
-    public void addProjeto(Backend.Albums.AlbumEditado projeto) throws IllegalArgumentException {
+    public void addNewAlbumEdit(Backend.Albums.AlbumEditado projeto) throws IllegalArgumentException {
         if(null != projeto.getProdutor() && projeto.getProdutor().equals(this)){
             throw new IllegalArgumentException("Atenção que o produtor já é o produtor do dado projeto!");
         }
-        //if (projeto.getProdutor() != null) {
-        //    throw new IllegalArgumentException("The given album is already associated with another producer");
-        //}
-        projetos.add(projeto);
+        newAlbumsEdits.add(projeto);
     }
 
-    public void removeProjeto(Backend.Albums.AlbumEditado projeto, Produtor backup) {
-        projetos.remove(projeto);
-        projeto.setProdutor(backup);
+    public void removeNewAlbumEdit(AlbumEditado projeto, Produtor replacementProducer) {
+        newAlbumsEdits.remove(projeto);
+        projeto.setProdutor(replacementProducer);
     }
 
-    public Set<Backend.Albums.AlbumEditado> getProjetos() {
-        return projetos;
+    public Set<Backend.Albums.AlbumEditado> getNewAlbumsEdits() {
+        return newAlbumsEdits;
+    }
+
+    public Backend.Albums.AlbumEditado getNewAlbumEdit(String titulo) {
+        for (Backend.Albums.AlbumEditado projeto : newAlbumsEdits) {
+            if (projeto.getTitulo().equals(titulo)) {
+                return projeto;
+            }
+        }
+        return null;
+    }
+
+    public Backend.Albums.AlbumEditado createNewAlbumEdit(String albumName, String newAlbumName)
+            throws ClassNotFoundException, IllegalArgumentException {
+        // checking for possible errors
+        Backend.Albums.Album original = getAlbumsRepo().getAlbum(albumName);
+        if (null == original) {
+            throw new ClassNotFoundException(albumName + " não foi encontrado.");
+        } else if (!getAlbumsRepo().isTituloValid(newAlbumName)) {
+            throw new IllegalArgumentException(newAlbumName + " já existe.");
+        }
+        // create the new album edit
+        Backend.Albums.AlbumEditado albumEdit = new Backend.Albums.AlbumEditado(
+                newAlbumName, original.getGenero(), original, getInstrumentsRepo(),
+                getAlbumsRepo(), getUsersRepo(), getSessionsRepo(), this);
+        return albumEdit;
     }
 
     // when the album is added by the admin
@@ -52,33 +78,10 @@ public class Produtor extends User {
         return oldAlbums;
     }
 
-    public Backend.Albums.AlbumEditado getProjeto(String titulo) {
-        for (Backend.Albums.AlbumEditado projeto : projetos) {
-            if (projeto.getTitulo().equals(titulo)) {
-                return projeto;
-            }
-        }
-        return null;
-    }
 
-    public Backend.Albums.AlbumEditado createAlbumEdit(String albumName, String newAlbumName)
-        throws ClassNotFoundException, IllegalArgumentException {
-        // checking for possible errors
-        Backend.Albums.Album original = getAlbumsRepo().getAlbum(albumName);
-        if (null == original) {
-            throw new ClassNotFoundException(albumName + " não foi encontrado.");
-        } else if (!getAlbumsRepo().isTituloValid(newAlbumName)) {
-            throw new IllegalArgumentException(newAlbumName + " já existe.");
-        }
-        // create the new album edit
-        Backend.Albums.AlbumEditado albumEdit = new Backend.Albums.AlbumEditado(
-            newAlbumName, original.getGenero(), original, getInstrumentsRepo(),
-                getAlbumsRepo(), getUsersRepo(), getSessionsRepo(), this);
-        return albumEdit;
-    }
-
+    // muito usado nas actions do Produtor
     public Session findSessionByDate(LocalDateTime dateInicio, LocalDateTime dateFim) {
-        for(AlbumEditado a: projetos) {
+        for(AlbumEditado a: newAlbumsEdits) {
             Set<Backend.Sessions.Session> associatedSessions = a.getAllSessions();
             for (Backend.Sessions.Session s : associatedSessions) {
                 // if data inicio is between the session dates

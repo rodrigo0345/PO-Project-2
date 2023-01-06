@@ -191,8 +191,8 @@ public class AdminTest {
 
         Set<Instrument> instruments = admin.getPendentInstruments();
         System.out.println(instruments);
-        m.addArtistInstrument(ins);
-        m.requestInstrument(ins, s, 1); // make sure the musician is in that session
+        m.addInstrument(ins);
+        m.requestInstrumentForSession(ins, s, 1); // make sure the musician is in that session
         admin.acceptInstrumentRequest(ins, s);
         assertNotNull(s.getApprovedInstruments());
     }
@@ -217,8 +217,8 @@ public class AdminTest {
         Set<Instrument> instruments = admin.getPendentInstruments();
         System.out.println(instruments);
 
-        m.addArtistInstrument(ins);
-        m.requestInstrument(ins, s, 1); // make sure the musician is in that session
+        m.addInstrument(ins);
+        m.requestInstrumentForSession(ins, s, 1); // make sure the musician is in that session
         admin.denyInstrumentRequest(ins.getName(), s);
         assertEquals(0, s.getApprovedInstruments().size());
     }

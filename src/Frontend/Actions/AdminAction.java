@@ -15,7 +15,11 @@ public class AdminAction {
 
     private static Backend.Users.Admin user;
 
+    // setUser só é usado para inicializar o user em Madmin
     public static void setUser(Backend.Users.User user) {
+        if(user == null) {
+            throw new IllegalArgumentException("Utilizador não pode ser null");
+        }
         if (user instanceof Backend.Users.Admin) {
             AdminAction.user = (Backend.Users.Admin) user;
         } else {
@@ -25,20 +29,17 @@ public class AdminAction {
 
     public static void addProducer() {
 
-        String name;
-        final String username;
-        final String email;
-        String password;
+        String name = Prompt.readString("Nome: ");
+        if(Prompt.goBack(name)) return;
 
-        try {
-            name = Prompt.readString("Nome: ");
-            username = Prompt.readString("Username: ");
-            password = Prompt.readString("Password: ");
-            email = Prompt.readString("Email: ");
-        } catch(Exception e) {
-            System.out.println("Input inválido");
-            return; // exit
-        }
+        final String username = Prompt.readString("Username: ");
+        if(Prompt.goBack(username)) return;
+
+        String password = Prompt.readString("Password: ");
+        if(Prompt.goBack(password)) return;
+
+        final String email = Prompt.readString("Email: ");
+        if(Prompt.goBack(email)) return;
 
 
         try {
@@ -52,9 +53,16 @@ public class AdminAction {
     public static void addMusician() {
 
         String name = Prompt.readString("Nome: ");
+        if(Prompt.goBack(name)) return;
+
         final String username = Prompt.readString("Username: ");
+        if(Prompt.goBack(username)) return;
+
         String password = Prompt.readString("Password: ");
+        if(Prompt.goBack(password)) return;
+
         final String email = Prompt.readString("Email: ");
+        if(Prompt.goBack(email)) return;
 
         try {
             user.addMusician(name, email, username, password);
@@ -65,9 +73,8 @@ public class AdminAction {
 
     public static void removeUser() {
 
-        String username;
-
-        username = Prompt.readString("Username: ");
+        String username = Prompt.readString("Username: ");
+        if(Prompt.goBack(username)) return;
 
         try {
             user.removeUser(username);
@@ -80,17 +87,17 @@ public class AdminAction {
     public static void addInstrument() {
 
         String name = Prompt.readString("Nome do instrumento: ");
+        if(Prompt.goBack(name)) return;
 
         if(name == null || name.isEmpty()) {
-            System.out.println("Nome inválido");
-            return;
+            Prompt.pressEnterToContinue("Nome inválido");
         }
 
         String nameLowerCase = name.toLowerCase();
 
         try{
             Instrument i = ReposHolder.getInstruments().getInstrument(nameLowerCase);
-            if(null == i){
+            if(i == null){
                 ReposHolder.getInstruments();
                 user.getInstrumentsRepo();
                 int quantidade = Prompt.checkInt("Introduza a quantidade: ");
@@ -101,14 +108,13 @@ public class AdminAction {
                 user.addQuantityToInstrument(name, quant);
             }
         }catch(Exception e){
-            System.out.println(e.getMessage());
+            Prompt.pressEnterToContinue(e.getMessage());
         }
     }
 
     public static void showAllSessionRequests() {
         if (null == AdminAction.user.getAllSessionRequests()) {
-            System.out.println("Não existem pedidos de sessão");
-            return;
+            Prompt.pressEnterToContinue("Não existem pedidos de sessão");
         }
         else{
             for(Session s: user.getAllSessionRequests()){
@@ -117,8 +123,16 @@ public class AdminAction {
         } 
             
         System.out.print("Selecione um pedido de sessão: ");
-        UUID id = UUID.fromString(Generics.sc.nextLine());
+        UUID id = null;
+        try{
+            id = UUID.fromString(Generics.sc.nextLine());
+        } catch (IllegalArgumentException e) {
+            Prompt.pressEnterToContinue("ID inválido");
+        }
+
         String answer = Prompt.readString("Aceitar ou rejeitar? (y/n)");
+        if(Prompt.goBack(answer)) return;
+
         if ("y".equals(answer)) {
             try {
                 user.acceptSessionRequest(id);
@@ -139,12 +153,12 @@ public class AdminAction {
 
     public static void showAllSessions() {
         System.out.println(user.getAllRecordingSessions());
-        Generics.sc.nextLine();
+        Prompt.pressEnterToContinue();
     }
 
     public static void showAllAlbumsBeingEdited() {
         System.out.println(user.getAllAlbumsBeingEdited());
-        Generics.sc.nextLine();
+        Prompt.pressEnterToContinue();
     }
 
     public static void stats() {
@@ -172,7 +186,7 @@ public class AdminAction {
         for (Map.Entry<String, Backend.Users.User> entry : list.entrySet()) {
             System.out.println(entry.getValue().toString());
         }
-        Generics.sc.nextLine();
+        Prompt.pressEnterToContinue();
     }
 
     public static void showAllInstruments() {
@@ -180,7 +194,7 @@ public class AdminAction {
         for (Map.Entry<String, Backend.Instruments.Instrument> entry : list2.entrySet()) {
             System.out.println(entry.getValue().toString());
         }
-        Generics.sc.nextLine();
+        Prompt.pressEnterToContinue();
     }
 
     public static void showAllAlbums() {
@@ -188,7 +202,7 @@ public class AdminAction {
         for (Backend.Albums.Album album : list3.values()) {
             System.out.println(album.toString());
         }
-        Generics.sc.nextLine();
+        Prompt.pressEnterToContinue();
     }
 
     public static void checkData() {
@@ -196,13 +210,19 @@ public class AdminAction {
         System.out.println("Username: " + user.getUsername());
         System.out.println("Email: " + user.getEmail());
         System.out.println("Password: " + user.getPassword());
-        Generics.sc.nextLine();
+        Prompt.pressEnterToContinue();
     }
 
     public static void addAlbum() {
         String titleOfTheAlbum = Prompt.readString("Nome do album: ");
+        if(Prompt.goBack(titleOfTheAlbum)) return;
+
         String producer = Prompt.readString("Produtor: ");
+        if(Prompt.goBack(producer)) return;
+
         String genre = Prompt.readString("Género: ");
+        if(Prompt.goBack(genre)) return;
+
         LocalDateTime date = Generics.readDate("Data de lançamento (dd MM aaaa): ");
 
         // verify that the inserted producer is valid
@@ -234,10 +254,16 @@ public class AdminAction {
         Backend.Albums.Album a = user.getAlbumsRepo().getAlbum(titleOfTheAlbum);
         if ("y".equals(ans)) {
             String titleOfTheSong = Prompt.readString("Título da música: ");
+            if(Prompt.goBack(titleOfTheSong)) return;
+
             int duration = Prompt.checkInt("Duração: ");
-            Generics.sc.nextLine(); // flush
+
             String genre = Prompt.readString("Género: ");
+            if(Prompt.goBack(genre)) return;
+
             String musician = Prompt.readString("Músico: ");
+            if(Prompt.goBack(musician)) return;
+
             try {
                 Backend.Tracks.Track t = new Backend.Tracks.Track(a, titleOfTheSong,
                         genre, duration);
@@ -260,8 +286,16 @@ public class AdminAction {
 
     private static void addArtistToTrack(String ans, Backend.Tracks.Track t) {
         if ("y".equals(ans)) {
-            System.out.println();
+            // mostrar todos os musicos
+            for(Backend.Users.User u : ReposHolder.getUsers().getUsers().values()) {
+                if(u instanceof Backend.Users.Musician) {
+                    System.out.println(u.toString());
+                }
+            }
+
             String musician2 = Prompt.readString("Músico: ");
+            if(Prompt.goBack(musician2)) return;
+
             t.addArtist((Backend.Users.Musician) ReposHolder.getUsers().getUser(musician2));
         }
     }
@@ -284,19 +318,32 @@ public class AdminAction {
         Set<Backend.Instruments.Instrument> pendentInstruments = user.getPendentInstruments();
 
         if (0 == pendentInstruments.size()) {
-            Prompt.outputError("Sem requisições de instrumentos");
-            Prompt.pressEnterToContinue();
+            Prompt.pressEnterToContinue("Sem requisições de instrumentos");
             return;
         }
         // para mostrar uma mensagem caso não haja instrumentos pendentes
         //
 
-        UUID idSessao = UUID.fromString(Prompt.readString("ID da sessão: "));
+        UUID idSessao = null;
+        try {
+            idSessao = UUID.fromString(Prompt.readString("ID da sessão: "));
+        } catch( IllegalArgumentException e ){
+            Prompt.pressEnterToContinue("ID inválido");
+            return;
+        }
+
         String name = Prompt.readString("Nome do instrumento: ");
+        if(Prompt.goBack(name)) return;
 
         Session s = ReposHolder.getSessions().getSession(idSessao);
+        if(s == null){
+            Prompt.pressEnterToContinue("Sessão inválida");
+            return;
+        }
         
         String answer = Prompt.readString("Aceitar ou rejeitar? (y/n)");
+        if(Prompt.goBack(answer)) return;
+
         if ("y".equals(answer)) {
             try {
                 user.acceptInstrumentRequest(name, s);

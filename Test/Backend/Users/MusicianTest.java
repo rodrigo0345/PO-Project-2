@@ -49,8 +49,8 @@ public class MusicianTest {
         admin.acceptSessionRequest(s.getId());
         s.addInvitedMusician(m);
         admin.addInstrument("flute", 8);
-        m.addArtistInstrument(admin.getInstrumentsRepo().getInstrument("flute"));
-        m.requestInstrument(admin.getInstrumentsRepo().getInstrument("flute"), s, 1);
+        m.addInstrument(admin.getInstrumentsRepo().getInstrument("flute"));
+        m.requestInstrumentForSession(admin.getInstrumentsRepo().getInstrument("flute"), s, 1);
         assertTrue(m.getInstruments().contains(admin.getInstrumentsRepo().getInstrument("flute")));
         assertEquals(1, m.getInstruments().size());
     }
@@ -77,8 +77,8 @@ public class MusicianTest {
         s.addInvitedMusician(m);
 
         admin.addInstrument("flute", 9);
-        m.addArtistInstrument(admin.getInstrumentsRepo().getInstrument("flute"));
-        m.requestInstrument(admin.getInstrumentsRepo().getInstrument("flute"), s, 1);
+        m.addInstrument(admin.getInstrumentsRepo().getInstrument("flute"));
+        m.requestInstrumentForSession(admin.getInstrumentsRepo().getInstrument("flute"), s, 1);
 
         try{
             m.addSession(a,s);

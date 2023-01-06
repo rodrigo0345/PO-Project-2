@@ -1,10 +1,8 @@
 package Backend.Albums;
 
-import Backend.Sessions.Session;
 import Backend.Users.Produtor;
 import org.junit.Test;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
@@ -23,7 +21,7 @@ public class AlbumEditadoTest {
         assertEquals(album.getProdutor().toString(), p1.toString());
         album.setProdutor(null);
         assertEquals(album.getProdutor().toString(), p1.toString());
-        assertEquals(p1.getProjeto("Random").toString(), album.toString());
+        assertEquals(p1.getNewAlbumEdit("Random").toString(), album.toString());
     }
 
     @Test

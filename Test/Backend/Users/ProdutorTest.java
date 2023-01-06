@@ -24,30 +24,30 @@ public class ProdutorTest {
     @Test
     public void addProjeto() {
         try{
-            produtor.addProjeto(a);
+            produtor.addNewAlbumEdit(a);
         } catch (Exception e) {
             assertEquals("Atenção que o produtor já é o produtor do dado projeto!", e.getMessage());
         }
-        assertEquals(1, produtor.getProjetos().size());
+        assertEquals(1, produtor.getNewAlbumsEdits().size());
     }
 
     @Test
     public void removeProjeto() {
         addProjeto();
-        assertEquals(1, produtor.getProjetos().size());
+        assertEquals(1, produtor.getNewAlbumsEdits().size());
         Produtor p1 = admin.addProdutor("Rodrigo", "rrr@gmail.com", "rrr", "rrr");
-        produtor.removeProjeto(a, p1);
-        assertEquals(0, produtor.getProjetos().size());
-        assertNull(produtor.getProjeto(a.getTitulo()));
+        produtor.removeNewAlbumEdit(a, p1);
+        assertEquals(0, produtor.getNewAlbumsEdits().size());
+        assertNull(produtor.getNewAlbumEdit(a.getTitulo()));
         assertEquals(p1.getUsername(), a.getProdutor().getUsername());
     }
 
     @Test
     public void getProjetos() {
         removeProjeto();
-        assertEquals(0, produtor.getProjetos().size());
+        assertEquals(0, produtor.getNewAlbumsEdits().size());
         addProjeto();
-        assertEquals(1, produtor.getProjetos().size());
+        assertEquals(1, produtor.getNewAlbumsEdits().size());
     }
 
     @Test
@@ -82,17 +82,17 @@ public class ProdutorTest {
     @Test
     public void getProjeto() {
         addProjeto();
-        assertEquals(a.getTitulo(), produtor.getProjeto(a.getTitulo()).getTitulo());
+        assertEquals(a.getTitulo(), produtor.getNewAlbumEdit(a.getTitulo()).getTitulo());
     }
 
     @Test
     public void createAlbumEdit() {
         try{
-            produtor.createAlbumEdit("R", "rock");
+            produtor.createNewAlbumEdit("R", "rock");
         } catch (Exception e) {
             assertEquals("O produtor já é o produtor do dado projeto!", e.getMessage());
         }
-        assertEquals(2, produtor.getProjetos().size());
+        assertEquals(2, produtor.getNewAlbumsEdits().size());
     }
 
     @Test
@@ -106,8 +106,8 @@ public class ProdutorTest {
         new Backend.Sessions.Session(Frontend.Utils.Generics.stringToDate("10/11/2030 10:30"), Frontend.Utils.Generics.stringToDate("10/11/2030 11:30"), a,
                 a.getSessionsRepo(), a.getUsersRepo(), a.getInstrumentsRepo(), a.getAlbumsRepo());
 
-        System.out.println(produtor.getProjeto("R").getLastSessionAdded().getDataInicio());
-        assertEquals(produtor.getProjeto("R").getLastSessionAdded(), produtor.findSessionByDate(Frontend.Utils.Generics.stringToDate("10/11/2030 10:29"), Frontend.Utils.Generics.stringToDate("10/11/2030 11:30")));
+        System.out.println(produtor.getNewAlbumEdit("R").getLastSessionAdded().getDataInicio());
+        assertEquals(produtor.getNewAlbumEdit("R").getLastSessionAdded(), produtor.findSessionByDate(Frontend.Utils.Generics.stringToDate("10/11/2030 10:29"), Frontend.Utils.Generics.stringToDate("10/11/2030 11:30")));
     }
 
     @Test
