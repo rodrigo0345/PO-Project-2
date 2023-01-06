@@ -7,6 +7,9 @@ import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.TreeSet;
 
+/**
+ * The type Produtor.
+ */
 public class Produtor extends User {
 
     // new albums edits referencia todos os albums editados "aqui" em estúdio
@@ -15,12 +18,30 @@ public class Produtor extends User {
     // old albums apenas referencia os albums que não foram editados "aqui"
     private final Set<Backend.Albums.Album> oldAlbums = new TreeSet<>();
 
+    /**
+     * Instantiates a new Produtor.
+     *
+     * @param name        the name
+     * @param email       the email
+     * @param username    the username
+     * @param password    the password
+     * @param users       the users
+     * @param instruments the instruments
+     * @param albums      the albums
+     * @param sessions    the sessions
+     */
     public Produtor(String name, String email, String username, String password, Backend.Users.Repos users,
                     Backend.Instruments.Repos instruments, Backend.Albums.Repos albums, Backend.Sessions.Repos sessions) {
         super(name, email, username, password, users, instruments, albums, sessions);
         this.getUsersRepo().addUser(this);
     }
 
+    /**
+     * Add new album edit.
+     *
+     * @param projeto the projeto
+     * @throws IllegalArgumentException the illegal argument exception
+     */
     public void addNewAlbumEdit(Backend.Albums.AlbumEditado projeto) throws IllegalArgumentException {
         if(null != projeto.getProdutor() && projeto.getProdutor().equals(this)){
             throw new IllegalArgumentException("Atenção que o produtor já é o produtor do dado projeto!");
@@ -28,15 +49,32 @@ public class Produtor extends User {
         newAlbumsEdits.add(projeto);
     }
 
+    /**
+     * Remove new album edit.
+     *
+     * @param projeto             the projeto
+     * @param replacementProducer the replacement producer
+     */
     public void removeNewAlbumEdit(AlbumEditado projeto, Produtor replacementProducer) {
         newAlbumsEdits.remove(projeto);
         projeto.setProdutor(replacementProducer);
     }
 
+    /**
+     * Gets new albums edits.
+     *
+     * @return the new albums edits
+     */
     public Set<Backend.Albums.AlbumEditado> getNewAlbumsEdits() {
         return newAlbumsEdits;
     }
 
+    /**
+     * Gets new album edit.
+     *
+     * @param titulo the titulo
+     * @return the new album edit
+     */
     public Backend.Albums.AlbumEditado getNewAlbumEdit(String titulo) {
         for (Backend.Albums.AlbumEditado projeto : newAlbumsEdits) {
             if (projeto.getTitulo().equals(titulo)) {
@@ -46,6 +84,15 @@ public class Produtor extends User {
         return null;
     }
 
+    /**
+     * Create new album edit backend . albums . album editado.
+     *
+     * @param albumName    the album name
+     * @param newAlbumName the new album name
+     * @return the backend . albums . album editado
+     * @throws ClassNotFoundException   the class not found exception
+     * @throws IllegalArgumentException the illegal argument exception
+     */
     public Backend.Albums.AlbumEditado createNewAlbumEdit(String albumName, String newAlbumName)
             throws ClassNotFoundException, IllegalArgumentException {
         // checking for possible errors
@@ -62,7 +109,12 @@ public class Produtor extends User {
         return albumEdit;
     }
 
-    // when the album is added by the admin
+    /**
+     * Add old album.
+     *
+     * @param album the album
+     */
+// when the album is added by the admin
     public void addOldAlbum(Backend.Albums.Album album) {
         if(album instanceof Backend.Albums.AlbumEditado && !((Backend.Albums.AlbumEditado) album).isEdited()){
             return; // simply continue the program.
@@ -70,16 +122,33 @@ public class Produtor extends User {
         oldAlbums.add(album);
     }
 
+    /**
+     * Remove old album.
+     *
+     * @param album the album
+     */
     public void removeOldAlbum(Backend.Albums.Album album) {
         oldAlbums.remove(album);
     }
 
+    /**
+     * Gets old albums.
+     *
+     * @return the old albums
+     */
     public Set<Backend.Albums.Album> getOldAlbums() {
         return oldAlbums;
     }
 
 
-    // muito usado nas actions do Produtor
+    /**
+     * Find session by date session.
+     *
+     * @param dateInicio the date inicio
+     * @param dateFim    the date fim
+     * @return the session
+     */
+// muito usado nas actions do Produtor
     public Session findSessionByDate(LocalDateTime dateInicio, LocalDateTime dateFim) {
         for(AlbumEditado a: newAlbumsEdits) {
             Set<Backend.Sessions.Session> associatedSessions = a.getAllSessions();
@@ -93,10 +162,23 @@ public class Produtor extends User {
         return null;
     }
 
+    /**
+     * Gets old album.
+     *
+     * @param nome the nome
+     * @return the old album
+     */
     public Album getOldAlbum(String nome) {
         return this.getAlbumsRepo().getAlbum(nome);
     }
 
+    /**
+     * Add musician to session.
+     *
+     * @param m the m
+     * @param s the s
+     * @throws IllegalArgumentException the illegal argument exception
+     */
     public void addMusicianToSession(Musician m, Session s) throws IllegalArgumentException {
         s.addInvitedMusician(m);
     }

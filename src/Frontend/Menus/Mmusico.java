@@ -2,9 +2,15 @@ package Frontend.Menus;
 import Frontend.Utils.Generics;
 import Frontend.Utils.Prompt;
 
+/**
+ * The type Mmusico.
+ */
 public class Mmusico{
     private static int option;
 
+    /**
+     * Mostrar menu.
+     */
     public static void mostrarMenu() {
         System.out.println("Menu de Musico - Logado como " + Frontend.Utils.UserHolder.getUser().getUsername());
         System.out.println("1. Editar perfil");
@@ -31,6 +37,9 @@ public class Mmusico{
         executeOption();
     }
 
+    /**
+     * Execute option.
+     */
     public static void executeOption() {
 
         Frontend.Actions.MusicianAction.setUser(Frontend.Utils.UserHolder.getUser());

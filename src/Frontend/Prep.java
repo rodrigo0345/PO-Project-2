@@ -4,8 +4,14 @@ import Frontend.Utils.ReposHolder;
 
 import java.io.IOException;
 
+/**
+ * The type Prep.
+ */
 public class Prep {
 
+    /**
+     * Init.
+     */
     /* Responsible for loading in program's data in the beginning of the application */
     public static void init() {
         // prepare to load data
@@ -43,6 +49,9 @@ public class Prep {
                                 ReposHolder.getUsers(), ReposHolder.getSessions());
     }
 
+    /**
+     * Save data.
+     */
     public static void saveData() {
         // não é a maneira mais eficiente de fazer isso, mas não é possivel iniciar a
         // mesma thread duas vezes

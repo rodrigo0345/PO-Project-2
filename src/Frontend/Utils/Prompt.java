@@ -1,7 +1,13 @@
 package Frontend.Utils;
 
+/**
+ * The type Prompt.
+ */
 public class Prompt {
 
+    /**
+     * Press enter to continue.
+     */
     public static void pressEnterToContinue() {
         System.out.println("Pressione ENTER para continuar...");
         try {
@@ -11,16 +17,29 @@ public class Prompt {
         }
     }
 
+    /**
+     * Press enter to continue.
+     *
+     * @param message the message
+     */
     public static void pressEnterToContinue(String message) {
         System.out.println(message);
         pressEnterToContinue();
     }
 
+    /**
+     * Clean prompt.
+     */
     public static void cleanPrompt() {
         System.out.print("\033[H\033[2J");
         System.out.flush();
     }
 
+    /**
+     * Output error.
+     *
+     * @param message the message
+     */
     public static void outputError(String message) {
         System.err.println(message);
     }
@@ -29,11 +48,23 @@ public class Prompt {
         System.out.print(message);
     }
 
+    /**
+     * Read string string.
+     *
+     * @param message the message
+     * @return the string
+     */
     public static String readString(String message){
         write(message);
         return Generics.sc.nextLine();
     }
 
+    /**
+     * Read double double.
+     *
+     * @param message the message
+     * @return the double
+     */
     public static Double readDouble(String message){
         Double number = null;
         String text;
@@ -52,6 +83,12 @@ public class Prompt {
         return number;
     }
 
+    /**
+     * Check int int.
+     *
+     * @param message the message
+     * @return the int
+     */
     public static int checkInt(String message){
 
         Integer number = null;
@@ -72,6 +109,12 @@ public class Prompt {
         return number;
     }
 
+    /**
+     * Check option int.
+     *
+     * @param message the message
+     * @return the int
+     */
     public static int checkOption(String message){
 
         Integer number = null;
@@ -92,7 +135,13 @@ public class Prompt {
         return number;
     }
 
-    // em caso de o utilizador querer voltar atras no programa
+    /**
+     * Go back boolean.
+     *
+     * @param input the input
+     * @return the boolean
+     */
+// em caso de o utilizador querer voltar atras no programa
     public static boolean goBack(String input) {
         return input.equals("\\");
     }

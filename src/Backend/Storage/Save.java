@@ -5,16 +5,31 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 
+/**
+ * The type Save.
+ */
 public class Save extends Thread { //Traduzido
 
     private final Object itemToStore;
     private final String pathToStore;
 
+    /**
+     * Instantiates a new Save.
+     *
+     * @param item the item
+     * @param path the path
+     */
     public Save(Object item, String path) {
         this.itemToStore = item;
         this.pathToStore = path;
     }
 
+    /**
+     * Save boolean.
+     *
+     * @return the boolean
+     * @throws IOException the io exception
+     */
     public synchronized boolean save() throws IOException {
         FileOutputStream fos = new FileOutputStream(pathToStore);
         ObjectOutputStream oos = new ObjectOutputStream(fos);

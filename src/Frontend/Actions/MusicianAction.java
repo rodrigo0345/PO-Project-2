@@ -8,11 +8,19 @@ import Frontend.Utils.ReposHolder;
 import java.util.Set;
 import java.util.UUID;
 
+/**
+ * The type Musician action.
+ */
 public class MusicianAction {
 
     private static Backend.Users.Musician user;
 
-    // setUser só é usado para inicializar o user em Mmusico
+    /**
+     * Sets user.
+     *
+     * @param user the user
+     */
+// setUser só é usado para inicializar o user em Mmusico
     public static void setUser(Backend.Users.User user) {
         if (user instanceof Backend.Users.Musician) {
             MusicianAction.user = (Backend.Users.Musician) user;
@@ -22,7 +30,10 @@ public class MusicianAction {
     }
 
 
-    // permite ao utilizador mudar variaveis como nome, email, password, etc
+    /**
+     * Edit profile.
+     */
+// permite ao utilizador mudar variaveis como nome, email, password, etc
     public static void editProfile() {
         System.out.println("[1] - Editar nome");
         System.out.println("[2] - Editar username");
@@ -68,7 +79,10 @@ public class MusicianAction {
     }
 
 
-    // Usado para mostrar ao utilizador os albums em que já participou
+    /**
+     * Show associated albums.
+     */
+// Usado para mostrar ao utilizador os albums em que já participou
     public static void showAssociatedAlbums() {
         Set<Album> aux = user.getAlbums();
 
@@ -81,6 +95,9 @@ public class MusicianAction {
         Prompt.pressEnterToContinue();
     }
 
+    /**
+     * Show future recording sessions.
+     */
     public static void showFutureRecordingSessions() {
         // get all the sessions with the musician in it
         Set<Session> relatedSessions = ReposHolder.getSessions().getMusicianSessions(user);
@@ -96,6 +113,9 @@ public class MusicianAction {
         Prompt.pressEnterToContinue();
     }
 
+    /**
+     * Request instrument for session.
+     */
     public static void requestInstrumentForSession() {
         Set<Session> relatedSessions = ReposHolder.getSessions().getMusicianSessions(user);
 
@@ -197,6 +217,9 @@ public class MusicianAction {
 
     }
 
+    /**
+     * Show stat of all recording sessions.
+     */
     public static void showStatOfAllRecordingSessions() {
         System.out.println("Estado de todas as sessões de gravação");
         for(Session s: ReposHolder.getSessions().getPendingSessions()){
@@ -214,6 +237,9 @@ public class MusicianAction {
         Generics.sc.nextLine();
     }
 
+    /**
+     * Check data.
+     */
     public static void checkData() {
         System.out.println("Nome: " + user.getName());
         System.out.println("Username: " + user.getUsername());

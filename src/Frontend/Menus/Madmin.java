@@ -2,10 +2,16 @@ package Frontend.Menus;
 import Frontend.Utils.Generics;
 import Frontend.Utils.Prompt;
 
+/**
+ * The type Madmin.
+ */
 // Menu of the administrators
 public class Madmin {
     private static int option;
 
+    /**
+     * Mostrar menu.
+     */
     public static void mostrarMenu() {
        
         System.out.println("Menu de Administrador - Logado como " +

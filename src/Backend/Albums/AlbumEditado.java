@@ -8,6 +8,9 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.UUID;
 
+/**
+ * The type Album editado.
+ */
 public class AlbumEditado extends Album {//Traduzido
     /*
      Quando se trata de referenciar sessões é muito mais seguro utilizar o ID do que a data, a opção de data é apenas para
@@ -21,6 +24,18 @@ public class AlbumEditado extends Album {//Traduzido
     // there are 2 produtores, one for the original album and one for the edited album
     private Backend.Users.Produtor produtor;
 
+    /**
+     * Instantiates a new Album editado.
+     *
+     * @param titulo      the titulo
+     * @param genero      the genero
+     * @param original    the original
+     * @param instruments the instruments
+     * @param albums      the albums
+     * @param users       the users
+     * @param sessions    the sessions
+     * @param producer    the producer
+     */
     public AlbumEditado(String titulo, String genero,
                         Album original,
                         Backend.Instruments.Repos instruments,
@@ -35,12 +50,22 @@ public class AlbumEditado extends Album {//Traduzido
         this.setProdutor(producer);
     }
 
+    /**
+     * Instantiates a new Album editado.
+     *
+     * @param titulo the titulo
+     */
     public AlbumEditado(String titulo){
         super(titulo);
         this.isEdited = false;
         this.setProdutor(null);
     }
 
+    /**
+     * Sets produtor.
+     *
+     * @param produtor the produtor
+     */
     public void setProdutor(Backend.Users.Produtor produtor) {
         if (null == produtor) return;
         produtor.addNewAlbumEdit(this);
@@ -52,16 +77,32 @@ public class AlbumEditado extends Album {//Traduzido
         return this.produtor;
     }
 
+    /**
+     * Sets album as complete.
+     */
     public void setAlbumAsComplete() {
         this.isEdited = true;
         this.setDate(LocalDateTime.now());
     }
 
+    /**
+     * Is edited boolean.
+     *
+     * @return the boolean
+     */
     public boolean isEdited() {
         return isEdited;
     }
 
-    // user na maioria das circunstâncias
+    /**
+     * Add session session.
+     *
+     * @param dateInicio the date inicio
+     * @param dateFim    the date fim
+     * @return the session
+     * @throws IllegalArgumentException the illegal argument exception
+     */
+// user na maioria das circunstâncias
     public Session addSession(LocalDateTime dateInicio, LocalDateTime dateFim) throws IllegalArgumentException {
 
         for(Session s: sessions){
@@ -85,7 +126,13 @@ public class AlbumEditado extends Album {//Traduzido
         return session;
     }
 
-    // usado apenas no construtor de sessão
+    /**
+     * Add session boolean.
+     *
+     * @param s the s
+     * @return the boolean
+     */
+// usado apenas no construtor de sessão
     public boolean addSession(Session s){
         if (this.isEdited) {
             throw new IllegalArgumentException("O álbum já está terminado");
@@ -105,10 +152,22 @@ public class AlbumEditado extends Album {//Traduzido
         return sessions.add(s);
     }
 
+    /**
+     * Get last session added backend . sessions . session.
+     *
+     * @return the backend . sessions . session
+     */
     public Backend.Sessions.Session getLastSessionAdded(){
         return this.lastSessionAdded;
     }
 
+    /**
+     * Remove session boolean.
+     *
+     * @param dateInicio the date inicio
+     * @return the boolean
+     * @throws IllegalArgumentException the illegal argument exception
+     */
     public boolean removeSession(LocalDateTime dateInicio) throws IllegalArgumentException {
         if (this.isEdited) {
             throw new IllegalArgumentException("O álbum que está a tentar editar já está terminado");
@@ -127,6 +186,13 @@ public class AlbumEditado extends Album {//Traduzido
         return sessions.remove(found);
     }
 
+    /**
+     * Remove session boolean.
+     *
+     * @param id the id
+     * @return the boolean
+     * @throws IllegalArgumentException the illegal argument exception
+     */
     public boolean removeSession(UUID id) throws IllegalArgumentException {
         if (this.isEdited) {
             throw new IllegalArgumentException("O álbum que está a tentar editar já está terminado.");
@@ -142,6 +208,12 @@ public class AlbumEditado extends Album {//Traduzido
         return sessions.remove(found);
     }
 
+    /**
+     * Mark session as completed.
+     *
+     * @param id the id
+     * @throws Exception the exception
+     */
     public void markSessionAsCompleted(UUID id) throws Exception {
         if (this.isEdited) {
             return;
@@ -153,6 +225,12 @@ public class AlbumEditado extends Album {//Traduzido
         }
     }
 
+    /**
+     * Gets session.
+     *
+     * @param id the id
+     * @return the session
+     */
     public Session getSession(UUID id) {
         for(Backend.Sessions.Session s: sessions){
             if(s.getId().equals(id)){
@@ -176,6 +254,11 @@ public class AlbumEditado extends Album {//Traduzido
         return super.removeArtist(username);
     }
 
+    /**
+     * Gets all sessions.
+     *
+     * @return the all sessions
+     */
     public Set<Backend.Sessions.Session> getAllSessions() {
         return sessions;
     }

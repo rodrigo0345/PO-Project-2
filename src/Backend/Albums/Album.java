@@ -12,6 +12,9 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
+/**
+ * The type Album.
+ */
 public class Album implements Serializable, Comparable<Album> {//Traduzido
     @Serial
     private static final long serialVersionUID = 8L;
@@ -27,6 +30,19 @@ public class Album implements Serializable, Comparable<Album> {//Traduzido
     private final Backend.Users.Repos usersRepo;
     private final Backend.Sessions.Repos sessionsRepo;
 
+    /**
+     * Instantiates a new Album.
+     *
+     * @param titulo           the titulo
+     * @param genero           the genero
+     * @param date             the date
+     * @param produtorOriginal the produtor original
+     * @param instruments      the instruments
+     * @param albums           the albums
+     * @param users            the users
+     * @param sessions         the sessions
+     * @throws IllegalArgumentException the illegal argument exception
+     */
     public Album(String titulo, String genero, LocalDateTime date, Produtor produtorOriginal, Backend.Instruments.Repos instruments,
                  Backend.Albums.Repos albums,
                  Backend.Users.Repos users, Backend.Sessions.Repos sessions)
@@ -44,7 +60,13 @@ public class Album implements Serializable, Comparable<Album> {//Traduzido
         this.albumsRepo.addAlbum(this); // dependency
     }
 
-    // only used for testing
+    /**
+     * Instantiates a new Album.
+     *
+     * @param titulo the titulo
+     * @throws IllegalArgumentException the illegal argument exception
+     */
+// only used for testing
     public Album(String titulo) throws IllegalArgumentException {
         this.instrumentsRepo = new Backend.Instruments.Repos();
         this.albumsRepo = new Backend.Albums.Repos();
@@ -54,7 +76,13 @@ public class Album implements Serializable, Comparable<Album> {//Traduzido
         this.albumsRepo.addAlbum(this); // dependency
     }
 
-    // automatically adds the album to the musician's list of albums,
+    /**
+     * Add artist boolean.
+     *
+     * @param artist the artist
+     * @return the boolean
+     */
+// automatically adds the album to the musician's list of albums,
     // should not be used to add artists to an edited album
     public boolean addArtist(Musician artist) {
         boolean a = artists.add(artist);
@@ -63,6 +91,12 @@ public class Album implements Serializable, Comparable<Album> {//Traduzido
         return a && b;
     }
 
+    /**
+     * Gets artist.
+     *
+     * @param username the username
+     * @return the artist
+     */
     public Musician getArtist(String username) {
         for (Musician m : artists) {
             if (m.getUsername().equals(username))
@@ -71,10 +105,21 @@ public class Album implements Serializable, Comparable<Album> {//Traduzido
         return null;
     }
 
+    /**
+     * Gets artists.
+     *
+     * @return the artists
+     */
     public Set<Musician> getArtists() {
         return this.artists;
     }
 
+    /**
+     * Remove artist boolean.
+     *
+     * @param username the username
+     * @return the boolean
+     */
     public boolean removeArtist(String username) {
         Musician aux = getArtist(username);
         if (null == aux)
@@ -83,6 +128,12 @@ public class Album implements Serializable, Comparable<Album> {//Traduzido
         return artists.remove(aux);
     }
 
+    /**
+     * Remove artist boolean.
+     *
+     * @param user the user
+     * @return the boolean
+     */
     public boolean removeArtist(Musician user) {
         // remove the album from the musician's list of albums
         for (Musician m : artists) {
@@ -92,18 +143,40 @@ public class Album implements Serializable, Comparable<Album> {//Traduzido
         return artists.remove(user);
     }
 
+    /**
+     * Gets date.
+     *
+     * @return the date
+     */
     public LocalDateTime getDate() {
         return date;
     }
 
+    /**
+     * Sets date.
+     *
+     * @param date the date
+     */
     public void setDate(LocalDateTime date) {
         this.date = date.truncatedTo(ChronoUnit.MINUTES);
     }
 
+    /**
+     * Gets titulo.
+     *
+     * @return the titulo
+     */
     public String getTitulo() {
         return this.titulo;
     }
 
+    /**
+     * Sets titulo.
+     *
+     * @param titulo the titulo
+     * @return the titulo
+     * @throws IllegalArgumentException the illegal argument exception
+     */
     public boolean setTitulo(String titulo) throws IllegalArgumentException {
         if (!this.albumsRepo.isTituloValid(titulo))
             throw new IllegalArgumentException(titulo + " já existe");
@@ -111,10 +184,21 @@ public class Album implements Serializable, Comparable<Album> {//Traduzido
         return true;
     }
 
+    /**
+     * Gets genero.
+     *
+     * @return the genero
+     */
     public String getGenero() {
         return genero;
     }
 
+    /**
+     * Add track boolean.
+     *
+     * @param track the track
+     * @return the boolean
+     */
     public boolean addTrack(Backend.Tracks.Track track) {
         if (!isTracknameValid(track.getTitulo()))
             return false;
@@ -126,11 +210,21 @@ public class Album implements Serializable, Comparable<Album> {//Traduzido
         return !tracks.containsKey(trackname);
     }
 
+    /**
+     * Remove track.
+     *
+     * @param track the track
+     */
     public void removeTrack(Backend.Tracks.Track track) {
         tracks.remove(track.getTitulo());
     }
 
-    // only use for albums that are not editable
+    /**
+     * Sets produtor original.
+     *
+     * @param produtor the produtor
+     */
+// only use for albums that are not editable
     public void setProdutorOriginal(Produtor produtor) {
         if (null == produtor) {
             return; // just to avoid exceptions as there are cases where this needs to continue
@@ -139,6 +233,11 @@ public class Album implements Serializable, Comparable<Album> {//Traduzido
         this.produtorOriginal.addOldAlbum(this);
     }
 
+    /**
+     * Gets produtor.
+     *
+     * @return the produtor
+     */
     public Produtor getProdutor() {
         return this.produtorOriginal;
     }
@@ -167,26 +266,57 @@ public class Album implements Serializable, Comparable<Album> {//Traduzido
         return this.titulo.compareTo(o.titulo);
     }
 
+    /**
+     * Gets instruments repo.
+     *
+     * @return the instruments repo
+     */
     public Backend.Instruments.Repos getInstrumentsRepo() {
         return instrumentsRepo;
     }
 
+    /**
+     * Gets users repo.
+     *
+     * @return the users repo
+     */
     public Backend.Users.Repos getUsersRepo() {
         return usersRepo;
     }
 
+    /**
+     * Gets sessions repo.
+     *
+     * @return the sessions repo
+     */
     public Backend.Sessions.Repos getSessionsRepo() {
         return sessionsRepo;
     }
 
+    /**
+     * Gets albums repo.
+     *
+     * @return the albums repo
+     */
     public Backend.Albums.Repos getAlbumsRepo() {
         return albumsRepo;
     }
 
+    /**
+     * Sets genero.
+     *
+     * @param genre the genre
+     */
     public void setGenero(String genre) {
         this.genero = genre;
     }
 
+    /**
+     * Remove track boolean.
+     *
+     * @param trackname the trackname
+     * @return the boolean
+     */
     public boolean removeTrack(String trackname) {
         if (!this.doesTrackExist(trackname)) {
             return false;
@@ -195,10 +325,21 @@ public class Album implements Serializable, Comparable<Album> {//Traduzido
         return true;
     }
 
+    /**
+     * Gets tracks.
+     *
+     * @return the tracks
+     */
     public Map<String, Backend.Tracks.Track> getTracks() {
         return tracks;
     }
 
+    /**
+     * Does track exist boolean.
+     *
+     * @param trackname the trackname
+     * @return the boolean
+     */
     public boolean doesTrackExist(String trackname) {
         return this.tracks.containsKey(trackname);
     }

@@ -10,6 +10,9 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 
+/**
+ * The type Session.
+ */
 public class Session implements Serializable, Comparable<Session> {//Traduzido
     @Serial
     private static final long serialVersionUID = 4L;
@@ -26,6 +29,18 @@ public class Session implements Serializable, Comparable<Session> {//Traduzido
     private final Backend.Instruments.Repos instrumentRepos;
     private final Backend.Albums.Repos albumRepos;
 
+    /**
+     * Instantiates a new Session.
+     *
+     * @param datainicio  the datainicio
+     * @param datafim     the datafim
+     * @param album       the album
+     * @param sessions    the sessions
+     * @param users       the users
+     * @param instruments the instruments
+     * @param albums      the albums
+     * @throws IllegalArgumentException the illegal argument exception
+     */
     public Session(LocalDateTime datainicio, LocalDateTime datafim, AlbumEditado album, Backend.Sessions.Repos sessions, Backend.Users.Repos users,
                    Backend.Instruments.Repos instruments, Backend.Albums.Repos albums) throws IllegalArgumentException {
         this.startDate = datainicio;
@@ -39,30 +54,66 @@ public class Session implements Serializable, Comparable<Session> {//Traduzido
         sessions.addPendingSession(this);
     }
 
+    /**
+     * Gets data inicio.
+     *
+     * @return the data inicio
+     */
     public LocalDateTime getDataInicio() {
         return this.startDate;
     }
 
+    /**
+     * Sets data inicio.
+     *
+     * @param date the date
+     */
     public void setDataInicio(LocalDateTime date) {
         this.startDate = date.truncatedTo(ChronoUnit.MINUTES);
     }
 
+    /**
+     * Gets data fim.
+     *
+     * @return the data fim
+     */
     public LocalDateTime getDataFim() {
         return this.endDate;
     }
 
+    /**
+     * Sets data fim.
+     *
+     * @param date the date
+     */
     public void setDataFim(LocalDateTime date) {
         this.endDate = date.truncatedTo(ChronoUnit.MINUTES);
     }
 
+    /**
+     * Gets id.
+     *
+     * @return the id
+     */
     public UUID getId() {
         return this.id;
     }
 
+    /**
+     * Is completed boolean.
+     *
+     * @return the boolean
+     */
     public boolean isCompleted() {
         return this.completed;
     }
 
+    /**
+     * Sets completed.
+     *
+     * @param completed the completed
+     * @throws Exception the exception
+     */
     public void setCompleted(boolean completed) throws Exception {
         if (this.sessionRepos.getPendingSessions().contains(this)) {
             throw new Exception("Sessão ainda não foi aceite pelo administrador");
@@ -94,15 +145,30 @@ public class Session implements Serializable, Comparable<Session> {//Traduzido
                 || (other.startDate.equals(this.startDate) && other.endDate.equals(this.endDate));
     }
 
-    // used for exceptions
+    /**
+     * Sets id.
+     *
+     * @param id2 the id 2
+     */
+// used for exceptions
     public void setId(UUID id2) {
         this.id = id2;
     }
 
+    /**
+     * Is accepted boolean.
+     *
+     * @return the boolean
+     */
     public boolean isAccepted() {
         return this.accepted;
     }
 
+    /**
+     * Sets accepted.
+     *
+     * @param accepted the accepted
+     */
     public void setAccepted(boolean accepted) {
         this.accepted = accepted;
 
@@ -114,6 +180,12 @@ public class Session implements Serializable, Comparable<Session> {//Traduzido
         this.sessionRepos.getPendingSessions().remove(this);
     }
 
+    /**
+     * Add invited musician.
+     *
+     * @param m the m
+     * @throws IllegalArgumentException the illegal argument exception
+     */
     public void addInvitedMusician(Backend.Users.Musician m) throws IllegalArgumentException {
         if(!this.accepted) throw new IllegalArgumentException("A sessão que está a tentar modificar ainda não foi aprovada!");
         if(this.completed) throw new IllegalArgumentException("A sessão a que está a tentar aceder já foi terminada!");
@@ -127,6 +199,12 @@ public class Session implements Serializable, Comparable<Session> {//Traduzido
         m.addSession(this.album, this);
     }
 
+    /**
+     * Remove invited musician.
+     *
+     * @param m the m
+     * @throws IllegalArgumentException the illegal argument exception
+     */
     public void removeInvitedMusician(Backend.Users.Musician m) throws IllegalArgumentException {
         if(!this.accepted) throw new IllegalArgumentException("A sessão que está a tentar modificar ainda não foi aprovada!");
         if(this.completed) throw new IllegalArgumentException("A sessão a que está a tentar aceder já foi terminada!");
@@ -134,23 +212,53 @@ public class Session implements Serializable, Comparable<Session> {//Traduzido
         m.removeSession(this.album, this);
     }
 
+    /**
+     * Remove all invited musicians.
+     *
+     * @throws IllegalArgumentException the illegal argument exception
+     */
     public void removeAllInvitedMusicians() throws IllegalArgumentException {
         this.invitedArtists.forEach((s, artist) -> this.removeInvitedMusician(artist));
     }
 
 
+    /**
+     * Get invited musician backend . users . musician.
+     *
+     * @param musician the musician
+     * @return the backend . users . musician
+     */
     public Backend.Users.Musician getInvitedMusician(Musician musician){
         return this.invitedArtists.get(musician.getUsername());
     }
 
+    /**
+     * Get invited musician backend . users . musician.
+     *
+     * @param username the username
+     * @return the backend . users . musician
+     */
     public Backend.Users.Musician getInvitedMusician(String username){
         return this.invitedArtists.get(username);
     }
 
+    /**
+     * Get invited musicians map.
+     *
+     * @return the map
+     */
     public Map<String, Backend.Users.Musician> getInvitedMusicians(){
         return this.invitedArtists;
     }
 
+    /**
+     * Add pending instrument instrument.
+     *
+     * @param instrument the instrument
+     * @param quantity   the quantity
+     * @return the instrument
+     * @throws IllegalArgumentException the illegal argument exception
+     */
     // waits for the permission of the administrator the session itself needs to be approved by the admin too
     // only accessed by the musician.
     // Creates a copy of an Instrument and adds it to the session
@@ -185,7 +293,14 @@ public class Session implements Serializable, Comparable<Session> {//Traduzido
         return instrument;
     }
 
-    // waits for the permission of the administrator the session itself needs to be approved by the admin too
+    /**
+     * Add pending instrument instrument.
+     *
+     * @param name the name
+     * @return the instrument
+     * @throws IllegalArgumentException the illegal argument exception
+     */
+// waits for the permission of the administrator the session itself needs to be approved by the admin too
     // only accessed by the musician
     public Instrument addPendingInstrument(String name) throws IllegalArgumentException {
         if(!this.accepted) throw new IllegalArgumentException("A sessão que está a tentar modificar ainda não foi aprovada!");
@@ -198,29 +313,64 @@ public class Session implements Serializable, Comparable<Session> {//Traduzido
         return i;
     }
 
+    /**
+     * Get pendent instruments set.
+     *
+     * @return the set
+     */
     public Set<Instrument> getPendentInstruments(){
         return this.pendentInstruments;
     }
 
-    // only Administrators can have access to this method
+    /**
+     * Approve instrument boolean.
+     *
+     * @param instrument the instrument
+     * @return the boolean
+     */
+// only Administrators can have access to this method
     public boolean approveInstrument(Instrument instrument){
         return this.pendentInstruments.remove(instrument) && this.instruments.add(instrument);
     }
 
-    // only Administrators can have access to this method
+    /**
+     * Deny instrument boolean.
+     *
+     * @param instrument the instrument
+     * @return the boolean
+     */
+// only Administrators can have access to this method
     public boolean denyInstrument(Instrument instrument){
         this.refusedInstruments.add(instrument);
         return this.pendentInstruments.remove(instrument);
     }
 
+    /**
+     * Get approved instruments set.
+     *
+     * @return the set
+     */
     public Set<Instrument> getApprovedInstruments(){
         return this.instruments;
     }
 
+    /**
+     * Does session overlap boolean.
+     *
+     * @param other the other
+     * @return the boolean
+     */
     public boolean doesSessionOverlap(Session other){
         return !this.startDate.isAfter(other.endDate) && !this.endDate.isBefore(other.startDate) && (!this.startDate.isEqual(other.startDate) || !this.endDate.isEqual(other.endDate));
     }
 
+    /**
+     * Does session overlap boolean.
+     *
+     * @param start the start
+     * @param end   the end
+     * @return the boolean
+     */
     public boolean doesSessionOverlap(LocalDateTime start, LocalDateTime end){
 return !this.startDate.isAfter(end) && !this.endDate.isBefore(start) && (!this.startDate.isEqual(start) || !this.endDate.isEqual(end));
     }
@@ -235,6 +385,12 @@ return !this.startDate.isAfter(end) && !this.endDate.isBefore(start) && (!this.s
         return 1;
     }
 
+    /**
+     * Equals boolean.
+     *
+     * @param o the o
+     * @return the boolean
+     */
     public boolean equals(Session o){
         if(o.startDate.equals(this.startDate) && o.endDate.equals(this.endDate)) { return true; }
         else return o.id.equals(this.id);
@@ -245,10 +401,20 @@ return !this.startDate.isAfter(end) && !this.endDate.isBefore(start) && (!this.s
         return "id da sessão = " + this.id + "data inicio = " + this.startDate + "data fim = " + this.endDate + "edicao de album = " + this.album;
     }
 
+    /**
+     * Sets rejected.
+     *
+     * @param b the b
+     */
     public void setRejected(boolean b) {
         this.rejected = b;
     }
 
+    /**
+     * Was rejected boolean.
+     *
+     * @return the boolean
+     */
     public boolean wasRejected() {
         return this.rejected;
     }

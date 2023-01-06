@@ -2,9 +2,15 @@ package Frontend.Menus;
 import Frontend.Utils.Generics;
 import Frontend.Utils.Prompt;
 
+/**
+ * The type Mprodutor.
+ */
 public class Mprodutor {
     private static int option;
 
+    /**
+     * Mostrar menu.
+     */
     public static void mostrarMenu() {//Traduzido
 
         // escrever aqui os menus
@@ -34,6 +40,9 @@ public class Mprodutor {
         executeOption();
     }
 
+    /**
+     * Execute option.
+     */
     public static void executeOption() {
 
         Frontend.Actions.ProdutorAction.setUser(Frontend.Utils.UserHolder.getUser());

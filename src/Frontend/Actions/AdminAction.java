@@ -11,11 +11,19 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
+/**
+ * The type Admin action.
+ */
 public class AdminAction {
 
     private static Backend.Users.Admin user;
 
-    // setUser só é usado para inicializar o user em Madmin
+    /**
+     * Sets user.
+     *
+     * @param user the user
+     */
+// setUser só é usado para inicializar o user em Madmin
     public static void setUser(Backend.Users.User user) {
         if(user == null) {
             throw new IllegalArgumentException("Utilizador não pode ser null");
@@ -27,6 +35,9 @@ public class AdminAction {
         }
     }
 
+    /**
+     * Add producer.
+     */
     public static void addProducer() {
 
         String name = Prompt.readString("Nome: ");
@@ -50,6 +61,9 @@ public class AdminAction {
         }
     }
 
+    /**
+     * Add musician.
+     */
     public static void addMusician() {
 
         String name = Prompt.readString("Nome: ");
@@ -71,6 +85,9 @@ public class AdminAction {
         }
     }
 
+    /**
+     * Remove user.
+     */
     public static void removeUser() {
 
         String username = Prompt.readString("Username: ");
@@ -83,7 +100,10 @@ public class AdminAction {
         }
     }
 
-    
+
+    /**
+     * Add instrument.
+     */
     public static void addInstrument() {
 
         String name = Prompt.readString("Nome do instrumento: ");
@@ -112,6 +132,9 @@ public class AdminAction {
         }
     }
 
+    /**
+     * Show all session requests.
+     */
     public static void showAllSessionRequests() {
         if (null == AdminAction.user.getAllSessionRequests()) {
             Prompt.pressEnterToContinue("Não existem pedidos de sessão");
@@ -151,16 +174,25 @@ public class AdminAction {
 
     }
 
+    /**
+     * Show all sessions.
+     */
     public static void showAllSessions() {
         System.out.println(user.getAllRecordingSessions());
         Prompt.pressEnterToContinue();
     }
 
+    /**
+     * Show all albums being edited.
+     */
     public static void showAllAlbumsBeingEdited() {
         System.out.println(user.getAllAlbumsBeingEdited());
         Prompt.pressEnterToContinue();
     }
 
+    /**
+     * Stats.
+     */
     public static void stats() {
         System.out.println("1. Estatisticas globais");
         System.out.println("2. Estatisticas de um certo periodo de tempo");
@@ -181,6 +213,9 @@ public class AdminAction {
         }
     }
 
+    /**
+     * Show all users.
+     */
     public static void showAllUsers() {
         Map<String, User> list = ReposHolder.getUsers().getUsers();
         for (Map.Entry<String, Backend.Users.User> entry : list.entrySet()) {
@@ -189,6 +224,9 @@ public class AdminAction {
         Prompt.pressEnterToContinue();
     }
 
+    /**
+     * Show all instruments.
+     */
     public static void showAllInstruments() {
         Map<String, Backend.Instruments.Instrument> list2 = ReposHolder.getInstruments().getInstruments();
         for (Map.Entry<String, Backend.Instruments.Instrument> entry : list2.entrySet()) {
@@ -197,6 +235,9 @@ public class AdminAction {
         Prompt.pressEnterToContinue();
     }
 
+    /**
+     * Show all albums.
+     */
     public static void showAllAlbums() {
         Map<String, Backend.Albums.Album> list3 = ReposHolder.getAlbums().getAlbums();
         for (Backend.Albums.Album album : list3.values()) {
@@ -205,6 +246,9 @@ public class AdminAction {
         Prompt.pressEnterToContinue();
     }
 
+    /**
+     * Check data.
+     */
     public static void checkData() {
         System.out.println("Nome: " + user.getName());
         System.out.println("Username: " + user.getUsername());
@@ -213,6 +257,9 @@ public class AdminAction {
         Prompt.pressEnterToContinue();
     }
 
+    /**
+     * Add album.
+     */
     public static void addAlbum() {
         String titleOfTheAlbum = Prompt.readString("Nome do album: ");
         if(Prompt.goBack(titleOfTheAlbum)) return;
@@ -300,7 +347,10 @@ public class AdminAction {
         }
     }
 
-    
+
+    /**
+     * Show all instruments requests.
+     */
     public static void showAllInstrumentsRequests(){
 
         // basta percorrer todas as sessões e mostrar todos os instrumentos pendentes
@@ -361,6 +411,9 @@ public class AdminAction {
         }
     }
 
+    /**
+     * Remove album.
+     */
     public static void removeAlbum() {
         System.out.println("Em construção...");
     }

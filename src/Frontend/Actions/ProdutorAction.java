@@ -11,10 +11,18 @@ import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.UUID;
 
+/**
+ * The type Produtor action.
+ */
 public class ProdutorAction {
     private static Backend.Users.Produtor user;
 
-    // setUser só é usado para inicializar o user em Mprodutor
+    /**
+     * Sets user.
+     *
+     * @param user the user
+     */
+// setUser só é usado para inicializar o user em Mprodutor
     public static void setUser(Backend.Users.User user) {
         if (user instanceof Backend.Users.Produtor) {
             ProdutorAction.user = (Backend.Users.Produtor) user;
@@ -23,7 +31,10 @@ public class ProdutorAction {
         }
     }
 
-    // permite ao utilizador mudar variaveis como nome, email, password, etc
+    /**
+     * Edit profile.
+     */
+// permite ao utilizador mudar variaveis como nome, email, password, etc
     public static void editProfile() {
         System.out.println("[1] - Editar nome");
         System.out.println("[2] - Editar username");
@@ -67,7 +78,10 @@ public class ProdutorAction {
         }
     }
 
-    // permite ao utilizador criar um album e ainda editar os seus albums
+    /**
+     * Start or create editing album.
+     */
+// permite ao utilizador criar um album e ainda editar os seus albums
     public static void startOrCreateEditingAlbum() {
 
         System.out.println("1. Começar a editar um álbum");
@@ -316,6 +330,9 @@ public class ProdutorAction {
         }
     }
 
+    /**
+     * End recording session.
+     */
     public static void endRecordingSession() {
         System.out.println("Terminar sessões de gravação...");
         boolean res = false;
@@ -330,6 +347,9 @@ public class ProdutorAction {
         }
     }
 
+    /**
+     * Show state of album.
+     */
     public static void showStateOfAlbum() {
         String albumName = Prompt.readString("Selecione o álbum para examinar: ");
         if (Prompt.goBack(albumName)) return;
@@ -354,6 +374,9 @@ public class ProdutorAction {
         }
     }
 
+    /**
+     * Show your albums.
+     */
     public static void showYourAlbums() {
         Set<Album> oldProjects = user.getOldAlbums();
         Set<AlbumEditado> myEditedProjects = user.getNewAlbumsEdits();
@@ -378,6 +401,9 @@ public class ProdutorAction {
         Prompt.pressEnterToContinue();
     }
 
+    /**
+     * Show recording sessions of day.
+     */
     public static void showRecordingSessionsOfDay() {
         String day = Prompt.readString("Selecione o dia para inspecionar (dd/MM/yyyy): ");
         if (Prompt.goBack(day)) return;
@@ -393,6 +419,9 @@ public class ProdutorAction {
         System.out.println(session);
     }
 
+    /**
+     * Check data.
+     */
     public static void checkData() {
         System.out.println("Nome: " + user.getName());
         System.out.println("Username: " + user.getUsername());
