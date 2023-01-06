@@ -66,7 +66,7 @@ public class Admin extends User {//Traduzidos
 
     public Backend.Users.Musician addMusician(String name, String email, String username, String password)
             throws IllegalArgumentException {
-        if (this.getUsersRepo().isUsernameAvailable(username)) {
+        if (!this.getUsersRepo().isUsernameAvailable(username)) {
             throw new IllegalArgumentException("Username já existe");
         }
         StringChecker.validName(name);
@@ -78,7 +78,7 @@ public class Admin extends User {//Traduzidos
 
     public Produtor addProdutor(String name, String email, String username, String password)
             throws IllegalArgumentException {
-        if (this.getUsersRepo().isUsernameAvailable(username)) {
+        if (!this.getUsersRepo().isUsernameAvailable(username)) {
             throw new IllegalArgumentException("Username já existe");
         }
         StringChecker.validName(name);
