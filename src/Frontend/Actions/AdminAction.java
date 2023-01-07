@@ -3,6 +3,7 @@ package Frontend.Actions;
 import Backend.Instruments.Instrument;
 import Backend.Sessions.Session;
 import Backend.Users.User;
+import Frontend.Menus.ConsoleColors;
 import Frontend.Utils.Generics;
 import Frontend.Utils.Prompt;
 import Frontend.Utils.ReposHolder;
@@ -39,7 +40,39 @@ public class AdminAction {
      * Add producer.
      */
     public static void addProducer() {
+        System.out.print("\033[H\033[2J");
 
+        ConsoleColors color = new ConsoleColors();
+
+        System.out.println(color.getCYAN());
+        System.out.println(
+                        " ________________________________________________________________________________________________________________________");
+        System.out.println(color.getYELLOW());
+        System.out.println(
+                        "     _______  ______   __   __  ___   __    _  ___   _______  _______  ______    _______  ______   _______  ______   ");
+        System.out.println(
+                        "    |   _   ||      | |  |_|  ||   | |  |  | ||   | |       ||       ||    _ |  |   _   ||      | |       ||    _ | ");
+        System.out.println(
+                        "    |  |_|  ||  _    ||       ||   | |   |_| ||   | |  _____||_     _||   | ||  |  |_|  ||  _    ||   _   ||   | || ");
+        System.out.println(
+                        "    |       || | |   ||       ||   | |       ||   | | |_____   |   |  |   |_||_ |       || | |   ||  | |  ||   |_||_");
+        System.out.println(
+                        "    |       || |_|   ||       ||   | |  _    ||   | |_____  |  |   |  |    __  ||       || |_|   ||  |_|  ||    __  |");
+        System.out.println(
+                        "    |   _   ||       || ||_|| ||   | | | |   ||   |  _____| |  |   |  |   |  | ||   _   ||       ||       ||   |  | |");
+        System.out.println(
+                        "    |__| |__||______| |_|   |_||___| |_|  |__||___| |_______|  |___|  |___|  |_||__| |__||______| |_______||___|  |_|");
+        System.out.println(color.getCYAN());
+        System.out.println(
+                        " ________________________________________________________________________________________________________________________");
+                        
+        System.out.println(color.getWHITE());
+        System.out.println("                                   Menu de Administrador - Logado como " +
+                                                        Frontend.Utils.UserHolder.getUser().getUsername());
+        System.out.println(color.getCYAN());
+        System.out.println(
+                        "                        **************************************************************");
+        
         String name = Prompt.readString("Nome: ");
         if(Prompt.goBack(name)) return;
 

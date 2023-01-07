@@ -12,17 +12,65 @@ public class Mmusico{
      * Mostrar menu.
      */
     public static void mostrarMenu() {
-        System.out.println("Menu de Musico - Logado como " + Frontend.Utils.UserHolder.getUser().getUsername());
-        System.out.println("1. Editar perfil");
-        System.out.println("2. Álbuns associados");
-        System.out.println("3. Futuras gravações de sessão");
-        System.out.println("4. Requisitar instrumento para uma determinada sessão de gravação");
-        System.out.println("5. Verificar estado de todas as sessões de gravação");
-        System.out.println("6. Consultar dados");
-        System.out.println("7. Log out");
-        System.out.println("8. Exit");
 
-        option = Prompt.checkOption("Introduza a opção: ");
+        ConsoleColors color = new ConsoleColors();
+
+        System.out.println(color.getCYAN());
+        System.out.println(
+                "________________________________________________________________________________________________________________________");
+        System.out.println(color.getYELLOW());
+        System.out.println("                                __   __  __   __  _______  ___   _______  _______    ");
+        System.out.println("                               |  |_|  ||  | |  ||       ||   | |       ||       |");
+        System.out.println("                               |       ||  | |  ||  _____||   | |       ||   _   | ");
+        System.out.println("                               |       ||  |_|  || |_____ |   | |       ||  | |  |");
+        System.out.println("                               |       ||       ||_____  ||   | |      _||  |_|  |");
+        System.out.println("                               | ||_|| ||       | _____| ||   | |     |_ |       |");
+        System.out.println("                               |_|   |_||_______||_______||___| |_______||_______|");
+        System.out.println(color.getCYAN());
+        System.out.println(
+                "________________________________________________________________________________________________________________________");
+        
+        System.out.println(color.getWHITE());
+        System.out.println("                                          Menu de Musico - Logado como " + Frontend.Utils.UserHolder.getUser().getUsername());
+
+        System.out.println(color.getCYAN());
+        System.out.println("                        **************************************************************");
+        System.out.println(color.getYELLOW());
+        System.out.print("                                [1]");
+        System.out.print(color.getWHITE());
+        System.out.print(" - Editar perfil");
+        System.out.println(color.getYELLOW());
+        System.out.print("                                [2]");
+        System.out.print(color.getWHITE());
+        System.out.print(" - Álbuns associados");
+        System.out.println(color.getYELLOW());
+        System.out.print("                                [3]");
+        System.out.print(color.getWHITE());
+        System.out.print(" - Futuras gravações de sessão");
+        System.out.println(color.getYELLOW());
+        System.out.print("                                [4]");
+        System.out.print(color.getWHITE());
+        System.out.print(" - Requisitar instrumento para uma determinada sessão de gravação");
+        System.out.println(color.getYELLOW());
+        System.out.print("                                [5]");
+        System.out.print(color.getWHITE());
+        System.out.print(" - Verificar estado de todas as sessões de gravação");
+        System.out.println(color.getYELLOW());
+        System.out.print("                                [6]");
+        System.out.print(color.getWHITE());
+        System.out.println(" - Consultar dados");
+        System.out.print(color.getYELLOW());
+        System.out.print("                                [7]");
+        System.out.print(color.getWHITE());
+        System.out.print(" - Log out");
+        System.out.println(color.getYELLOW());
+        System.out.print("                                [8]");
+        System.out.print(color.getWHITE());
+        System.out.println(" - Exit");
+ 
+ 
+
+        option = Prompt.checkOption("[?] - Introduza a opção: ");
 
         if(7 == Mmusico.option || 8 == Mmusico.option) {
             Frontend.Utils.UserHolder.setUser(null);

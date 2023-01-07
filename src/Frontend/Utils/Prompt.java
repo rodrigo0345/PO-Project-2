@@ -8,6 +8,7 @@ public class Prompt {
     /**
      * Press enter to continue.
      */
+
     public static void pressEnterToContinue() {
         System.out.println("Pressione ENTER para continuar...");
         try {
@@ -55,7 +56,10 @@ public class Prompt {
      * @return the string
      */
     public static String readString(String message){
+        ConsoleColors color = new ConsoleColors();
+        System.out.print(color.getYELLOW());
         write(message);
+        System.out.print(color.getWHITE());
         return Generics.sc.nextLine();
     }
 
@@ -66,6 +70,7 @@ public class Prompt {
      * @return the double
      */
     public static Double readDouble(String message){
+        ConsoleColors color = new ConsoleColors();
         Double number = null;
         String text;
 
@@ -76,7 +81,9 @@ public class Prompt {
             try{
                 number = Double.parseDouble(text);
             }catch(NumberFormatException e){
-                outputError(text + " não é um número decimal válido.");
+                System.out.println(color.getRED());
+                outputError("[!] - ERRO: " + text +" não é um decimal válido");
+                System.out.println(color.getYELLOW());
             }
         }while(null == number);
 
@@ -90,7 +97,7 @@ public class Prompt {
      * @return the int
      */
     public static int checkInt(String message){
-
+        ConsoleColors color = new ConsoleColors();
         Integer number = null;
         String text;
 
@@ -102,7 +109,9 @@ public class Prompt {
                 number = Integer.parseInt(text);
             }
             catch(NumberFormatException e){
-                outputError(text + " não é um número inteiro válido");
+                System.out.println(color.getRED());
+                outputError(" [!] - ERRO: " + text +" não é um inteiro válido");
+                System.out.println(color.getYELLOW());
             }
         }while(null == number);
 
@@ -116,19 +125,23 @@ public class Prompt {
      * @return the int
      */
     public static int checkOption(String message){
-
+        ConsoleColors color = new ConsoleColors();
         Integer number = null;
         String text;
 
         do{
+            System.out.println(color.getGREEN());
             write(message);
+            System.out.print(color.getWHITE());
             text = Generics.sc.nextLine();
 
             try{
                 number = Integer.parseInt(text);
             }catch(NumberFormatException e){
-                outputError(text + " não é uma opção válida.");
-                Generics.sc.nextLine();
+                System.out.println(color.getRED());
+                outputError("[!] - ERRO: " + text +" não é um algarismo válido");
+                System.out.println(color.getYELLOW());
+                Generics.sc.nextLine(); 
             }
         }while(null == number);
 

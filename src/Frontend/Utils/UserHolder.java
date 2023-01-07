@@ -68,7 +68,9 @@ public class UserHolder {
             Frontend.Utils.Prompt.cleanPrompt();
         }
         else {
-            throw new IllegalArgumentException("Utilizador não é Produtor nem Músico ou Admin");
+            ConsoleColors color = new ConsoleColors();
+            System.out.println(color.getRED());
+            throw new IllegalArgumentException("[!] - ERRO: O utilizador não é produtor, músico ou admin");
         }
     }
 

@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 import Backend.Users.Repos;
 import Backend.Users.User;
+import Frontend.Menus.ConsoleColors;
 
 /**
  * The type Authentication.
@@ -37,12 +38,30 @@ public class Authentication {
      */
     public static User loginPrompt(Repos users) throws Exception {
 
-        String username = Frontend.Utils.Prompt.readString("Username: ");
-        String password = Frontend.Utils.Prompt.readString("Password: ");
+        ConsoleColors color = new ConsoleColors();
+
+        System.out.println(color.getCYAN());
+        System.out.println(
+                "____________________________________________________________________________________________________________");
+        System.out.println(color.getYELLOW());
+        System.out.println("                                     __   __  _______  __    _  __   __                  ");
+        System.out.println("                                    |  |_|  ||       ||  |  | ||  | |  |");
+        System.out.println("                                    |       ||    ___||   |_| ||  | |  |");
+        System.out.println("                                    |       ||   |___ |       ||  |_|  |");
+        System.out.println("                                    |       ||    ___||  _    ||       |");
+        System.out.println("                                    | ||_|| ||   |___ | | |   ||       |");
+        System.out.println("                                    |_|   |_||_______||_|  |__||_______|");
+        System.out.println(color.getCYAN());
+        System.out.println(
+                "____________________________________________________________________________________________________________");
+        System.out.println(color.getWHITE());       
+        String username = Frontend.Utils.Prompt.readString("            Username: ");
+        String password = Frontend.Utils.Prompt.readString("            Password: ");
 
         User user = users.getUser(username, password);
         if (null == user) {
-            throw new Exception("Username ou password inválidos");
+            System.out.println(color.getRED());
+            throw new Exception("[!] - ERRO: Username ou password inválidos");
         }
         return user;
     }

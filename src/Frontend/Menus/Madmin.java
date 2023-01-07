@@ -13,29 +13,113 @@ public class Madmin {
      * Mostrar menu.
      */
     public static void mostrarMenu() {
+
+        ConsoleColors color = new ConsoleColors();
+
+        System.out.println(color.getCYAN());
+        System.out.println(
+                        " ________________________________________________________________________________________________________________________");
+        System.out.println(color.getYELLOW());
+        System.out.println(
+                        "     _______  ______   __   __  ___   __    _  ___   _______  _______  ______    _______  ______   _______  ______   ");
+        System.out.println(
+                        "    |   _   ||      | |  |_|  ||   | |  |  | ||   | |       ||       ||    _ |  |   _   ||      | |       ||    _ | ");
+        System.out.println(
+                        "    |  |_|  ||  _    ||       ||   | |   |_| ||   | |  _____||_     _||   | ||  |  |_|  ||  _    ||   _   ||   | || ");
+        System.out.println(
+                        "    |       || | |   ||       ||   | |       ||   | | |_____   |   |  |   |_||_ |       || | |   ||  | |  ||   |_||_");
+        System.out.println(
+                        "    |       || |_|   ||       ||   | |  _    ||   | |_____  |  |   |  |    __  ||       || |_|   ||  |_|  ||    __  |");
+        System.out.println(
+                        "    |   _   ||       || ||_|| ||   | | | |   ||   |  _____| |  |   |  |   |  | ||   _   ||       ||       ||   |  | |");
+        System.out.println(
+                        "    |__| |__||______| |_|   |_||___| |_|  |__||___| |_______|  |___|  |___|  |_||__| |__||______| |_______||___|  |_|");
+        System.out.println(color.getCYAN());
+        System.out.println(
+                        " ________________________________________________________________________________________________________________________");
+                        
+        System.out.println(color.getWHITE());
+        System.out.println("                                   Menu de Administrador - Logado como " +
+                                                        Frontend.Utils.UserHolder.getUser().getUsername());
+        System.out.println(color.getCYAN());
+        System.out.println(
+                        "                        **************************************************************");
+        System.out.println(color.getYELLOW());
+        System.out.print("                                [1]");
+        System.out.print(color.getWHITE());
+        System.out.print(" - Adicionar um novo produtor");
+        System.out.println(color.getYELLOW());
+        System.out.print("                                [2]");
+        System.out.print(color.getWHITE());
+        System.out.print(" - Adicionar um novo músico");
+        System.out.println(color.getYELLOW());
+        System.out.print("                                [3]");
+        System.out.print(color.getWHITE());
+        System.out.print(" - Remover um utilizador");
+        System.out.println(color.getYELLOW());
+        System.out.print("                                [4]");
+        System.out.print(color.getWHITE());
+        System.out.print(" - Adicionar um instrumento musical");
+        System.out.println(color.getYELLOW());
+        System.out.print("                                [5]");
+        System.out.print(color.getWHITE());
+        System.out.print(" - Exibir todos os pedidos de sessão");
+        System.out.println(color.getYELLOW());
+        System.out.print("                                [6]");
+        System.out.print(color.getWHITE());
+        System.out.print(" - Exibir todos as sessões de gravação");
+        System.out.println(color.getYELLOW());
+        System.out.print("                                [7]");
+        System.out.print(color.getWHITE());
+        System.out.print(" - Exibir todos os álbuns em edição");
+        System.out.println(color.getYELLOW());
+        System.out.print("                                [8]");
+        System.out.print(color.getWHITE());
+        System.out.print(" - Estatisticas");
+        System.out.println(color.getYELLOW());
+        System.out.print("                                [9]");
+        System.out.print(color.getWHITE());
+        System.out.print(" - Exibir todos os users");
+        System.out.println(color.getYELLOW());
+        System.out.print("                               [10]");
+        System.out.print(color.getWHITE());
+        System.out.print(" - Exibir todos os instrumentos");
+        System.out.println(color.getYELLOW());
+        System.out.print("                               [11]");
+        System.out.print(color.getWHITE());
+        System.out.print(" - Adicionar um novo álbum");
+        System.out.println(color.getYELLOW());
+        System.out.print("                               [12]");
+        System.out.print(color.getWHITE());
+        System.out.print(" - Exibir todos os álbuns");
+        System.out.println(color.getYELLOW());
+        System.out.print("                               [13]");
+        System.out.print(color.getWHITE());
+        System.out.print(" - Consultar dados");
+        System.out.println(color.getYELLOW());
+        System.out.print("                               [14]");
+        System.out.print(color.getWHITE());
+        System.out.print(" - Validar Requisição de Instrumentos");
+        System.out.println(color.getYELLOW());
+        System.out.print("                               [15]");
+        System.out.print(color.getWHITE());
+        System.out.print(" - Remover um album");
+        System.out.println(color.getYELLOW());
+        System.out.print("                               [16]");
+        System.out.print(color.getWHITE());
+        System.out.print(" - Log out");
+        System.out.println(color.getYELLOW());
+        System.out.print("                               [17]");
+        System.out.print(color.getWHITE());
+        System.out.println(" - Exit");
+        System.out.println(color.getCYAN());
+        System.out.println(
+                        "                       **************************************************************");
+
        
-        System.out.println("Menu de Administrador - Logado como " +
-                                        Frontend.Utils.UserHolder.getUser().getUsername());
-        System.out.println("1. Adicionar um novo produtor");
-        System.out.println("2. Adicionar um novo músico");
-        System.out.println("3. Remover um utilizador");
-        System.out.println("4. Adicionar um instrumento musical");
-        System.out.println("5. Exibir todos os pedidos de sessão");
-        System.out.println("6. Exibir todos as sessões de gravação");
-        System.out.println("7. Exibir todos os álbuns em edição");
-        System.out.println("8. Estatisticas");
-        System.out.println("9. Exibir todos os users");
-        System.out.println("10. Exibir todos os instrumentos");
-        System.out.println("11. Adicionar um novo álbum");
-        System.out.println("12. Exibir todos os álbuns");
-        System.out.println("13. Consultar dados");
-        System.out.println("14. Validar Requisição de Instrumentos");
-        System.out.println("15. Remover um album");
-        System.out.println("16. Log out");
-        System.out.println("17. Exit");
-
-        option = Prompt.checkOption("Introduza a opção: ");
-
+        
+        option = Prompt.checkOption("[?] - Introduza a opção: ");
+        
         if(16 == Madmin.option || 17 == Madmin.option) {
             Frontend.Utils.UserHolder.setUser(null);
 
