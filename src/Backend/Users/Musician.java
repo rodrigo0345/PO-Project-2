@@ -1,5 +1,6 @@
 package Backend.Users;
 
+import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -77,6 +78,7 @@ public class Musician extends User {
         if(!s.getInvitedMusicians().containsKey(this.getUsername()))
             throw new IllegalArgumentException("O músico não foi convidado para a sessão em específico!");
         
+        instrument.setDataRequisicao(LocalDateTime.now());
         s.addPendingInstrument(instrument, quantity);
     }
 

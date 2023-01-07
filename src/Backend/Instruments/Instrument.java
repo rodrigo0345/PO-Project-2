@@ -2,6 +2,7 @@ package Backend.Instruments;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 /**
@@ -13,16 +14,20 @@ public class Instrument implements Serializable, Comparable<Instrument>, Cloneab
     private final String name;
     private UUID id;
     private int quantidade;
+    private LocalDateTime dataRequisicao;
 
+    
     /**
      * Instantiates a new Instrument.
-     *
-     * @param name       the name
-     * @param quantidade the quantidade
+     * 
+     * @param name
+     * @param quantidade
+     * @param dataRequisicao
      */
-    public Instrument(String name, int quantidade) {
+    public Instrument(String name, int quantidade, LocalDateTime dataRequisicao) {
         this.name = name;
         this.quantidade = quantidade;
+        this.dataRequisicao = dataRequisicao;
         this.id = UUID.randomUUID();
     }
 
@@ -69,6 +74,20 @@ public class Instrument implements Serializable, Comparable<Instrument>, Cloneab
      */
     public void setQuantidade(int quantidade) {
         this.quantidade = quantidade;
+    }
+
+    /**
+     * @return
+     */
+    public LocalDateTime getDataRequisicao() {
+        return dataRequisicao;
+    }
+
+    /**
+     * @param dataRequisicao
+     */
+    public void setDataRequisicao(LocalDateTime dataRequisicao) {
+        this.dataRequisicao = dataRequisicao;
     }
 
     @Override

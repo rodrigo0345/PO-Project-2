@@ -392,7 +392,7 @@ public class AdminAction {
 
         for(Session s : sessions){
             for (Instrument i : s.getPendentInstruments()){
-                System.out.println(s.getId() + ": " + i.toString());
+                System.out.println(s.getId() + ": " + i.toString() + " Data Requisição = " + i.getDataRequisicao());
             }
         }
 
