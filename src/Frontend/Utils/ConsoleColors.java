@@ -1,4 +1,4 @@
-package Frontend.Menus;
+package Frontend.Utils;
 
 public class ConsoleColors {
     // Reset

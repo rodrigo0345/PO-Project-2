@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 import Backend.Users.Repos;
 import Backend.Users.User;
-import Frontend.Menus.ConsoleColors;
+import Frontend.Utils.ConsoleColors;
 
 /**
  * The type Authentication.
