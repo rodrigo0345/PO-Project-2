@@ -480,6 +480,7 @@ public class AdminAction {
             user.removeAlbum(album);
         } catch (Exception e) {
             Prompt.pressEnterToContinue(e.getMessage());
+            return;
         }
 
         Prompt.pressEnterToContinue();

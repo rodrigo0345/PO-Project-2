@@ -336,6 +336,7 @@ public class Admin extends User {//Traduzidos
     // remove album
     public void removeAlbum(String title) throws Exception {
         if(this.getAlbumsRepo().getAlbum(title) == null) throw new Exception("O álbum que está a tentar remover não existe.");
+        if(!(this.getAlbumsRepo().getAlbum(title) instanceof AlbumEditado)) throw new Exception("O álbum que está a tentar remover não está editado.");
         if(this.getAlbumsRepo().getAlbum(title) instanceof AlbumEditado){
             if(!((AlbumEditado)this.getAlbumsRepo().getAlbum(title)).isEdited()){
                 throw new Exception("O álbum que está a tentar remover ainda não foi terminado.");
