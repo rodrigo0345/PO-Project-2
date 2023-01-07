@@ -55,9 +55,13 @@ public class Produtor extends User {
      * @param projeto             the projeto
      * @param replacementProducer the replacement producer
      */
-    public void removeNewAlbumEdit(AlbumEditado projeto, Produtor replacementProducer) {
+    public void assignNewProducer(AlbumEditado projeto, Produtor replacementProducer) {
         newAlbumsEdits.remove(projeto);
         projeto.setProdutor(replacementProducer);
+    }
+
+    public void removeNewAlbumEdit(Backend.Albums.AlbumEditado projeto) {
+        newAlbumsEdits.remove(projeto);
     }
 
     /**
