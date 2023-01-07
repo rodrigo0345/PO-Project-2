@@ -1,5 +1,7 @@
 package Frontend.Utils;
 
+import Frontend.Menus.ConsoleColors;
+
 /**
  * The type Prompt.
  */
