@@ -83,7 +83,7 @@ public class Madmin {
                 Frontend.Actions.AdminAction.removeAlbum();
                 break;
             default:
-                Prompt.outputError("Opção inválida");
+                Prompt.outputError("[!] - ERRO: Opção inválida!");
                 break;
         }
 

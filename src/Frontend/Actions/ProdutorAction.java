@@ -4,6 +4,7 @@ import Backend.Albums.Album;
 import Backend.Albums.AlbumEditado;
 import Backend.Sessions.Session;
 import Backend.Tracks.Track;
+import Frontend.Utils.ConsoleColors;
 import Frontend.Utils.Generics;
 import Frontend.Utils.Prompt;
 import Frontend.Utils.ReposHolder;
@@ -16,7 +17,6 @@ import java.util.UUID;
  */
 public class ProdutorAction {
     private static Backend.Users.Produtor user;
-
     /**
      * Sets user.
      *
@@ -24,6 +24,7 @@ public class ProdutorAction {
      */
 // setUser só é usado para inicializar o user em Mprodutor
     public static void setUser(Backend.Users.User user) {
+        Frontend.Utils.Generics.menuProducerHeader();
         if (user instanceof Backend.Users.Produtor) {
             ProdutorAction.user = (Backend.Users.Produtor) user;
         } else {
@@ -36,10 +37,26 @@ public class ProdutorAction {
      */
 // permite ao utilizador mudar variaveis como nome, email, password, etc
     public static void editProfile() {
-        System.out.println("[1] - Editar nome");
-        System.out.println("[2] - Editar username");
-        System.out.println("[3] - Editar email");
-        System.out.println("[4] - Editar password");
+        Frontend.Utils.Generics.menuProducerHeader();
+
+        ConsoleColors color = new ConsoleColors();
+
+        System.out.println(color.getYELLOW());
+        System.out.print("[1] - ");
+        System.out.print(color.getWHITE());
+        System.out.print("Editar nome");
+        System.out.println(color.getYELLOW());
+        System.out.print("[2] - ");
+        System.out.print(color.getWHITE());
+        System.out.print("Editar username");
+        System.out.println(color.getYELLOW());
+        System.out.print("[3] - ");
+        System.out.print(color.getWHITE());
+        System.out.print("Editar email");
+        System.out.println(color.getYELLOW());
+        System.out.print("[4] - ");
+        System.out.print(color.getWHITE());
+        System.out.println("Editar password");
 
         int option = Prompt.checkOption("Introduza a opção: ");
 
@@ -83,9 +100,18 @@ public class ProdutorAction {
      */
 // permite ao utilizador criar um album e ainda editar os seus albums
     public static void startOrCreateEditingAlbum() {
+        Frontend.Utils.Generics.menuProducerHeader();
 
-        System.out.println("1. Começar a editar um álbum");
-        System.out.println("2. Editar as informações de um álbum");
+        ConsoleColors color = new ConsoleColors();
+
+        System.out.println(color.getYELLOW());
+        System.out.print("[1] - ");
+        System.out.print(color.getWHITE());
+        System.out.print("Começar a editar um álbum");
+        System.out.println(color.getYELLOW());
+        System.out.print("[2] - ");
+        System.out.print(color.getWHITE());
+        System.out.print("Editar as informações de um álbum");
 
         int option = Prompt.checkOption("Introduza a opção: ");
 
@@ -136,13 +162,34 @@ public class ProdutorAction {
                 return;
             }
 
-            System.out.println("1. Adicionar uma nova sessão de gravação");
-            System.out.println("2. Remover uma sessão de gravação");
-            System.out.println("3. Adicionar artistas à sessão de gravação");
-            System.out.println("4. Remover um artista");
-            System.out.println("5. Adicionar uma nova faixa");
-            System.out.println("6. Encerrar a edição do álbum");
-            System.out.println("7. Concluir sessão de gravação");
+            System.out.println(color.getYELLOW());
+            System.out.print("[1] - ");
+            System.out.print(color.getWHITE());
+            System.out.print("Adicionar uma nova sessão de gravação");
+            System.out.println(color.getYELLOW());
+            System.out.print("[2] - ");
+            System.out.print(color.getWHITE());
+            System.out.print("Remover uma sessão de gravação");
+            System.out.println(color.getYELLOW());
+            System.out.print("[3] - ");
+            System.out.print(color.getWHITE());
+            System.out.print("Adicionar artistas à sessão de gravação");
+            System.out.println(color.getYELLOW());
+            System.out.print("[4] - ");
+            System.out.print(color.getWHITE());
+            System.out.print("Remover um artista");
+            System.out.println(color.getYELLOW());
+            System.out.print("[5] - ");
+            System.out.print(color.getWHITE());
+            System.out.print("Adicionar uma nova faixa");
+            System.out.println(color.getYELLOW());
+            System.out.print("[6] - ");
+            System.out.print(color.getWHITE());
+            System.out.print("Encerrar a edição do álbum");
+            System.out.println(color.getYELLOW());
+            System.out.print("[7] - ");
+            System.out.print(color.getWHITE());
+            System.out.print("Concluir sessão de gravação");
 
             int choice = Prompt.checkInt("Introduza a opção: ");
 
@@ -334,6 +381,7 @@ public class ProdutorAction {
      * End recording session.
      */
     public static void endRecordingSession() {
+        Frontend.Utils.Generics.menuProducerHeader();
         System.out.println("Terminar sessões de gravação...");
         boolean res = false;
         try {
@@ -351,6 +399,7 @@ public class ProdutorAction {
      * Show state of album.
      */
     public static void showStateOfAlbum() {
+        Frontend.Utils.Generics.menuProducerHeader();
         String albumName = Prompt.readString("Selecione o álbum para examinar: ");
         if (Prompt.goBack(albumName)) return;
 
@@ -378,6 +427,7 @@ public class ProdutorAction {
      * Show your albums.
      */
     public static void showYourAlbums() {
+        Frontend.Utils.Generics.menuProducerHeader();
         Set<Album> oldProjects = user.getOldAlbums();
         Set<AlbumEditado> myEditedProjects = user.getNewAlbumsEdits();
 
@@ -405,6 +455,7 @@ public class ProdutorAction {
      * Show recording sessions of day.
      */
     public static void showRecordingSessionsOfDay() {
+        Frontend.Utils.Generics.menuProducerHeader();
         String day = Prompt.readString("Selecione o dia para inspecionar (dd/MM/yyyy): ");
         if (Prompt.goBack(day)) return;
 
@@ -417,16 +468,32 @@ public class ProdutorAction {
 
         Backend.Sessions.Session session = user.findSessionByDate(dInicio, dFim);
         System.out.println(session);
+        Prompt.pressEnterToContinue();
     }
 
     /**
      * Check data.
      */
     public static void checkData() {
-        System.out.println("Nome: " + user.getName());
-        System.out.println("Username: " + user.getUsername());
-        System.out.println("Email: " + user.getEmail());
-        System.out.println("Password: " + user.getPassword());
+        Frontend.Utils.Generics.menuProducerHeader();
+        ConsoleColors color = new ConsoleColors();
+
+        System.out.print(color.getYELLOW());
+        System.out.print("Nome: ");
+        System.out.print(color.getWHITE());
+        System.out.print(""+user.getName());
+        System.out.println(color.getYELLOW());
+        System.out.print("Username: " );
+        System.out.print(color.getWHITE());
+        System.out.print(""+ user.getUsername());
+        System.out.println(color.getYELLOW());
+        System.out.print("Email: " );
+        System.out.print(color.getWHITE());
+        System.out.print(""+ user.getEmail());
+        System.out.println(color.getYELLOW());
+        System.out.print("Password: " );
+        System.out.print(color.getWHITE());
+        System.out.print(""+ user.getPassword());
         Prompt.pressEnterToContinue();
     }
 }

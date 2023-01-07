@@ -52,7 +52,10 @@ public class Generics {
                 Integer.parseInt(timeSplited[1])
             );
         } catch (Exception e) {
-            Frontend.Utils.Prompt.outputError("Data inválida");
+
+            ConsoleColors color = new ConsoleColors();
+            System.out.println(color.getRED());
+            Frontend.Utils.Prompt.outputError("[!] - ERRO: Data inválida!");
             Frontend.Utils.Prompt.pressEnterToContinue();
             return null;
         }
@@ -300,7 +303,7 @@ public static void menuProducerContent(){
     System.out.println(color.getYELLOW());
     System.out.print("                                [2]");
     System.out.print(color.getWHITE());
-    System.out.print(" - Start/Edit the editing of an album");
+    System.out.print(" - Iniciar ou editar um album");
     System.out.println(color.getYELLOW());
     System.out.print("                                [3]");
     System.out.print(color.getWHITE());

@@ -2,6 +2,7 @@ package Frontend.Actions;
 import Backend.Albums.Album;
 import Backend.Instruments.Instrument;
 import Backend.Sessions.Session;
+import Frontend.Utils.ConsoleColors;
 import Frontend.Utils.Generics;
 import Frontend.Utils.Prompt;
 import Frontend.Utils.ReposHolder;
@@ -35,6 +36,9 @@ public class MusicianAction {
      */
 // permite ao utilizador mudar variaveis como nome, email, password, etc
     public static void editProfile() {
+
+        Frontend.Utils.Generics.menuMusicianHeader();
+
         System.out.println("[1] - Editar nome");
         System.out.println("[2] - Editar username");
         System.out.println("[3] - Editar email");
@@ -69,6 +73,8 @@ public class MusicianAction {
 
                     user.setPassword(password);
                     break;
+                case 5:
+                    return;                   
                 default:
                     Prompt.pressEnterToContinue("Opção inválida");
                     break;
@@ -84,6 +90,7 @@ public class MusicianAction {
      */
 // Usado para mostrar ao utilizador os albums em que já participou
     public static void showAssociatedAlbums() {
+        Frontend.Utils.Generics.menuMusicianHeader();
         Set<Album> aux = user.getAlbums();
 
         for (Backend.Albums.Album album : aux) {
@@ -99,6 +106,8 @@ public class MusicianAction {
      * Show future recording sessions.
      */
     public static void showFutureRecordingSessions() {
+
+        Frontend.Utils.Generics.menuMusicianHeader();
         // get all the sessions with the musician in it
         Set<Session> relatedSessions = ReposHolder.getSessions().getMusicianSessions(user);
 
@@ -117,6 +126,9 @@ public class MusicianAction {
      * Request instrument for session.
      */
     public static void requestInstrumentForSession() {
+
+        Frontend.Utils.Generics.menuMusicianHeader();
+
         Set<Session> relatedSessions = ReposHolder.getSessions().getMusicianSessions(user);
 
         if (relatedSessions.isEmpty()) {
@@ -221,6 +233,9 @@ public class MusicianAction {
      * Show stat of all recording sessions.
      */
     public static void showStatOfAllRecordingSessions() {
+
+        Frontend.Utils.Generics.menuMusicianHeader();
+
         System.out.println("Estado de todas as sessões de gravação");
         for(Session s: ReposHolder.getSessions().getPendingSessions()){
             System.out.println("Pendente: " + s);
@@ -241,10 +256,27 @@ public class MusicianAction {
      * Check data.
      */
     public static void checkData() {
-        System.out.println("Nome: " + user.getName());
-        System.out.println("Username: " + user.getUsername());
-        System.out.println("Email: " + user.getEmail());
-        System.out.println("Password: " + user.getPassword());
+
+        Frontend.Utils.Generics.menuMusicianHeader();
+        ConsoleColors color = new ConsoleColors();
+
+        System.out.print(color.getYELLOW());
+        System.out.print("Nome: ");
+        System.out.print(color.getWHITE());
+        System.out.print(""+user.getName());
+        System.out.println(color.getYELLOW());
+        System.out.print("Username: " );
+        System.out.print(color.getWHITE());
+        System.out.print(""+ user.getUsername());
+        System.out.println(color.getYELLOW());
+        System.out.print("Email: " );
+        System.out.print(color.getWHITE());
+        System.out.print(""+ user.getEmail());
+        System.out.println(color.getYELLOW());
+        System.out.print("Password: " );
+        System.out.print(color.getWHITE());
+        System.out.print(""+ user.getPassword());
+        Prompt.pressEnterToContinue();
 
         //falta a lista de instrumentos que cada músico toca
         Prompt.pressEnterToContinue();

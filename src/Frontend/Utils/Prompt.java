@@ -10,7 +10,10 @@ public class Prompt {
      */
 
     public static void pressEnterToContinue() {
-        System.out.println("Pressione ENTER para continuar...");
+        ConsoleColors color = new ConsoleColors();
+        System.out.println(color.getGREEN());
+        System.out.println("Pressione ENTER para continuar");
+        System.out.println(color.getWHITE());
         try {
             System.in.read();
         } catch (Exception e) {
@@ -28,6 +31,7 @@ public class Prompt {
 
         System.out.println(color.getRED());
         System.out.println(message);
+        System.out.println(color.getWHITE());
         pressEnterToContinue();
     }
 
@@ -45,10 +49,15 @@ public class Prompt {
      * @param message the message
      */
     public static void outputError(String message) {
+        ConsoleColors color = new ConsoleColors();
+        System.out.print(color.getRED());
         System.err.println(message);
+        System.out.print(color.getWHITE());
     }
 
     private static void write(String message) {
+        ConsoleColors color = new ConsoleColors();
+        System.out.print(color.getYELLOW());
         System.out.print(message);
     }
 
@@ -79,14 +88,16 @@ public class Prompt {
 
         do{
             write(message);
+            System.out.println(color.getYELLOW());
             text = Generics.sc.nextLine();
+            System.out.println(color.getWHITE());
 
             try{
                 number = Double.parseDouble(text);
             }catch(NumberFormatException e){
                 System.out.println(color.getRED());
                 outputError("[!] - ERRO: " + text +" não é um decimal válido");
-                System.out.println(color.getYELLOW());
+                System.out.println(color.getWHITE());
             }
         }while(null == number);
 
@@ -105,7 +116,9 @@ public class Prompt {
         String text;
 
         do{
+            System.out.println(color.getYELLOW());
             write(message);
+            System.out.println(color.getWHITE());
             text = Generics.sc.nextLine();
 
             try{
@@ -114,7 +127,7 @@ public class Prompt {
             catch(NumberFormatException e){
                 System.out.println(color.getRED());
                 outputError(" [!] - ERRO: " + text +" não é um inteiro válido");
-                System.out.println(color.getYELLOW());
+                System.out.println(color.getWHITE());
             }
         }while(null == number);
 
@@ -143,7 +156,7 @@ public class Prompt {
             }catch(NumberFormatException e){
                 System.out.println(color.getRED());
                 outputError("[!] - ERRO: " + text +" não é um algarismo válido");
-                System.out.println(color.getYELLOW());
+                System.out.println(color.getWHITE());
                 Generics.sc.nextLine(); 
             }
         }while(null == number);

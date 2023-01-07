@@ -287,11 +287,24 @@ public class AdminAction {
     public static void checkData() {
         
         Frontend.Utils.Generics.menuAdminHeader();
+        ConsoleColors color = new ConsoleColors();
 
-        System.out.println("Nome: " + user.getName());
-        System.out.println("Username: " + user.getUsername());
-        System.out.println("Email: " + user.getEmail());
-        System.out.println("Password: " + user.getPassword());
+        System.out.print(color.getYELLOW());
+        System.out.print("Nome: ");
+        System.out.print(color.getWHITE());
+        System.out.print(""+user.getName());
+        System.out.println(color.getYELLOW());
+        System.out.print("Username: " );
+        System.out.print(color.getWHITE());
+        System.out.print(""+ user.getUsername());
+        System.out.println(color.getYELLOW());
+        System.out.print("Email: " );
+        System.out.print(color.getWHITE());
+        System.out.print(""+ user.getEmail());
+        System.out.println(color.getYELLOW());
+        System.out.print("Password: " );
+        System.out.print(color.getWHITE());
+        System.out.print(""+ user.getPassword());
         Prompt.pressEnterToContinue();
     }
 
@@ -302,6 +315,8 @@ public class AdminAction {
         
         Frontend.Utils.Generics.menuAdminHeader();
 
+        ConsoleColors color = new ConsoleColors();
+
         String titleOfTheAlbum = Prompt.readString("Nome do album: ");
         if(Prompt.goBack(titleOfTheAlbum)) return;
 
@@ -311,7 +326,7 @@ public class AdminAction {
         String genre = Prompt.readString("Género: ");
         if(Prompt.goBack(genre)) return;
 
-        LocalDateTime date = Generics.readDate("Data de lançamento (dd MM aaaa): ");
+        LocalDateTime date = Generics.readDate("Data de lançamento (dd/MM/aaaa hh:mm): ");
 
         // verify that the inserted producer is valid
         try {
@@ -319,7 +334,9 @@ public class AdminAction {
             if (aux instanceof Backend.Users.Produtor prod) {
                 user.addAlbum(titleOfTheAlbum, genre, date, prod);
             } else {
+                System.out.print(color.getRED());
                 System.out.println("Produtor inválido");
+                System.out.print(color.getWHITE());
                 Generics.sc.nextLine();
                 return;
             }
