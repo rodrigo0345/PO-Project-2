@@ -26,13 +26,17 @@ public class AdminAction {
      */
 // setUser só é usado para inicializar o user em Madmin
     public static void setUser(Backend.Users.User user) {
+        ConsoleColors color = new ConsoleColors();
         if(user == null) {
-            throw new IllegalArgumentException("Utilizador não pode ser null");
+
+            System.out.println(color.getRED());
+            throw new IllegalArgumentException("[!] - ERRO: O utilizador não pode ser null");
         }
         if (user instanceof Backend.Users.Admin) {
             AdminAction.user = (Backend.Users.Admin) user;
         } else {
-            throw new IllegalArgumentException("O utilizador não é um produtor");
+            System.out.println(color.getRED());
+            throw new IllegalArgumentException("[!] - ERRO: O utilizador não é um produtor");
         }
     }
 
@@ -99,6 +103,38 @@ public class AdminAction {
      */
     public static void addMusician() {
 
+        System.out.print("\033[H\033[2J");
+
+        ConsoleColors color = new ConsoleColors();
+
+        System.out.println(color.getCYAN());
+        System.out.println(
+                        " ________________________________________________________________________________________________________________________");
+        System.out.println(color.getYELLOW());
+        System.out.println(
+                        "     _______  ______   __   __  ___   __    _  ___   _______  _______  ______    _______  ______   _______  ______   ");
+        System.out.println(
+                        "    |   _   ||      | |  |_|  ||   | |  |  | ||   | |       ||       ||    _ |  |   _   ||      | |       ||    _ | ");
+        System.out.println(
+                        "    |  |_|  ||  _    ||       ||   | |   |_| ||   | |  _____||_     _||   | ||  |  |_|  ||  _    ||   _   ||   | || ");
+        System.out.println(
+                        "    |       || | |   ||       ||   | |       ||   | | |_____   |   |  |   |_||_ |       || | |   ||  | |  ||   |_||_");
+        System.out.println(
+                        "    |       || |_|   ||       ||   | |  _    ||   | |_____  |  |   |  |    __  ||       || |_|   ||  |_|  ||    __  |");
+        System.out.println(
+                        "    |   _   ||       || ||_|| ||   | | | |   ||   |  _____| |  |   |  |   |  | ||   _   ||       ||       ||   |  | |");
+        System.out.println(
+                        "    |__| |__||______| |_|   |_||___| |_|  |__||___| |_______|  |___|  |___|  |_||__| |__||______| |_______||___|  |_|");
+        System.out.println(color.getCYAN());
+        System.out.println(
+                        " ________________________________________________________________________________________________________________________");
+                        
+        System.out.println(color.getWHITE());
+        System.out.println("                                   Menu de Administrador - Logado como " +
+                                                        Frontend.Utils.UserHolder.getUser().getUsername());
+        System.out.println(color.getCYAN());
+        System.out.println(
+                        "                        **************************************************************");
         String name = Prompt.readString("Nome: ");
         if(Prompt.goBack(name)) return;
 
@@ -123,6 +159,38 @@ public class AdminAction {
      */
     public static void removeUser() {
 
+        System.out.print("\033[H\033[2J");
+
+        ConsoleColors color = new ConsoleColors();
+
+        System.out.println(color.getCYAN());
+        System.out.println(
+                        " ________________________________________________________________________________________________________________________");
+        System.out.println(color.getYELLOW());
+        System.out.println(
+                        "     _______  ______   __   __  ___   __    _  ___   _______  _______  ______    _______  ______   _______  ______   ");
+        System.out.println(
+                        "    |   _   ||      | |  |_|  ||   | |  |  | ||   | |       ||       ||    _ |  |   _   ||      | |       ||    _ | ");
+        System.out.println(
+                        "    |  |_|  ||  _    ||       ||   | |   |_| ||   | |  _____||_     _||   | ||  |  |_|  ||  _    ||   _   ||   | || ");
+        System.out.println(
+                        "    |       || | |   ||       ||   | |       ||   | | |_____   |   |  |   |_||_ |       || | |   ||  | |  ||   |_||_");
+        System.out.println(
+                        "    |       || |_|   ||       ||   | |  _    ||   | |_____  |  |   |  |    __  ||       || |_|   ||  |_|  ||    __  |");
+        System.out.println(
+                        "    |   _   ||       || ||_|| ||   | | | |   ||   |  _____| |  |   |  |   |  | ||   _   ||       ||       ||   |  | |");
+        System.out.println(
+                        "    |__| |__||______| |_|   |_||___| |_|  |__||___| |_______|  |___|  |___|  |_||__| |__||______| |_______||___|  |_|");
+        System.out.println(color.getCYAN());
+        System.out.println(
+                        " ________________________________________________________________________________________________________________________");
+                        
+        System.out.println(color.getWHITE());
+        System.out.println("                                   Menu de Administrador - Logado como " +
+                                                        Frontend.Utils.UserHolder.getUser().getUsername());
+        System.out.println(color.getCYAN());
+        System.out.println(
+                        "                        **************************************************************");
         String username = Prompt.readString("Username: ");
         if(Prompt.goBack(username)) return;
 
@@ -138,6 +206,38 @@ public class AdminAction {
      * Add instrument.
      */
     public static void addInstrument() {
+        System.out.print("\033[H\033[2J");
+
+        ConsoleColors color = new ConsoleColors();
+
+        System.out.println(color.getCYAN());
+        System.out.println(
+                        " ________________________________________________________________________________________________________________________");
+        System.out.println(color.getYELLOW());
+        System.out.println(
+                        "     _______  ______   __   __  ___   __    _  ___   _______  _______  ______    _______  ______   _______  ______   ");
+        System.out.println(
+                        "    |   _   ||      | |  |_|  ||   | |  |  | ||   | |       ||       ||    _ |  |   _   ||      | |       ||    _ | ");
+        System.out.println(
+                        "    |  |_|  ||  _    ||       ||   | |   |_| ||   | |  _____||_     _||   | ||  |  |_|  ||  _    ||   _   ||   | || ");
+        System.out.println(
+                        "    |       || | |   ||       ||   | |       ||   | | |_____   |   |  |   |_||_ |       || | |   ||  | |  ||   |_||_");
+        System.out.println(
+                        "    |       || |_|   ||       ||   | |  _    ||   | |_____  |  |   |  |    __  ||       || |_|   ||  |_|  ||    __  |");
+        System.out.println(
+                        "    |   _   ||       || ||_|| ||   | | | |   ||   |  _____| |  |   |  |   |  | ||   _   ||       ||       ||   |  | |");
+        System.out.println(
+                        "    |__| |__||______| |_|   |_||___| |_|  |__||___| |_______|  |___|  |___|  |_||__| |__||______| |_______||___|  |_|");
+        System.out.println(color.getCYAN());
+        System.out.println(
+                        " ________________________________________________________________________________________________________________________");
+                        
+        System.out.println(color.getWHITE());
+        System.out.println("                                   Menu de Administrador - Logado como " +
+                                                        Frontend.Utils.UserHolder.getUser().getUsername());
+        System.out.println(color.getCYAN());
+        System.out.println(
+                        "                        **************************************************************");
 
         String name = Prompt.readString("Nome do instrumento: ");
         if(Prompt.goBack(name)) return;
@@ -169,6 +269,40 @@ public class AdminAction {
      * Show all session requests.
      */
     public static void showAllSessionRequests() {
+
+        System.out.print("\033[H\033[2J");
+
+        ConsoleColors color = new ConsoleColors();
+
+        System.out.println(color.getCYAN());
+        System.out.println(
+                        " ________________________________________________________________________________________________________________________");
+        System.out.println(color.getYELLOW());
+        System.out.println(
+                        "     _______  ______   __   __  ___   __    _  ___   _______  _______  ______    _______  ______   _______  ______   ");
+        System.out.println(
+                        "    |   _   ||      | |  |_|  ||   | |  |  | ||   | |       ||       ||    _ |  |   _   ||      | |       ||    _ | ");
+        System.out.println(
+                        "    |  |_|  ||  _    ||       ||   | |   |_| ||   | |  _____||_     _||   | ||  |  |_|  ||  _    ||   _   ||   | || ");
+        System.out.println(
+                        "    |       || | |   ||       ||   | |       ||   | | |_____   |   |  |   |_||_ |       || | |   ||  | |  ||   |_||_");
+        System.out.println(
+                        "    |       || |_|   ||       ||   | |  _    ||   | |_____  |  |   |  |    __  ||       || |_|   ||  |_|  ||    __  |");
+        System.out.println(
+                        "    |   _   ||       || ||_|| ||   | | | |   ||   |  _____| |  |   |  |   |  | ||   _   ||       ||       ||   |  | |");
+        System.out.println(
+                        "    |__| |__||______| |_|   |_||___| |_|  |__||___| |_______|  |___|  |___|  |_||__| |__||______| |_______||___|  |_|");
+        System.out.println(color.getCYAN());
+        System.out.println(
+                        " ________________________________________________________________________________________________________________________");
+                        
+        System.out.println(color.getWHITE());
+        System.out.println("                                   Menu de Administrador - Logado como " +
+                                                        Frontend.Utils.UserHolder.getUser().getUsername());
+        System.out.println(color.getCYAN());
+        System.out.println(
+                        "                        **************************************************************");
+
         if (null == AdminAction.user.getAllSessionRequests()) {
             Prompt.pressEnterToContinue("Não existem pedidos de sessão");
         }
@@ -211,6 +345,38 @@ public class AdminAction {
      * Show all sessions.
      */
     public static void showAllSessions() {
+        System.out.print("\033[H\033[2J");
+
+        ConsoleColors color = new ConsoleColors();
+
+        System.out.println(color.getCYAN());
+        System.out.println(
+                        " ________________________________________________________________________________________________________________________");
+        System.out.println(color.getYELLOW());
+        System.out.println(
+                        "     _______  ______   __   __  ___   __    _  ___   _______  _______  ______    _______  ______   _______  ______   ");
+        System.out.println(
+                        "    |   _   ||      | |  |_|  ||   | |  |  | ||   | |       ||       ||    _ |  |   _   ||      | |       ||    _ | ");
+        System.out.println(
+                        "    |  |_|  ||  _    ||       ||   | |   |_| ||   | |  _____||_     _||   | ||  |  |_|  ||  _    ||   _   ||   | || ");
+        System.out.println(
+                        "    |       || | |   ||       ||   | |       ||   | | |_____   |   |  |   |_||_ |       || | |   ||  | |  ||   |_||_");
+        System.out.println(
+                        "    |       || |_|   ||       ||   | |  _    ||   | |_____  |  |   |  |    __  ||       || |_|   ||  |_|  ||    __  |");
+        System.out.println(
+                        "    |   _   ||       || ||_|| ||   | | | |   ||   |  _____| |  |   |  |   |  | ||   _   ||       ||       ||   |  | |");
+        System.out.println(
+                        "    |__| |__||______| |_|   |_||___| |_|  |__||___| |_______|  |___|  |___|  |_||__| |__||______| |_______||___|  |_|");
+        System.out.println(color.getCYAN());
+        System.out.println(
+                        " ________________________________________________________________________________________________________________________");
+                        
+        System.out.println(color.getWHITE());
+        System.out.println("                                   Menu de Administrador - Logado como " +
+                                                        Frontend.Utils.UserHolder.getUser().getUsername());
+        System.out.println(color.getCYAN());
+        System.out.println(
+                        "                        **************************************************************");
         System.out.println(user.getAllRecordingSessions());
         Prompt.pressEnterToContinue();
     }
@@ -219,6 +385,38 @@ public class AdminAction {
      * Show all albums being edited.
      */
     public static void showAllAlbumsBeingEdited() {
+        System.out.print("\033[H\033[2J");
+
+        ConsoleColors color = new ConsoleColors();
+
+        System.out.println(color.getCYAN());
+        System.out.println(
+                        " ________________________________________________________________________________________________________________________");
+        System.out.println(color.getYELLOW());
+        System.out.println(
+                        "     _______  ______   __   __  ___   __    _  ___   _______  _______  ______    _______  ______   _______  ______   ");
+        System.out.println(
+                        "    |   _   ||      | |  |_|  ||   | |  |  | ||   | |       ||       ||    _ |  |   _   ||      | |       ||    _ | ");
+        System.out.println(
+                        "    |  |_|  ||  _    ||       ||   | |   |_| ||   | |  _____||_     _||   | ||  |  |_|  ||  _    ||   _   ||   | || ");
+        System.out.println(
+                        "    |       || | |   ||       ||   | |       ||   | | |_____   |   |  |   |_||_ |       || | |   ||  | |  ||   |_||_");
+        System.out.println(
+                        "    |       || |_|   ||       ||   | |  _    ||   | |_____  |  |   |  |    __  ||       || |_|   ||  |_|  ||    __  |");
+        System.out.println(
+                        "    |   _   ||       || ||_|| ||   | | | |   ||   |  _____| |  |   |  |   |  | ||   _   ||       ||       ||   |  | |");
+        System.out.println(
+                        "    |__| |__||______| |_|   |_||___| |_|  |__||___| |_______|  |___|  |___|  |_||__| |__||______| |_______||___|  |_|");
+        System.out.println(color.getCYAN());
+        System.out.println(
+                        " ________________________________________________________________________________________________________________________");
+                        
+        System.out.println(color.getWHITE());
+        System.out.println("                                   Menu de Administrador - Logado como " +
+                                                        Frontend.Utils.UserHolder.getUser().getUsername());
+        System.out.println(color.getCYAN());
+        System.out.println(
+                        "                        **************************************************************");
         System.out.println(user.getAllAlbumsBeingEdited());
         Prompt.pressEnterToContinue();
     }
@@ -227,6 +425,38 @@ public class AdminAction {
      * Stats.
      */
     public static void stats() {
+        System.out.print("\033[H\033[2J");
+
+        ConsoleColors color = new ConsoleColors();
+
+        System.out.println(color.getCYAN());
+        System.out.println(
+                        " ________________________________________________________________________________________________________________________");
+        System.out.println(color.getYELLOW());
+        System.out.println(
+                        "     _______  ______   __   __  ___   __    _  ___   _______  _______  ______    _______  ______   _______  ______   ");
+        System.out.println(
+                        "    |   _   ||      | |  |_|  ||   | |  |  | ||   | |       ||       ||    _ |  |   _   ||      | |       ||    _ | ");
+        System.out.println(
+                        "    |  |_|  ||  _    ||       ||   | |   |_| ||   | |  _____||_     _||   | ||  |  |_|  ||  _    ||   _   ||   | || ");
+        System.out.println(
+                        "    |       || | |   ||       ||   | |       ||   | | |_____   |   |  |   |_||_ |       || | |   ||  | |  ||   |_||_");
+        System.out.println(
+                        "    |       || |_|   ||       ||   | |  _    ||   | |_____  |  |   |  |    __  ||       || |_|   ||  |_|  ||    __  |");
+        System.out.println(
+                        "    |   _   ||       || ||_|| ||   | | | |   ||   |  _____| |  |   |  |   |  | ||   _   ||       ||       ||   |  | |");
+        System.out.println(
+                        "    |__| |__||______| |_|   |_||___| |_|  |__||___| |_______|  |___|  |___|  |_||__| |__||______| |_______||___|  |_|");
+        System.out.println(color.getCYAN());
+        System.out.println(
+                        " ________________________________________________________________________________________________________________________");
+                        
+        System.out.println(color.getWHITE());
+        System.out.println("                                   Menu de Administrador - Logado como " +
+                                                        Frontend.Utils.UserHolder.getUser().getUsername());
+        System.out.println(color.getCYAN());
+        System.out.println(
+                        "                        **************************************************************");
         System.out.println("1. Estatisticas globais");
         System.out.println("2. Estatisticas de um certo periodo de tempo");
 
@@ -250,6 +480,38 @@ public class AdminAction {
      * Show all users.
      */
     public static void showAllUsers() {
+        System.out.print("\033[H\033[2J");
+
+        ConsoleColors color = new ConsoleColors();
+
+        System.out.println(color.getCYAN());
+        System.out.println(
+                        " ________________________________________________________________________________________________________________________");
+        System.out.println(color.getYELLOW());
+        System.out.println(
+                        "     _______  ______   __   __  ___   __    _  ___   _______  _______  ______    _______  ______   _______  ______   ");
+        System.out.println(
+                        "    |   _   ||      | |  |_|  ||   | |  |  | ||   | |       ||       ||    _ |  |   _   ||      | |       ||    _ | ");
+        System.out.println(
+                        "    |  |_|  ||  _    ||       ||   | |   |_| ||   | |  _____||_     _||   | ||  |  |_|  ||  _    ||   _   ||   | || ");
+        System.out.println(
+                        "    |       || | |   ||       ||   | |       ||   | | |_____   |   |  |   |_||_ |       || | |   ||  | |  ||   |_||_");
+        System.out.println(
+                        "    |       || |_|   ||       ||   | |  _    ||   | |_____  |  |   |  |    __  ||       || |_|   ||  |_|  ||    __  |");
+        System.out.println(
+                        "    |   _   ||       || ||_|| ||   | | | |   ||   |  _____| |  |   |  |   |  | ||   _   ||       ||       ||   |  | |");
+        System.out.println(
+                        "    |__| |__||______| |_|   |_||___| |_|  |__||___| |_______|  |___|  |___|  |_||__| |__||______| |_______||___|  |_|");
+        System.out.println(color.getCYAN());
+        System.out.println(
+                        " ________________________________________________________________________________________________________________________");
+                        
+        System.out.println(color.getWHITE());
+        System.out.println("                                   Menu de Administrador - Logado como " +
+                                                        Frontend.Utils.UserHolder.getUser().getUsername());
+        System.out.println(color.getCYAN());
+        System.out.println(
+                        "                        **************************************************************");
         Map<String, User> list = ReposHolder.getUsers().getUsers();
         for (Map.Entry<String, Backend.Users.User> entry : list.entrySet()) {
             System.out.println(entry.getValue().toString());
@@ -261,6 +523,38 @@ public class AdminAction {
      * Show all instruments.
      */
     public static void showAllInstruments() {
+        System.out.print("\033[H\033[2J");
+
+        ConsoleColors color = new ConsoleColors();
+
+        System.out.println(color.getCYAN());
+        System.out.println(
+                        " ________________________________________________________________________________________________________________________");
+        System.out.println(color.getYELLOW());
+        System.out.println(
+                        "     _______  ______   __   __  ___   __    _  ___   _______  _______  ______    _______  ______   _______  ______   ");
+        System.out.println(
+                        "    |   _   ||      | |  |_|  ||   | |  |  | ||   | |       ||       ||    _ |  |   _   ||      | |       ||    _ | ");
+        System.out.println(
+                        "    |  |_|  ||  _    ||       ||   | |   |_| ||   | |  _____||_     _||   | ||  |  |_|  ||  _    ||   _   ||   | || ");
+        System.out.println(
+                        "    |       || | |   ||       ||   | |       ||   | | |_____   |   |  |   |_||_ |       || | |   ||  | |  ||   |_||_");
+        System.out.println(
+                        "    |       || |_|   ||       ||   | |  _    ||   | |_____  |  |   |  |    __  ||       || |_|   ||  |_|  ||    __  |");
+        System.out.println(
+                        "    |   _   ||       || ||_|| ||   | | | |   ||   |  _____| |  |   |  |   |  | ||   _   ||       ||       ||   |  | |");
+        System.out.println(
+                        "    |__| |__||______| |_|   |_||___| |_|  |__||___| |_______|  |___|  |___|  |_||__| |__||______| |_______||___|  |_|");
+        System.out.println(color.getCYAN());
+        System.out.println(
+                        " ________________________________________________________________________________________________________________________");
+                        
+        System.out.println(color.getWHITE());
+        System.out.println("                                   Menu de Administrador - Logado como " +
+                                                        Frontend.Utils.UserHolder.getUser().getUsername());
+        System.out.println(color.getCYAN());
+        System.out.println(
+                        "                        **************************************************************");
         Map<String, Backend.Instruments.Instrument> list2 = ReposHolder.getInstruments().getInstruments();
         for (Map.Entry<String, Backend.Instruments.Instrument> entry : list2.entrySet()) {
             System.out.println(entry.getValue().toString());
@@ -272,6 +566,38 @@ public class AdminAction {
      * Show all albums.
      */
     public static void showAllAlbums() {
+        System.out.print("\033[H\033[2J");
+
+        ConsoleColors color = new ConsoleColors();
+
+        System.out.println(color.getCYAN());
+        System.out.println(
+                        " ________________________________________________________________________________________________________________________");
+        System.out.println(color.getYELLOW());
+        System.out.println(
+                        "     _______  ______   __   __  ___   __    _  ___   _______  _______  ______    _______  ______   _______  ______   ");
+        System.out.println(
+                        "    |   _   ||      | |  |_|  ||   | |  |  | ||   | |       ||       ||    _ |  |   _   ||      | |       ||    _ | ");
+        System.out.println(
+                        "    |  |_|  ||  _    ||       ||   | |   |_| ||   | |  _____||_     _||   | ||  |  |_|  ||  _    ||   _   ||   | || ");
+        System.out.println(
+                        "    |       || | |   ||       ||   | |       ||   | | |_____   |   |  |   |_||_ |       || | |   ||  | |  ||   |_||_");
+        System.out.println(
+                        "    |       || |_|   ||       ||   | |  _    ||   | |_____  |  |   |  |    __  ||       || |_|   ||  |_|  ||    __  |");
+        System.out.println(
+                        "    |   _   ||       || ||_|| ||   | | | |   ||   |  _____| |  |   |  |   |  | ||   _   ||       ||       ||   |  | |");
+        System.out.println(
+                        "    |__| |__||______| |_|   |_||___| |_|  |__||___| |_______|  |___|  |___|  |_||__| |__||______| |_______||___|  |_|");
+        System.out.println(color.getCYAN());
+        System.out.println(
+                        " ________________________________________________________________________________________________________________________");
+                        
+        System.out.println(color.getWHITE());
+        System.out.println("                                   Menu de Administrador - Logado como " +
+                                                        Frontend.Utils.UserHolder.getUser().getUsername());
+        System.out.println(color.getCYAN());
+        System.out.println(
+                        "                        **************************************************************");
         Map<String, Backend.Albums.Album> list3 = ReposHolder.getAlbums().getAlbums();
         for (Backend.Albums.Album album : list3.values()) {
             System.out.println(album.toString());
@@ -283,6 +609,38 @@ public class AdminAction {
      * Check data.
      */
     public static void checkData() {
+        System.out.print("\033[H\033[2J");
+
+        ConsoleColors color = new ConsoleColors();
+
+        System.out.println(color.getCYAN());
+        System.out.println(
+                        " ________________________________________________________________________________________________________________________");
+        System.out.println(color.getYELLOW());
+        System.out.println(
+                        "     _______  ______   __   __  ___   __    _  ___   _______  _______  ______    _______  ______   _______  ______   ");
+        System.out.println(
+                        "    |   _   ||      | |  |_|  ||   | |  |  | ||   | |       ||       ||    _ |  |   _   ||      | |       ||    _ | ");
+        System.out.println(
+                        "    |  |_|  ||  _    ||       ||   | |   |_| ||   | |  _____||_     _||   | ||  |  |_|  ||  _    ||   _   ||   | || ");
+        System.out.println(
+                        "    |       || | |   ||       ||   | |       ||   | | |_____   |   |  |   |_||_ |       || | |   ||  | |  ||   |_||_");
+        System.out.println(
+                        "    |       || |_|   ||       ||   | |  _    ||   | |_____  |  |   |  |    __  ||       || |_|   ||  |_|  ||    __  |");
+        System.out.println(
+                        "    |   _   ||       || ||_|| ||   | | | |   ||   |  _____| |  |   |  |   |  | ||   _   ||       ||       ||   |  | |");
+        System.out.println(
+                        "    |__| |__||______| |_|   |_||___| |_|  |__||___| |_______|  |___|  |___|  |_||__| |__||______| |_______||___|  |_|");
+        System.out.println(color.getCYAN());
+        System.out.println(
+                        " ________________________________________________________________________________________________________________________");
+                        
+        System.out.println(color.getWHITE());
+        System.out.println("                                   Menu de Administrador - Logado como " +
+                                                        Frontend.Utils.UserHolder.getUser().getUsername());
+        System.out.println(color.getCYAN());
+        System.out.println(
+                        "                        **************************************************************");
         System.out.println("Nome: " + user.getName());
         System.out.println("Username: " + user.getUsername());
         System.out.println("Email: " + user.getEmail());
@@ -294,6 +652,38 @@ public class AdminAction {
      * Add album.
      */
     public static void addAlbum() {
+        System.out.print("\033[H\033[2J");
+
+        ConsoleColors color = new ConsoleColors();
+
+        System.out.println(color.getCYAN());
+        System.out.println(
+                        " ________________________________________________________________________________________________________________________");
+        System.out.println(color.getYELLOW());
+        System.out.println(
+                        "     _______  ______   __   __  ___   __    _  ___   _______  _______  ______    _______  ______   _______  ______   ");
+        System.out.println(
+                        "    |   _   ||      | |  |_|  ||   | |  |  | ||   | |       ||       ||    _ |  |   _   ||      | |       ||    _ | ");
+        System.out.println(
+                        "    |  |_|  ||  _    ||       ||   | |   |_| ||   | |  _____||_     _||   | ||  |  |_|  ||  _    ||   _   ||   | || ");
+        System.out.println(
+                        "    |       || | |   ||       ||   | |       ||   | | |_____   |   |  |   |_||_ |       || | |   ||  | |  ||   |_||_");
+        System.out.println(
+                        "    |       || |_|   ||       ||   | |  _    ||   | |_____  |  |   |  |    __  ||       || |_|   ||  |_|  ||    __  |");
+        System.out.println(
+                        "    |   _   ||       || ||_|| ||   | | | |   ||   |  _____| |  |   |  |   |  | ||   _   ||       ||       ||   |  | |");
+        System.out.println(
+                        "    |__| |__||______| |_|   |_||___| |_|  |__||___| |_______|  |___|  |___|  |_||__| |__||______| |_______||___|  |_|");
+        System.out.println(color.getCYAN());
+        System.out.println(
+                        " ________________________________________________________________________________________________________________________");
+                        
+        System.out.println(color.getWHITE());
+        System.out.println("                                   Menu de Administrador - Logado como " +
+                                                        Frontend.Utils.UserHolder.getUser().getUsername());
+        System.out.println(color.getCYAN());
+        System.out.println(
+                        "                        **************************************************************");
         String titleOfTheAlbum = Prompt.readString("Nome do album: ");
         if(Prompt.goBack(titleOfTheAlbum)) return;
 
@@ -330,6 +720,38 @@ public class AdminAction {
     }
 
     private static void addTrackToAlbum(String ans, String titleOfTheAlbum) {
+        System.out.print("\033[H\033[2J");
+
+        ConsoleColors color = new ConsoleColors();
+
+        System.out.println(color.getCYAN());
+        System.out.println(
+                        " ________________________________________________________________________________________________________________________");
+        System.out.println(color.getYELLOW());
+        System.out.println(
+                        "     _______  ______   __   __  ___   __    _  ___   _______  _______  ______    _______  ______   _______  ______   ");
+        System.out.println(
+                        "    |   _   ||      | |  |_|  ||   | |  |  | ||   | |       ||       ||    _ |  |   _   ||      | |       ||    _ | ");
+        System.out.println(
+                        "    |  |_|  ||  _    ||       ||   | |   |_| ||   | |  _____||_     _||   | ||  |  |_|  ||  _    ||   _   ||   | || ");
+        System.out.println(
+                        "    |       || | |   ||       ||   | |       ||   | | |_____   |   |  |   |_||_ |       || | |   ||  | |  ||   |_||_");
+        System.out.println(
+                        "    |       || |_|   ||       ||   | |  _    ||   | |_____  |  |   |  |    __  ||       || |_|   ||  |_|  ||    __  |");
+        System.out.println(
+                        "    |   _   ||       || ||_|| ||   | | | |   ||   |  _____| |  |   |  |   |  | ||   _   ||       ||       ||   |  | |");
+        System.out.println(
+                        "    |__| |__||______| |_|   |_||___| |_|  |__||___| |_______|  |___|  |___|  |_||__| |__||______| |_______||___|  |_|");
+        System.out.println(color.getCYAN());
+        System.out.println(
+                        " ________________________________________________________________________________________________________________________");
+                        
+        System.out.println(color.getWHITE());
+        System.out.println("                                   Menu de Administrador - Logado como " +
+                                                        Frontend.Utils.UserHolder.getUser().getUsername());
+        System.out.println(color.getCYAN());
+        System.out.println(
+                        "                        **************************************************************");
 
         Backend.Albums.Album a = user.getAlbumsRepo().getAlbum(titleOfTheAlbum);
         if ("y".equals(ans)) {
@@ -365,6 +787,38 @@ public class AdminAction {
     }
 
     private static void addArtistToTrack(String ans, Backend.Tracks.Track t) {
+        System.out.print("\033[H\033[2J");
+
+        ConsoleColors color = new ConsoleColors();
+
+        System.out.println(color.getCYAN());
+        System.out.println(
+                        " ________________________________________________________________________________________________________________________");
+        System.out.println(color.getYELLOW());
+        System.out.println(
+                        "     _______  ______   __   __  ___   __    _  ___   _______  _______  ______    _______  ______   _______  ______   ");
+        System.out.println(
+                        "    |   _   ||      | |  |_|  ||   | |  |  | ||   | |       ||       ||    _ |  |   _   ||      | |       ||    _ | ");
+        System.out.println(
+                        "    |  |_|  ||  _    ||       ||   | |   |_| ||   | |  _____||_     _||   | ||  |  |_|  ||  _    ||   _   ||   | || ");
+        System.out.println(
+                        "    |       || | |   ||       ||   | |       ||   | | |_____   |   |  |   |_||_ |       || | |   ||  | |  ||   |_||_");
+        System.out.println(
+                        "    |       || |_|   ||       ||   | |  _    ||   | |_____  |  |   |  |    __  ||       || |_|   ||  |_|  ||    __  |");
+        System.out.println(
+                        "    |   _   ||       || ||_|| ||   | | | |   ||   |  _____| |  |   |  |   |  | ||   _   ||       ||       ||   |  | |");
+        System.out.println(
+                        "    |__| |__||______| |_|   |_||___| |_|  |__||___| |_______|  |___|  |___|  |_||__| |__||______| |_______||___|  |_|");
+        System.out.println(color.getCYAN());
+        System.out.println(
+                        " ________________________________________________________________________________________________________________________");
+                        
+        System.out.println(color.getWHITE());
+        System.out.println("                                   Menu de Administrador - Logado como " +
+                                                        Frontend.Utils.UserHolder.getUser().getUsername());
+        System.out.println(color.getCYAN());
+        System.out.println(
+                        "                        **************************************************************");
         if ("y".equals(ans)) {
             // mostrar todos os musicos
             for(Backend.Users.User u : ReposHolder.getUsers().getUsers().values()) {
@@ -385,6 +839,38 @@ public class AdminAction {
      * Show all instruments requests.
      */
     public static void showAllInstrumentsRequests(){
+        System.out.print("\033[H\033[2J");
+
+        ConsoleColors color = new ConsoleColors();
+
+        System.out.println(color.getCYAN());
+        System.out.println(
+                        " ________________________________________________________________________________________________________________________");
+        System.out.println(color.getYELLOW());
+        System.out.println(
+                        "     _______  ______   __   __  ___   __    _  ___   _______  _______  ______    _______  ______   _______  ______   ");
+        System.out.println(
+                        "    |   _   ||      | |  |_|  ||   | |  |  | ||   | |       ||       ||    _ |  |   _   ||      | |       ||    _ | ");
+        System.out.println(
+                        "    |  |_|  ||  _    ||       ||   | |   |_| ||   | |  _____||_     _||   | ||  |  |_|  ||  _    ||   _   ||   | || ");
+        System.out.println(
+                        "    |       || | |   ||       ||   | |       ||   | | |_____   |   |  |   |_||_ |       || | |   ||  | |  ||   |_||_");
+        System.out.println(
+                        "    |       || |_|   ||       ||   | |  _    ||   | |_____  |  |   |  |    __  ||       || |_|   ||  |_|  ||    __  |");
+        System.out.println(
+                        "    |   _   ||       || ||_|| ||   | | | |   ||   |  _____| |  |   |  |   |  | ||   _   ||       ||       ||   |  | |");
+        System.out.println(
+                        "    |__| |__||______| |_|   |_||___| |_|  |__||___| |_______|  |___|  |___|  |_||__| |__||______| |_______||___|  |_|");
+        System.out.println(color.getCYAN());
+        System.out.println(
+                        " ________________________________________________________________________________________________________________________");
+                        
+        System.out.println(color.getWHITE());
+        System.out.println("                                   Menu de Administrador - Logado como " +
+                                                        Frontend.Utils.UserHolder.getUser().getUsername());
+        System.out.println(color.getCYAN());
+        System.out.println(
+                        "                        **************************************************************");
 
         // basta percorrer todas as sessões e mostrar todos os instrumentos pendentes
         // em conjunto com a sessao que os requisitou
@@ -448,6 +934,38 @@ public class AdminAction {
      * Remove album.
      */
     public static void removeAlbum() {
+        System.out.print("\033[H\033[2J");
+
+        ConsoleColors color = new ConsoleColors();
+
+        System.out.println(color.getCYAN());
+        System.out.println(
+                        " ________________________________________________________________________________________________________________________");
+        System.out.println(color.getYELLOW());
+        System.out.println(
+                        "     _______  ______   __   __  ___   __    _  ___   _______  _______  ______    _______  ______   _______  ______   ");
+        System.out.println(
+                        "    |   _   ||      | |  |_|  ||   | |  |  | ||   | |       ||       ||    _ |  |   _   ||      | |       ||    _ | ");
+        System.out.println(
+                        "    |  |_|  ||  _    ||       ||   | |   |_| ||   | |  _____||_     _||   | ||  |  |_|  ||  _    ||   _   ||   | || ");
+        System.out.println(
+                        "    |       || | |   ||       ||   | |       ||   | | |_____   |   |  |   |_||_ |       || | |   ||  | |  ||   |_||_");
+        System.out.println(
+                        "    |       || |_|   ||       ||   | |  _    ||   | |_____  |  |   |  |    __  ||       || |_|   ||  |_|  ||    __  |");
+        System.out.println(
+                        "    |   _   ||       || ||_|| ||   | | | |   ||   |  _____| |  |   |  |   |  | ||   _   ||       ||       ||   |  | |");
+        System.out.println(
+                        "    |__| |__||______| |_|   |_||___| |_|  |__||___| |_______|  |___|  |___|  |_||__| |__||______| |_______||___|  |_|");
+        System.out.println(color.getCYAN());
+        System.out.println(
+                        " ________________________________________________________________________________________________________________________");
+                        
+        System.out.println(color.getWHITE());
+        System.out.println("                                   Menu de Administrador - Logado como " +
+                                                        Frontend.Utils.UserHolder.getUser().getUsername());
+        System.out.println(color.getCYAN());
+        System.out.println(
+                        "                        **************************************************************");
         System.out.println("Em construção...");
     }
 }

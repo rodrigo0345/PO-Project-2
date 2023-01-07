@@ -26,6 +26,9 @@ public class Prompt {
      * @param message the message
      */
     public static void pressEnterToContinue(String message) {
+        ConsoleColors color = new ConsoleColors();
+
+        System.out.println(color.getRED());
         System.out.println(message);
         pressEnterToContinue();
     }
