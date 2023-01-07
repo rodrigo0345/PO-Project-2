@@ -331,6 +331,31 @@ public class Admin extends User {//Traduzidos
         musician.addAlbum(album);
     }
 
+    // remove album
+    public void removeAlbum(String title) throws Exception {
+        if(this.getAlbumsRepo().getAlbum(title) == null) throw new Exception("O álbum que está a tentar remover não existe.");
+        if(this.getAlbumsRepo().getAlbum(title) instanceof AlbumEditado){
+            if(!((AlbumEditado)this.getAlbumsRepo().getAlbum(title)).isEdited()){
+                throw new Exception("O álbum que está a tentar remover ainda não foi terminado.");
+            }
+        }
+
+        // remove on producer
+        this.getAlbumsRepo().getAlbum(title).getProdutor().removeNewAlbumEdit(
+                (AlbumEditado) this.getAlbumsRepo().getAlbum(title)
+        );
+
+
+        // remove on musicians
+        for(User m: this.getUsersRepo().getUsers().values()){
+            if(m instanceof Musician){
+                ((Musician)m).removeAlbum(this.getAlbumsRepo().getAlbum(title));
+            }
+        }
+
+        this.getAlbumsRepo().removeAlbum(title);
+    }
+
     /**
      * Add produtor to album.
      *

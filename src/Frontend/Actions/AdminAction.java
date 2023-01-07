@@ -466,5 +466,19 @@ public class AdminAction {
         Frontend.Utils.Generics.menuAdminHeader();
         
         System.out.println("Em construção...");
+
+        
+
+        String album = Prompt.readString("Nome do album a remover: ");
+        if(Prompt.goBack(album)) return;
+
+        try {
+            user.removeAlbum(album);
+        } catch (Exception e) {
+            Prompt.pressEnterToContinue(e.getMessage());
+        }
+
+        Prompt.pressEnterToContinue();
+
     }
 }

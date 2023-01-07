@@ -36,7 +36,7 @@ public class ProdutorTest {
         addProjeto();
         assertEquals(1, produtor.getNewAlbumsEdits().size());
         Produtor p1 = admin.addProdutor("Rodrigo", "rrr@gmail.com", "rrr", "rrr");
-        produtor.removeNewAlbumEdit(a, p1);
+        produtor.assignNewProducer(a, p1);
         assertEquals(0, produtor.getNewAlbumsEdits().size());
         assertNull(produtor.getNewAlbumEdit(a.getTitulo()));
         assertEquals(p1.getUsername(), a.getProdutor().getUsername());
