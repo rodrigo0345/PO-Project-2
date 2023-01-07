@@ -154,6 +154,7 @@ public class AdminAction {
 
         if (null == AdminAction.user.getAllSessionRequests()) {
             Prompt.pressEnterToContinue("Não existem pedidos de sessão");
+            return;
         }
         else{
             for(Session s: user.getAllSessionRequests()){
@@ -464,10 +465,13 @@ public class AdminAction {
     public static void removeAlbum() {
         
         Frontend.Utils.Generics.menuAdminHeader();
-        
-        System.out.println("Em construção...");
 
-        
+        // list all albums editados
+        for (Backend.Albums.Album a : user.getAlbumsRepo().getAlbums().values()) {
+            if(a instanceof Backend.Albums.AlbumEditado) {
+                System.out.println(a.toString());
+            }
+        }
 
         String album = Prompt.readString("Nome do album a remover: ");
         if(Prompt.goBack(album)) return;

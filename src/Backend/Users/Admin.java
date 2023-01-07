@@ -215,6 +215,7 @@ public class Admin extends User {//Traduzidos
      */
     public String getAllRecordingSessions() {
         StringBuilder s = new StringBuilder();
+        if(this.getSessionsRepo().getSessions() == null) return "Não existem sessões de gravação";
         for (Backend.Sessions.Session session : this.getSessionsRepo().getSessions()) {
             s.append(" ").append(session.toString());
         }
@@ -228,6 +229,7 @@ public class Admin extends User {//Traduzidos
      */
     public String getAllAlbumsBeingEdited() {
         StringBuilder s = new StringBuilder();
+        if(this.getAlbumsRepo().getAlbums() == null) return "Não existem álbuns a serem editados";
         for (Backend.Albums.Album album : this.getAlbumsRepo().getAlbums().values()) {
             if (album instanceof Backend.Albums.AlbumEditado && !((Backend.Albums.AlbumEditado) album).isEdited()) {
                 s.append(" ").append(album);
