@@ -44,7 +44,7 @@ public class Admin extends User {//Traduzidos
      */
     public void addInstrument(String name, int quantidade) throws IllegalArgumentException {
         if (0 > quantidade) { throw new IllegalArgumentException("Quantidade inválida"); }
-        Instrument instrument = new Instrument(name, quantidade);
+        Instrument instrument = new Instrument(name, quantidade, null);
         this.getInstrumentsRepo().addInstrument(instrument);
     }
 
