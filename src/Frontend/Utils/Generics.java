@@ -235,7 +235,7 @@ public static void menuMusicianContent(){
     System.out.println(color.getYELLOW());
     System.out.print("                                [3]");
     System.out.print(color.getWHITE());
-    System.out.print(" - Futuras gravações de sessão");
+    System.out.print(" - Futuras sessões de gravação");
     System.out.println(color.getYELLOW());
     System.out.print("                                [4]");
     System.out.print(color.getWHITE());

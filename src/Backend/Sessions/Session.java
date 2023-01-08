@@ -398,7 +398,7 @@ return !this.startDate.isAfter(end) && !this.endDate.isBefore(start) && (!this.s
 
     @Override
     public String toString(){
-        return "id da sessão = " + this.id + "data inicio = " + this.startDate + "data fim = " + this.endDate + "edicao de album = " + this.album;
+        return "ID: " + this.id + " | DataInicial: " + this.startDate + " | DataFinal: " + this.endDate + " | Edição: " + this.album;
     }
 
     /**

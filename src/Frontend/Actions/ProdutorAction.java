@@ -57,6 +57,10 @@ public class ProdutorAction {
         System.out.print("[4] - ");
         System.out.print(color.getWHITE());
         System.out.println("Editar password");
+        System.out.print(color.getYELLOW());
+        System.out.print("[5] - ");
+        System.out.print(color.getWHITE());
+        System.out.println("Retroceder");        
 
         int option = Prompt.checkOption("Introduza a opção: ");
 
@@ -86,6 +90,8 @@ public class ProdutorAction {
 
                     user.setPassword(password);
                     break;
+                case 5:
+                    return;  
                 default:
                     Prompt.pressEnterToContinue("Opção inválida");
                     break;
@@ -103,7 +109,10 @@ public class ProdutorAction {
         Frontend.Utils.Generics.menuProducerHeader();
 
         ConsoleColors color = new ConsoleColors();
-
+        System.out.println(color.getYELLOW());
+        System.out.print("[0] - ");
+        System.out.print(color.getWHITE());
+        System.out.print("Retroceder");
         System.out.println(color.getYELLOW());
         System.out.print("[1] - ");
         System.out.print(color.getWHITE());
@@ -114,6 +123,10 @@ public class ProdutorAction {
         System.out.print("Editar as informações de um álbum");
 
         int option = Prompt.checkOption("Introduza a opção: ");
+
+        if(0 == option){
+            return;
+        }
 
         if (1 == option) { // Criar album
 
@@ -382,7 +395,8 @@ public class ProdutorAction {
      */
     public static void endRecordingSession() {
         Frontend.Utils.Generics.menuProducerHeader();
-        System.out.println("Terminar sessões de gravação...");
+        ConsoleColors color = new ConsoleColors();
+        System.out.println(color.getWHITE());
         boolean res = false;
         try {
             res = ReposHolder.getSessions().endRecordingSessions();

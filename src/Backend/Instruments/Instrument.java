@@ -5,6 +5,8 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+import Frontend.Utils.ConsoleColors;
+
 /**
  * The type Instrument.
  */
@@ -92,7 +94,11 @@ public class Instrument implements Serializable, Comparable<Instrument>, Cloneab
 
     @Override
     public String toString() {
-        return "Instrument=" + this.name + ", id=" + this.id + ", quantidade=" + this.quantidade;
+
+        ConsoleColors color = new ConsoleColors();
+        System.out.println(color.getWHITE());
+        
+        return "Instrumento: " + this.name + " | ID: " + this.id + " | Quantidade: " + this.quantidade;
     }
 
     @Override

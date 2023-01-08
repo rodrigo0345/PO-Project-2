@@ -219,9 +219,15 @@ public class AdminAction {
     public static void stats() {
         
         Frontend.Utils.Generics.menuAdminHeader();
-
-        System.out.println("1. Estatisticas globais");
-        System.out.println("2. Estatisticas de um certo periodo de tempo");
+        ConsoleColors color = new ConsoleColors();
+        System.out.println(color.getYELLOW());
+        System.out.print("[1] - ");
+        System.out.print(color.getWHITE());
+        System.out.println("Estatisticas globais");
+        System.out.print(color.getYELLOW());
+        System.out.print("[2] - ");
+        System.out.print(color.getWHITE());
+        System.out.println("Estatisticas de um certo periodo de tempo");
 
         int option = Prompt.checkInt("Opção: ");
         if (option == 1){
