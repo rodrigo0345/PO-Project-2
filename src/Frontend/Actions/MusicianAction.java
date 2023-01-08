@@ -1,4 +1,5 @@
 package Frontend.Actions;
+
 import Backend.Albums.Album;
 import Backend.Instruments.Instrument;
 import Backend.Sessions.Session;
@@ -6,6 +7,7 @@ import Frontend.Utils.ConsoleColors;
 import Frontend.Utils.Generics;
 import Frontend.Utils.Prompt;
 import Frontend.Utils.ReposHolder;
+
 import java.util.Set;
 import java.util.UUID;
 

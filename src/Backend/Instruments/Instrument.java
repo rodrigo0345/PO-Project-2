@@ -1,11 +1,11 @@
 package Backend.Instruments;
 
+import Frontend.Utils.ConsoleColors;
+
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.UUID;
-
-import Frontend.Utils.ConsoleColors;
 
 /**
  * The type Instrument.

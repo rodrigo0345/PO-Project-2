@@ -1,8 +1,8 @@
 package Backend.Users;
 
-import java.io.Serializable;
-
 import Frontend.Utils.ConsoleColors;
+
+import java.io.Serializable;
 
 /**
  * The type User.

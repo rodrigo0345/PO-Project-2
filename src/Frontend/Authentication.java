@@ -1,7 +1,5 @@
 package Frontend;
 
-import java.util.Scanner;
-
 import Backend.Users.Repos;
 import Backend.Users.User;
 import Frontend.Utils.ConsoleColors;
