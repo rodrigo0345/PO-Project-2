@@ -38,12 +38,28 @@ public class MusicianAction {
     public static void editProfile() {
 
         Frontend.Utils.Generics.menuMusicianHeader();
-
-        System.out.println("[1] - Editar nome");
-        System.out.println("[2] - Editar username");
-        System.out.println("[3] - Editar email");
-        System.out.println("[4] - Editar password");
-        System.out.println("[5] - Retroceder");
+        ConsoleColors color = new ConsoleColors();
+        
+        System.out.println(color.getYELLOW());
+        System.out.print("[1] -");
+        System.out.print(color.getWHITE());
+        System.out.print(" Editar nome");
+        System.out.println(color.getYELLOW());
+        System.out.print("[2] -");
+        System.out.print(color.getWHITE());
+        System.out.print(" Editar username");
+        System.out.println(color.getYELLOW());
+        System.out.print("[3] - ");
+        System.out.print(color.getWHITE());
+        System.out.print("Editar email");
+        System.out.println(color.getYELLOW());
+        System.out.print("[4] -");
+        System.out.print(color.getWHITE());
+        System.out.print(" Editar password");
+        System.out.println(color.getYELLOW());
+        System.out.print("[5] - ");
+        System.out.print(color.getWHITE());
+        System.out.println("Retroceder");
 
         try {
             int option = Prompt.checkOption("Introduza a opção: ");

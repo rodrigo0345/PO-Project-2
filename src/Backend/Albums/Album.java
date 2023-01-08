@@ -2,6 +2,7 @@ package Backend.Albums;
 
 import Backend.Users.Musician;
 import Backend.Users.Produtor;
+import Frontend.Utils.ConsoleColors;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -244,12 +245,16 @@ public class Album implements Serializable, Comparable<Album> {//Traduzido
 
     @Override
     public String toString() {
+
+        ConsoleColors color = new ConsoleColors();
+        System.out.println(color.getWHITE());  
+             
         String aux = "";
         if (null != produtorOriginal) {
-            aux = "produtor=" + this.produtorOriginal.getUsername();
+            aux = "Produtor: " + this.produtorOriginal.getUsername();
         }
 
-        aux += "titulo=" + titulo + ", genero=" + genero + ", date=" + date;
+        aux += " | Título: " + titulo + " | Género: " + genero + " | Data: " + date;
 
         int i = 0;
         for (Musician m : this.artists) {

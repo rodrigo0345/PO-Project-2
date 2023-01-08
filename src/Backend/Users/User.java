@@ -2,6 +2,8 @@ package Backend.Users;
 
 import java.io.Serializable;
 
+import Frontend.Utils.ConsoleColors;
+
 /**
  * The type User.
  */
@@ -166,7 +168,9 @@ public abstract class User implements Comparable<User>, Serializable {
 
     @Override
     public String toString() {
-        return "name=" + name + ", email=" + email + ", username=" + username;
+        ConsoleColors color = new ConsoleColors();
+        System.out.println(color.getWHITE());
+        return "Nome: " + name + " | Email: " + email + " | Username: " + username;
     }
 
     @Override
