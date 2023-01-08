@@ -6,10 +6,12 @@ import Backend.Instruments.Instrument;
 import Backend.Sessions.Session;
 import org.junit.Test;
 
+import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.TreeSet;
 
 import static org.junit.Assert.*;
+
 
 public class AdminTest {
 
@@ -38,7 +40,7 @@ public class AdminTest {
 
         admin.acceptSessionRequest(s.getId()); // needs to be approved first
 
-        s.addPendingInstrument(new Instrument("flute", 6), 1);
+        s.addPendingInstrument(new Instrument("flute", 6, LocalDateTime.now()), 1);
         admin.removeInstrument("flute");
         assertFalse(s.getApprovedInstruments().contains(s));
         assertEquals(0, s.getApprovedInstruments().size());
@@ -135,7 +137,11 @@ public class AdminTest {
         getAllSessionRequests();
         this.album.setAlbumAsComplete();
         admin.acceptSessionRequest(this.album.getLastSessionAdded().getId());
-        this.album.getLastSessionAdded().setCompleted(true);
+        try {
+            this.album.getLastSessionAdded().setCompleted(true);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         assertEquals( "Álbums não terminados: 1\n" +
                 "Albums terminados: 1\n" +
                 "Percentagem de sessões completas: 50.0%", admin.getStats());
