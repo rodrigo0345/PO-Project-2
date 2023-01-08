@@ -154,7 +154,7 @@ public class ProdutorAction {
                 Prompt.pressEnterToContinue(e.getMessage());
                 return;
             }
-            Prompt.pressEnterToContinue("Album" + albumName + "criado com sucesso!");
+            Prompt.pressEnterToContinue("Album " + EditionAlbumName + "criado com sucesso!");
 
         } else if (2 == option) { // Editar album
 
@@ -414,6 +414,25 @@ public class ProdutorAction {
      */
     public static void showStateOfAlbum() {
         Frontend.Utils.Generics.menuProducerHeader();
+
+        Set<Album> oldProjects = user.getOldAlbums();
+        Set<AlbumEditado> myEditedProjects = user.getNewAlbumsEdits();
+
+        if (oldProjects.isEmpty()) { System.out.println("Sem álbuns...");}
+        else {
+            for (Album album1: oldProjects){
+                System.out.println(album1);
+            }
+        }
+
+        if(myEditedProjects.isEmpty()) {
+            System.out.println("Sem álbuns...");
+        } else {
+            for (AlbumEditado album1 : myEditedProjects) {
+                System.out.println(album1);
+            }
+        }
+
         String albumName = Prompt.readString("Selecione o álbum para examinar: ");
         if (Prompt.goBack(albumName)) return;
 

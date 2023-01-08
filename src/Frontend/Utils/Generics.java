@@ -307,7 +307,7 @@ public static void menuProducerContent(){
     System.out.println(color.getYELLOW());
     System.out.print("                                [3]");
     System.out.print(color.getWHITE());
-    System.out.print(" - Terminar sessão de gravação");
+    System.out.print(" - Terminar todas as sessões de gravação");
     System.out.println(color.getYELLOW());
     System.out.print("                                [4]");
     System.out.print(color.getWHITE());
