@@ -445,16 +445,20 @@ public class ProdutorAction {
         Set<Album> oldProjects = user.getOldAlbums();
         Set<AlbumEditado> myEditedProjects = user.getNewAlbumsEdits();
 
-
+        ConsoleColors color = new ConsoleColors();
+        System.out.println(color.getYELLOW());
         System.out.println("--- Álbuns antigos ---");
+        System.out.println(color.getWHITE());
         if (oldProjects.isEmpty()) { System.out.println("Sem álbuns...");}
         else {
             for (Album album1: oldProjects){
                 System.out.println(album1);
             }
         }
-
+       
+        System.out.println(color.getYELLOW());
         System.out.println("--- Novos Álbuns ---");
+        System.out.println(color.getWHITE());
         if(myEditedProjects.isEmpty()) {
             System.out.println("Sem álbuns...");
         } else {
