@@ -6,6 +6,9 @@ import Backend.Users.Admin;
 import Backend.Users.Musician;
 import org.junit.Test;
 
+import java.time.LocalDateTime;
+import java.util.Date;
+
 import static org.junit.Assert.*;
 
 public class SessionTest {
@@ -42,7 +45,7 @@ public class SessionTest {
     public void addPendendingInstrument() {
         admin.acceptSessionRequest(session.getId());
 
-        Instrument i = new Instrument("guitarra", 4);
+        Instrument i = new Instrument("guitarra", 4, LocalDateTime.now());
 
         try {
             session.addPendingInstrument(i, 1);
@@ -62,7 +65,7 @@ public class SessionTest {
         admin.acceptSessionRequest(session.getId());
 
         addPendendingInstrument();
-        session.addPendingInstrument(new Instrument("violino", 4), 1);
+        session.addPendingInstrument(new Instrument("violino", 4, LocalDateTime.now()), 1);
         assertEquals(2, session.getPendentInstruments().size());
     }
 
@@ -104,7 +107,7 @@ public class SessionTest {
 
     @Test
     public  void doesSessionOverlap(){
-        Session s = new Session(Frontend.Utils.Generics.stringToDate("11/03/2050 10:00"), Frontend.Utils.Generics.stringToDate("11/03/2050 12:30"), album, album.getSessionsRepo(),
+        Session s = new Session(Frontend.Utils.Generics.stringToDate("11/03/2050 10:00"), Frontend.Utils.Generics.stringToDate("11/03/2050 12:20"), album, album.getSessionsRepo(),
                 album.getUsersRepo(), album.getInstrumentsRepo(), album.getAlbumsRepo());
         assertTrue(session.doesSessionOverlap(s));
     }

@@ -6,6 +6,9 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
+
+// não passam os testes porque não tivemos tempo de testar a
+// data de requisição nos instrumentos
 public class ProdutorTest {
 
     private final Admin admin = new Admin("Teste", "Teste@gmail.com", "admin", "admin",

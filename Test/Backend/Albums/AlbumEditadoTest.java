@@ -1,5 +1,7 @@
 package Backend.Albums;
 
+import Backend.Sessions.Session;
+import Backend.Users.Admin;
 import Backend.Users.Produtor;
 import org.junit.Test;
 
@@ -8,8 +10,11 @@ import java.time.temporal.ChronoUnit;
 
 import static org.junit.Assert.*;
 
+
 public class AlbumEditadoTest {
     AlbumEditado album = new AlbumEditado("Random");
+    Admin a = new Admin("Teste", "teste@gmail.com", "teste", "teste",
+            album.getInstrumentsRepo(), album.getAlbumsRepo(), album.getUsersRepo(), album.getSessionsRepo());
 
     @Test
     public void setProducer() {
@@ -39,7 +44,7 @@ public class AlbumEditadoTest {
         try{
             album.addSession(Frontend.Utils.Generics.stringToDate("10/01/2020 15:30"), Frontend.Utils.Generics.stringToDate("15/01/2023 16:30"));
         } catch(IllegalArgumentException e){
-            assertEquals(e.getMessage(), "A data de ínicio já foi extrapolada");
+            assertEquals(e.getMessage(), "Já existe uma sessão com essas datas");
         }
 
         // testes para quando o album já tenha sido editado
@@ -72,7 +77,8 @@ public class AlbumEditadoTest {
 
     @Test
     public void markSessionAsCompleted() {
-        album.addSession(Frontend.Utils.Generics.stringToDate("10/01/2023 15:30"), Frontend.Utils.Generics.stringToDate("10/01/2023 16:30"));
+        Session sss = album.addSession(Frontend.Utils.Generics.stringToDate("10/01/2023 15:30"), Frontend.Utils.Generics.stringToDate("10/01/2023 16:30"));
+        a.acceptSessionRequest(sss.getId());
         try {
             album.markSessionAsCompleted(album.getLastSessionAdded().getId());
         } catch (Exception e) {
